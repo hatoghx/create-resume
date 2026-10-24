@@ -64,7 +64,10 @@ body{background:#fff}
 <body>
 <div class="bar">
 <button class="main" id="print">PDFで保存・印刷</button>
+<button id="imp">TXT読込</button>
+<button id="exp">TXT保存</button>
 <button id="clear">入力を消去</button>
+<input type="file" id="file" accept=".txt,text/plain" hidden>
 </div>
 <main>
 <section class="page">
@@ -149,6 +152,38 @@ load();
 document.addEventListener("input",save);
 document.addEventListener("paste",function(e){
 if(e.target&&e.target.isContentEditable){e.preventDefault();var t=(e.clipboardData||window.clipboardData).getData("text");document.execCommand("insertText",false,t);}
+});
+var labels={dy:"作成年",dm:"作成月",dd:"作成日",furi:"ふりがな",name:"氏名",birth:"生年月日",sex:"性別",afuri:"住所ふりがな",addr:"現住所",tel:"電話",mail:"E-mail",motive:"志望の動機",pr:"自己PR",skill:"趣味・特技など",wish:"本人希望記入欄",alt:"連絡先"};
+for(i=0;i<eduRows;i++){labels["ey"+i]="学歴職歴"+(i+1)+"年";labels["em"+i]="学歴職歴"+(i+1)+"月";labels["ec"+i]="学歴職歴"+(i+1)+"内容";}
+for(i=0;i<qualRows;i++){labels["qy"+i]="免許資格"+(i+1)+"年";labels["qm"+i]="免許資格"+(i+1)+"月";labels["qc"+i]="免許資格"+(i+1)+"内容";}
+function esc(s){return s.replace(/\\/g,"\\\\").replace(/\r?\n/g,"\\n");}
+function unesc(s){return s.replace(/\\(\\|n)/g,function(m,c){return c==="n"?"\n":"\\";});}
+function exportTxt(){
+var out=fields().map(function(el){return (labels[el.dataset.k]||el.dataset.k)+"["+el.dataset.k+"]="+esc(el.innerText.replace(/\n+$/,""));}).join("\r\n")+"\r\n";
+var a=document.createElement("a");
+a.href=URL.createObjectURL(new Blob([out],{type:"text/plain;charset=utf-8"}));
+a.download="履歴書.txt";
+document.body.appendChild(a);a.click();a.remove();
+setTimeout(function(){URL.revokeObjectURL(a.href);},1000);
+}
+function importTxt(text){
+var map={};
+text.replace(/^﻿/,"").split(/\r?\n/).forEach(function(l){
+var m=l.match(/^[^\[=]*\[([A-Za-z0-9_]+)\]=(.*)$/);
+if(m)map[m[1]]=unesc(m[2]);
+});
+fields().forEach(function(el){if(map[el.dataset.k]!==undefined)el.innerText=map[el.dataset.k];});
+save();
+}
+document.getElementById("exp").addEventListener("click",exportTxt);
+document.getElementById("imp").addEventListener("click",function(){document.getElementById("file").click();});
+document.getElementById("file").addEventListener("change",function(e){
+var f=e.target.files&&e.target.files[0];
+if(!f)return;
+var r=new FileReader();
+r.onload=function(){importTxt(String(r.result));};
+r.readAsText(f,"utf-8");
+e.target.value="";
 });
 document.getElementById("print").addEventListener("click",function(){window.print();});
 document.getElementById("clear").addEventListener("click",function(){
