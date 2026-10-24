@@ -9,7 +9,7 @@
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--k);font-family:"ＭＳ 明朝","MS Mincho","ＭＳ Ｐ明朝","MS PMincho","Hiragino Mincho ProN","Yu Mincho","Noto Serif JP",serif;font-size:10pt}
 [hidden]{display:none!important}
-.bar{position:fixed;top:0;left:0;z-index:9;display:flex;font-family:sans-serif;transform-origin:0 0;background:var(--pn);border-bottom:1px solid var(--ln)}
+.bar{position:fixed;top:0;left:0;right:0;z-index:9;display:flex;font-family:sans-serif;background:var(--pn);border-bottom:1px solid var(--ln);padding:env(safe-area-inset-top,0px) env(safe-area-inset-right,0px) 0 env(safe-area-inset-left,0px)}
 .bar button{flex:1 1 0;min-width:0;font:inherit;font-size:15px;padding:12px 0;border:0;border-right:1px solid var(--ln);background:var(--pn);color:var(--tx);cursor:pointer;white-space:nowrap}
 .bar button:last-child{border-right:0}
 .bar button:hover{background:#3d3d3d}
@@ -391,25 +391,13 @@ if(!photo.classList.contains("has"))return;
 e.preventDefault();
 if(confirm("写真を削除します。よろしいですか。")){showPhoto("");try{localStorage.removeItem(PKEY);}catch(x){}}
 });
-var bar=document.querySelector(".bar");
-function stick(){
-var vv=window.visualViewport;
-if(!vv){bar.style.width="100%";return;}
-var k=vv.scale;
-var f=1;
-bar.style.width=(vv.width*k/f)+"px";
-bar.style.transform="translate("+vv.offsetLeft+"px,"+vv.offsetTop+"px) scale("+(f/k)+")";
-}
 function fit(){
 var vp=document.querySelector('meta[name="viewport"]');
 vp.setAttribute("content","width=device-width,initial-scale=1");
 document.getElementById("wrap").style.zoom=Math.min(1,(window.innerWidth-16)/1587.52);
-stick();
 }
 window.addEventListener("resize",fit);
 window.addEventListener("orientationchange",function(){setTimeout(fit,300);});
-window.addEventListener("scroll",stick);
-if(window.visualViewport){window.visualViewport.addEventListener("resize",stick);window.visualViewport.addEventListener("scroll",stick);}
 tx.value=buildText();
 layout();
 if(document.fonts&&document.fonts.ready)document.fonts.ready.then(layout);
