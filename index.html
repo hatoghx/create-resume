@@ -8,9 +8,17 @@
 :root{--k:#000;--bg:#e9e9ee}
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--k);font-family:"ＭＳ 明朝","MS Mincho","ＭＳ Ｐ明朝","MS PMincho","Hiragino Mincho ProN","Yu Mincho","Noto Serif JP",serif;font-size:10pt}
-.bar{position:fixed;top:0;left:0;z-index:9;display:flex;flex-wrap:nowrap;gap:6px;justify-content:flex-end;padding:6px;font-family:sans-serif;transform-origin:0 0;pointer-events:none}
-.bar button{font:inherit;font-size:13px;padding:6px 12px;border:1px solid #333;background:#fff;border-radius:4px;cursor:pointer;pointer-events:auto;white-space:nowrap;box-shadow:0 1px 4px rgba(0,0,0,.3)}
-.bar button.main{background:#111;color:#fff}
+[hidden]{display:none!important}
+.bar{position:fixed;top:0;left:0;z-index:9;display:flex;font-family:sans-serif;transform-origin:0 0;background:#fff;border-bottom:1px solid #333}
+.bar button{flex:1 1 0;min-width:0;font:inherit;font-size:15px;padding:12px 0;border:0;border-right:1px solid #ccc;background:#fff;color:#111;cursor:pointer;white-space:nowrap}
+.bar button:last-child{border-right:0}
+.bar button.on{background:#111;color:#fff}
+.off{position:absolute;opacity:0;pointer-events:none;height:0;overflow:hidden;top:0;left:0}
+.vw{padding:64px 16px 24px;font-family:sans-serif;color:#111}
+#tx{display:block;width:100%;max-width:900px;margin:0 auto;min-height:calc(100vh - 100px);padding:12px;font:14px/1.6 "Yu Gothic","Meiryo",sans-serif;border:1px solid #888;background:#fff;color:#111;resize:vertical}
+.set{max-width:560px;margin:0 auto;display:flex;flex-direction:column;gap:12px}
+.set input{font:inherit;font-size:16px;padding:10px;border:1px solid #888;background:#fff;color:#111;width:100%}
+.set button{font:inherit;font-size:16px;padding:12px;border:1px solid #111;background:#111;color:#fff;cursor:pointer}
 .wrap{display:flex;flex-direction:row;width:1190.64pt;margin:12px auto;box-shadow:0 2px 12px rgba(0,0,0,.2);background:#fff}
 .page{position:relative;width:595.32pt;height:841.92pt;background:#fff;overflow:hidden;flex:none}
 .page+.page{transform:translateX(-0.18pt)}
@@ -35,6 +43,8 @@ body{margin:0;background:var(--bg);color:var(--k);font-family:"ＭＳ 明朝","M
 .photo img{position:absolute;left:0;top:0;width:100%;height:100%;object-fit:cover;display:block}
 @page{size:A3 landscape;margin:0}
 @media print{
+.vw{display:none!important}
+.wrap.off{position:static!important;opacity:1!important;pointer-events:auto!important;height:auto!important;overflow:visible!important}
 .tk,.tn{stroke:none}
 body{background:#fff}
 .bar{display:none}
@@ -43,11 +53,8 @@ body{background:#fff}
 </style>
 </head>
 <body>
-<div class="bar">
-<button class="main" id="print">PDF保存</button>
-<button id="imp">インポート</button>
-<button id="exp">エクスポート</button>
-<input type="file" id="file" accept=".txt,text/plain" hidden>
+<div class="bar" id="bar">
+<button id="tb-r" class="on">履歴書</button><button id="tb-i">入力</button><button id="tb-s">設定</button>
 </div>
 <div class="wrap" id="wrap">
 <section class="page">
@@ -180,6 +187,8 @@ body{background:#fff}
 <div class="bx" id="bx4" style="transform:translate(61.92pt,615.48pt)"><svg class="sv bs" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 483.84 145.56" width="483.84pt" height="145.56pt"><path class="tn" d="M0.84 48.6H483V48.72H0.84ZM0.84 72.72H483V72.84H0.84ZM0.84 96.84H483V96.96H0.84ZM0.84 120.96H483V121.08H0.84Z"/><path class="tk" d="M-0 -0H0.84V145.56H-0ZM483 0.84H483.84V145.56H483ZM0.84 -0H483.84V0.84H0.84ZM0.84 23.28H483V24.12H0.84ZM0.84 24.96H483V25.8H0.84ZM0.84 144.72H483.84V145.56H0.84Z"/><text x="2.038 8.041 10.799 19.803 28.798 37.802 46.797 55.802 64.797 73.801 78.362 87.357 95.884 104.879 113.883 118.444 127.439 136.443 141.004 149.999 159.003 167.998 177.003 181.563 190.558 199.563 208.558 213.119 221.402 229.919 238.923 247.441 256.436 264.963 273.12 281.637 290.641 299.637 307.803 315.356 323.882 331.796 340.683 349.678 358.682 367.677" y="15.36" class="p" style="font-size:9.007">　 本人希望記入欄（特に給料・職種・勤務時間・勤務地・その他についての希望などがあれば記入）</text></svg><span class="ed vc" style="left:0.84pt;top:25.8pt;width:482.16pt;height:22.8pt;" contenteditable data-k="w0"></span><span class="ed vc" style="left:0.84pt;top:48.72pt;width:482.16pt;height:24pt;" contenteditable data-k="w1"></span><span class="ed vc" style="left:0.84pt;top:72.84pt;width:482.16pt;height:24pt;" contenteditable data-k="w2"></span><span class="ed vc" style="left:0.84pt;top:96.96pt;width:482.16pt;height:24pt;" contenteditable data-k="w3"></span><span class="ed vc" style="left:0.84pt;top:121.08pt;width:482.16pt;height:23.64pt;" contenteditable data-k="w4"></span></div>
 </section>
 </div>
+<div class="vw" id="v-in" hidden><textarea id="tx" spellcheck="false" aria-label="入力"></textarea></div>
+<div class="vw" id="v-set" hidden><div class="set"><input id="fn" type="text" aria-label="ファイル名"><button id="print">PDF保存</button></div></div>
 <script>
 (function(){
 var KEY="create-resume-v3";
@@ -193,7 +202,7 @@ try{var o={};fields().forEach(function(el){o[el.dataset.k]=el.innerText;});local
 }
 load();
 alignAll();
-document.addEventListener("input",function(e){align(e.target);layout();save();});
+document.addEventListener("input",function(e){if(e.target===tx||e.target===fn)return;align(e.target);layout();save();pushText();});
 document.addEventListener("paste",function(e){
 if(e.target&&e.target.isContentEditable){e.preventDefault();var t=(e.clipboardData||window.clipboardData).getData("text");document.execCommand("insertText",false,t);}
 });
@@ -247,14 +256,15 @@ while(s.lines.length&&s.lines[0].trim()==="")s.lines.shift();
 });
 return secs;
 }
-function applyImport(secs){
+function applyImport(secs,full){
 var sec={},n;
+if(full)resetAll();
 secs.forEach(function(x){sec[x.name]=x;});
 SINGLE.concat(TAIL).forEach(function(a){if(sec[a[1]])setv(a[0],sec[a[1]].lines.join("\n"));});
 var d=sec["作成年月日"];
 if(d){var dn=nums(d.lines[0]||"");setv("dy",dn[0]||"");setv("dm",dn[1]||"");setv("dd",dn[2]||"");}
 var b=sec["生年月日と満年齢"];
-if(b){var bn=nums(b.lines[0]||"");setv("birth",bn.length>3?bn[0]+" 年 "+bn[1]+" 月 "+bn[2]+" 日生 （満 "+bn[3]+" 歳）":"");}
+if(b){var bn=nums(b.lines[0]||"");setv("birth",bn.length>3?bn[0]+" 年 "+bn[1]+" 月 "+bn[2]+" 日生 （満 "+bn[3]+" 歳）":BIRTH0);}
 var edu=sec["学歴"],work=sec["職歴"];
 if(edu||work){
 var rows=[];
@@ -312,26 +322,42 @@ for(n=0;n<wishRows;n++){var t=val("w"+n).trim();if(t)W.push(t);}
 sec("本人希望",W.join("\n"));
 return o.join("\r\n");
 }
-function exportTxt(){
-var a=document.createElement("a");
-a.href=URL.createObjectURL(new Blob([buildText()],{type:"text/plain;charset=utf-8"}));
-a.download="履歴書.txt";
-document.body.appendChild(a);a.click();a.remove();
-setTimeout(function(){URL.revokeObjectURL(a.href);},1000);
+var tx=document.getElementById("tx"),fn=document.getElementById("fn"),curView="resume",touched=false;
+var BIRTH0="年　　　　　月　　　　　日生　（満　　　歳）　";
+function resetAll(){fields().forEach(function(el){el.innerText="";});setv("birth",BIRTH0);}
+function pad(n){return (n<10?"0":"")+n;}
+function stamp(){var d=new Date();return pad(d.getMonth()+1)+pad(d.getDate())+pad(d.getHours())+pad(d.getMinutes());}
+function autoName(){if(!touched)fn.value="履歴書_"+stamp()+".pdf";}
+function pushText(){if(document.activeElement!==tx)tx.value=buildText();}
+function setView(v){
+curView=v;
+document.getElementById("wrap").classList.toggle("off",v!=="resume");
+document.getElementById("v-in").hidden=v!=="in";
+document.getElementById("v-set").hidden=v!=="set";
+document.getElementById("tb-r").classList.toggle("on",v==="resume");
+document.getElementById("tb-i").classList.toggle("on",v==="in");
+document.getElementById("tb-s").classList.toggle("on",v==="set");
+if(v==="in")pushText();
+if(v==="set")autoName();
+if(v==="resume")layout();
+window.scrollTo(0,0);
+fit();
 }
-function importTxt(text){applyImport(parse(text));}
-window.__resume={imp:importTxt,exp:buildText};
-document.getElementById("exp").addEventListener("click",exportTxt);
-document.getElementById("imp").addEventListener("click",function(){document.getElementById("file").click();});
-document.getElementById("file").addEventListener("change",function(e){
-var f=e.target.files&&e.target.files[0];
-if(!f)return;
-var r=new FileReader();
-r.onload=function(){importTxt(String(r.result));};
-r.readAsText(f,"utf-8");
-e.target.value="";
+function importTxt(text){applyImport(parse(text),true);pushText();}
+window.__resume={imp:importTxt,exp:buildText,view:setView,type:function(s){tx.value=s;tx.dispatchEvent(new Event("input",{bubbles:true}));}};
+document.getElementById("tb-r").addEventListener("click",function(){setView("resume");});
+document.getElementById("tb-i").addEventListener("click",function(){setView("in");});
+document.getElementById("tb-s").addEventListener("click",function(){setView("set");});
+tx.addEventListener("input",function(){applyImport(parse(tx.value),true);});
+fn.addEventListener("input",function(){touched=true;});
+document.getElementById("print").addEventListener("click",function(){
+autoName();
+var n=fn.value.replace(/[.]pdf$/i,"").trim()||"履歴書",old=document.title;
+document.title=n;
+layout();
+window.print();
+document.title=old;
 });
-document.getElementById("print").addEventListener("click",function(){window.print();});
 var photo=document.getElementById("photo"),pimg=document.getElementById("pimg"),pfile=document.getElementById("pfile"),PKEY="create-resume-photo-v1";
 var phs=document.getElementById("phs");
 function showPhoto(src){
@@ -367,13 +393,13 @@ function stick(){
 var vv=window.visualViewport;
 if(!vv){bar.style.width="100%";return;}
 var k=vv.scale;
-var f=.6;
+var f=1;
 bar.style.width=(vv.width*k/f)+"px";
 bar.style.transform="translate("+vv.offsetLeft+"px,"+vv.offsetTop+"px) scale("+(f/k)+")";
 }
 function fit(){
 var vp=document.querySelector('meta[name="viewport"]');
-if(touch&&Math.min(screen.width,screen.height)<W){
+if(touch&&curView==="resume"&&Math.min(screen.width,screen.height)<W){
 vp.setAttribute("content","width="+W);
 document.getElementById("wrap").style.zoom=1;
 }else{
@@ -386,6 +412,7 @@ window.addEventListener("resize",fit);
 window.addEventListener("orientationchange",function(){setTimeout(fit,300);});
 window.addEventListener("scroll",stick);
 if(window.visualViewport){window.visualViewport.addEventListener("resize",stick);window.visualViewport.addEventListener("scroll",stick);}
+tx.value=buildText();
 layout();
 if(document.fonts&&document.fonts.ready)document.fonts.ready.then(layout);
 window.addEventListener('load',layout);
