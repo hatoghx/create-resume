@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>履歴書作成</title>
 <style>
-:root{--k:#000;--bg:#e9e9ee;--w:.3mm}
+:root{--k:#000;--bg:#e9e9ee;--w:1px;--dw:3px}
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--k);font-family:"ＭＳ 明朝","MS Mincho","ＭＳ Ｐ明朝","MS PMincho","Hiragino Mincho ProN","Yu Mincho","Noto Serif JP",serif;font-size:10pt}
 .bar{position:fixed;top:0;left:0;z-index:9;display:flex;flex-wrap:nowrap;gap:6px;justify-content:flex-end;padding:6px;font-family:sans-serif;transform-origin:0 0;pointer-events:none}
@@ -24,11 +24,11 @@ body{margin:0;background:var(--bg);color:var(--k);font-family:"ＭＳ 明朝","M
 .lb.r{left:auto;right:2.02mm}
 .sm .ed{font-size:9pt}
 .fu{font-size:8pt}
-.hdc{display:flex;align-items:center;justify-content:center;font-size:10pt;letter-spacing:.35em;border-bottom:.9mm double var(--k)}
+.hdc{display:flex;align-items:center;justify-content:center;font-size:10pt;letter-spacing:.35em;border-bottom:var(--dw) double var(--k)}
 .ttl{left:20.22mm;top:26.79mm;font-size:22pt;letter-spacing:.2em;line-height:1}
 .date{right:79.7mm;top:31.34mm;font-size:10pt;white-space:nowrap}
 .date .il{min-width:12.13mm}
-.photo{left:142.65mm;top:30.03mm;width:28.31mm;height:36.9mm;border:.25mm dashed #666;font-size:6.5pt;line-height:1.5;color:#444;padding:3.03mm 1.52mm;text-align:center}
+.photo{left:142.65mm;top:30.03mm;width:28.31mm;height:36.9mm;border:1px dashed #666;font-size:6.5pt;line-height:1.5;color:#444;padding:3.03mm 1.52mm;text-align:center}
 .photo p{margin:0;text-align:left}
 .photo{cursor:pointer;overflow:hidden}
 .photo img{position:absolute;left:0;top:0;width:100%;height:100%;object-fit:cover;display:block}
@@ -208,6 +208,14 @@ e.preventDefault();
 if(confirm("写真を削除します。よろしいですか。")){showPhoto("");try{localStorage.removeItem(PKEY);}catch(x){}}
 });
 var W=Math.ceil(420*96/25.4),bar=document.querySelector(".bar"),touch=navigator.maxTouchPoints>0;
+function lines(){
+var vv=window.visualViewport,d=(window.devicePixelRatio||1)*(vv?vv.scale:1);
+var r=document.documentElement.style;
+r.setProperty("--w",(Math.max(1,Math.round(.3*3.7795*d))/d)+"px");
+r.setProperty("--dw",(Math.max(3,Math.round(.9*3.7795*d))/d)+"px");
+}
+var lt;
+function lazyLines(){clearTimeout(lt);lt=setTimeout(lines,150);}
 function stick(){
 var vv=window.visualViewport;
 if(!vv){bar.style.width="100%";return;}
@@ -225,12 +233,13 @@ document.getElementById("wrap").style.zoom=1;
 vp.setAttribute("content","width=device-width,initial-scale=1");
 document.getElementById("wrap").style.zoom=Math.min(1,(window.innerWidth-16)/W);
 }
+lines();
 stick();
 }
 window.addEventListener("resize",fit);
 window.addEventListener("orientationchange",function(){setTimeout(fit,300);});
 window.addEventListener("scroll",stick);
-if(window.visualViewport){window.visualViewport.addEventListener("resize",stick);window.visualViewport.addEventListener("scroll",stick);}
+if(window.visualViewport){window.visualViewport.addEventListener("resize",stick);window.visualViewport.addEventListener("resize",lazyLines);window.visualViewport.addEventListener("scroll",stick);}
 fit();
 })();
 </script>
