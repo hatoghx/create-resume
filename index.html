@@ -24,6 +24,7 @@ body{margin:0;background:var(--bg);color:var(--k);font-family:"ＭＳ 明朝","M
 .ed,.dt,.bh{text-rendering:geometricPrecision;font-kerning:none}
 .ed{position:absolute;display:block;padding:1.73pt 4.3pt;line-height:1.45;white-space:pre-wrap;overflow:hidden;outline:none;font-size:10pt}
 .fu{font-size:8pt}
+[data-k^="ey"],[data-k^="em"],[data-k^="qy"],[data-k^="qm"]{text-align:center}
 .dt,.bh{font-family:"MS PMincho","ＭＳ Ｐ明朝","MS Mincho","ＭＳ 明朝","Noto Serif JP",serif;font-size:1000pt;line-height:1;white-space:pre;transform-origin:0 0;letter-spacing:-1.1pt}
 .il{display:inline-block;text-align:center;outline:none;white-space:pre}
 .bh{outline:none}
@@ -87,9 +88,9 @@ body{background:#fff}
 <span class="ed" style="left:54.6pt;top:133.32pt;width:317.16pt;height:39.72pt;padding-left:63.04pt;font-size:16pt" contenteditable data-k="name"></span>
 <span class="ed" style="left:309pt;top:173.88pt;width:62.76pt;height:23.52pt;padding-top:8.6pt" contenteditable data-k="sex"></span>
 <span class="ed fu" style="left:54.6pt;top:198.24pt;width:370.68pt;height:23.64pt;padding-left:63.04pt;font-size:8pt" contenteditable data-k="afuri"></span>
-<span class="ed" style="left:426.12pt;top:198.24pt;width:113.76pt;height:23.64pt;padding-left:34.4pt" contenteditable data-k="tel"></span>
-<span class="ed" style="left:54.6pt;top:222pt;width:370.68pt;height:47.76pt;padding-top:5.7pt;padding-left:63.04pt" contenteditable data-k="addr"></span>
-<span class="ed" style="left:426.12pt;top:222pt;width:113.76pt;height:47.76pt;padding-top:17.2pt" contenteditable data-k="mail"></span>
+<span class="ed" style="left:426.12pt;top:198.24pt;width:113.76pt;height:23.64pt;padding-left:26pt;padding-right:0;font-size:8pt;line-height:1.3" contenteditable data-k="tel"></span>
+<span class="ed" style="left:54.6pt;top:222pt;width:370.68pt;height:47.76pt;padding-top:2pt;padding-left:63.04pt;line-height:1.25" contenteditable data-k="addr"></span>
+<span class="ed" style="left:426.12pt;top:222pt;width:113.76pt;height:47.76pt;padding-top:15pt;padding-left:2pt;padding-right:0;font-size:7.5pt;line-height:1.35" contenteditable data-k="mail"></span>
 <span class="ed fu" style="left:54.6pt;top:270.6pt;width:370.68pt;height:23.64pt;padding-left:63.04pt;font-size:8pt" contenteditable data-k="cfuri"></span>
 <span class="ed" style="left:426.12pt;top:270.6pt;width:113.76pt;height:23.64pt;padding-left:34.4pt" contenteditable data-k="ctel"></span>
 <span class="ed" style="left:54.6pt;top:294.36pt;width:370.68pt;height:47.76pt;padding-top:17.2pt;padding-left:63.04pt" contenteditable data-k="alt"></span>
@@ -173,9 +174,9 @@ body{background:#fff}
 <span class="ed" style="left:62.76pt;top:197.88pt;width:50.52pt;height:23.64pt;" contenteditable data-k="qy4"></span>
 <span class="ed" style="left:113.4pt;top:197.88pt;width:25.32pt;height:23.64pt;" contenteditable data-k="qm4"></span>
 <span class="ed" style="left:139.56pt;top:197.88pt;width:405.36pt;height:23.64pt;" contenteditable data-k="qc4"></span>
-<span class="ed" style="left:62.76pt;top:254.52pt;width:482.16pt;height:95.64pt;" contenteditable data-k="motive"></span>
-<span class="ed" style="left:62.76pt;top:383.16pt;width:482.16pt;height:95.64pt;" contenteditable data-k="pr"></span>
-<span class="ed" style="left:62.76pt;top:511.8pt;width:482.16pt;height:95.64pt;" contenteditable data-k="skill"></span>
+<span class="ed" style="left:62.76pt;top:254.52pt;width:482.16pt;height:95.64pt;line-height:1.25" contenteditable data-k="motive"></span>
+<span class="ed" style="left:62.76pt;top:383.16pt;width:482.16pt;height:95.64pt;line-height:1.25" contenteditable data-k="pr"></span>
+<span class="ed" style="left:62.76pt;top:511.8pt;width:482.16pt;height:95.64pt;line-height:1.25" contenteditable data-k="skill"></span>
 <span class="ed" style="left:62.76pt;top:641.28pt;width:482.16pt;height:22.8pt;" contenteditable data-k="w0"></span>
 <span class="ed" style="left:62.76pt;top:664.2pt;width:482.16pt;height:24pt;" contenteditable data-k="w1"></span>
 <span class="ed" style="left:62.76pt;top:688.32pt;width:482.16pt;height:24pt;" contenteditable data-k="w2"></span>
@@ -195,33 +196,99 @@ function save(){
 try{var o={};fields().forEach(function(el){o[el.dataset.k]=el.innerText;});localStorage.setItem(KEY,JSON.stringify(o));}catch(e){}
 }
 load();
-document.addEventListener("input",save);
+alignAll();
+document.addEventListener("input",function(e){align(e.target);save();});
 document.addEventListener("paste",function(e){
 if(e.target&&e.target.isContentEditable){e.preventDefault();var t=(e.clipboardData||window.clipboardData).getData("text");document.execCommand("insertText",false,t);}
 });
-var labels={dy:"作成年",dm:"作成月",dd:"作成日",furi:"ふりがな",name:"氏名",birth:"生年月日",sex:"性別",afuri:"住所ふりがな",addr:"現住所",tel:"電話",mail:"E-mail",cfuri:"連絡先ふりがな",alt:"連絡先",ctel:"連絡先電話",cmail:"連絡先E-mail",motive:"志望の動機",pr:"自己PR",skill:"趣味・特技など"};
-for(i=0;i<eduRows;i++){labels["ey"+i]="学歴職歴"+(i+1)+"年";labels["em"+i]="学歴職歴"+(i+1)+"月";labels["ec"+i]="学歴職歴"+(i+1)+"内容";}
-for(i=0;i<qualRows;i++){labels["qy"+i]="資格免許"+(i+1)+"年";labels["qm"+i]="資格免許"+(i+1)+"月";labels["qc"+i]="資格免許"+(i+1)+"内容";}
-for(i=0;i<wishRows;i++){labels["w"+i]="本人希望"+(i+1);}
-function esc(s){return s.replace(/\\/g,"\\\\").replace(/\r?\n/g,"\\n");}
+var SINGLE=[["dy","作成年"],["dm","作成月"],["dd","作成日"],["furi","ふりがな"],["name","氏名"],["birth","生年月日"],["sex","性別"],["afuri","住所ふりがな"],["addr","現住所"],["tel","電話"],["mail","E-mail"],["cfuri","連絡先ふりがな"],["alt","連絡先"],["ctel","連絡先電話"],["cmail","連絡先E-mail"]];
+var TAIL=[["motive","志望の動機"],["pr","自己PR"],["skill","趣味・特技など"]];
+var ALIAS={"志望動機":"志望の動機","メール":"E-mail","email":"E-mail","Email":"E-mail","資格免許":"資格・免許","資格":"資格・免許","本人希望記入欄":"本人希望","趣味・特技":"趣味・特技など"};
 function unesc(s){return s.replace(/\\(\\|n)/g,function(m,c){return c==="n"?"\n":"\\";});}
+function byKey(k){return document.querySelector('[data-k="'+k+'"]');}
+function val(k){var el=byKey(k);return el?el.innerText.replace(/\n+$/,""):"";}
+function setv(k,v){var el=byKey(k);if(el)el.innerText=v;}
+function nz(s){s=(s||"").trim();return s==="null"?"":s;}
+function entry(line){var m=line.match(/^\s*([^,]*?)\s*,\s*([^,]*?)\s*,\s*(.*?)\s*$/);if(m)return{y:nz(m[1]),m:nz(m[2]),c:nz(m[3])};return{y:"",m:"",c:nz(line)};}
+function align(el){
+if(!el||!el.dataset||!/^ec\d+$/.test(el.dataset.k||""))return;
+var t=el.innerText.trim();
+el.style.textAlign=(t==="学歴"||t==="職歴")?"center":(t==="以上"?"right":"");
+}
+function alignAll(){fields().forEach(align);}
+function parse(text){
+var secs=[],cur=null,legacy={};
+text.replace(/^﻿/,"").split(/\r?\n/).forEach(function(l){
+var h=l.match(/^\s*\[([^\]]+)\]\s*(.*)$/);
+if(h){
+var name=h[1].trim(),rest=h[2];
+if(/^[A-Za-z0-9_]+$/.test(name)&&rest.charAt(0)==="="){legacy[name]=unesc(rest.slice(1));cur=null;return;}
+name=ALIAS[name.replace(/\s/g,"")]||name;
+cur={name:name,lines:[]};secs.push(cur);
+if(rest.trim()!=="")cur.lines.push(rest);
+return;
+}
+var o=l.match(/^[^\[=]*\[([A-Za-z0-9_]+)\]=(.*)$/);
+if(o){legacy[o[1]]=unesc(o[2]);cur=null;return;}
+if(cur)cur.lines.push(l);
+});
+secs.forEach(function(s){
+while(s.lines.length&&s.lines[s.lines.length-1].trim()==="")s.lines.pop();
+while(s.lines.length&&s.lines[0].trim()==="")s.lines.shift();
+});
+return{secs:secs,legacy:legacy};
+}
+function applyImport(p){
+var sec={},n;
+p.secs.forEach(function(x){sec[x.name]=x;});
+Object.keys(p.legacy).forEach(function(k){setv(k,p.legacy[k]);});
+SINGLE.concat(TAIL).forEach(function(a){if(sec[a[1]])setv(a[0],sec[a[1]].lines.join("\n"));});
+var edu=sec["学歴"],work=sec["職歴"];
+if(edu||work){
+var rows=[];
+if(edu){rows.push({y:"",m:"",c:"学歴"});edu.lines.forEach(function(l){rows.push(entry(l));});}
+if(work){if(edu)rows.push({y:"",m:"",c:""});rows.push({y:"",m:"",c:"職歴"});work.lines.forEach(function(l){rows.push(entry(l));});}
+if(rows[rows.length-1].c!=="以上")rows.push({y:"",m:"",c:"以上"});
+for(n=0;n<eduRows;n++){var r=rows[n]||{y:"",m:"",c:""};setv("ey"+n,r.y);setv("em"+n,r.m);setv("ec"+n,r.c);}
+}
+var q=sec["資格・免許"];
+if(q){for(n=0;n<qualRows;n++){var e=q.lines[n]!==undefined?entry(q.lines[n]):{y:"",m:"",c:""};setv("qy"+n,e.y);setv("qm"+n,e.m);setv("qc"+n,e.c);}}
+var w=sec["本人希望"];
+if(w){for(n=0;n<wishRows;n++){setv("w"+n,w.lines[n]!==undefined?w.lines[n].trim():"");}}
+alignAll();save();
+}
+function ent(y,m,c){return (y||"null")+", "+(m||"null")+", "+c;}
+function buildText(){
+var o=[],n;
+function sec(t,v){o.push("["+t+"]");if(v!=="")o.push(v);o.push("");}
+SINGLE.forEach(function(a){sec(a[1],val(a[0]));});
+var st="学歴",L={"学歴":[],"職歴":[]};
+for(n=0;n<eduRows;n++){
+var y=val("ey"+n).trim(),m=val("em"+n).trim(),c=val("ec"+n).trim();
+if(c==="学歴"||c==="職歴"){st=c;continue;}
+if(c==="以上"||(!y&&!m&&!c))continue;
+L[st].push(ent(y,m,c));
+}
+sec("学歴",L["学歴"].join("\n"));
+sec("職歴",L["職歴"].join("\n"));
+var Q=[];
+for(n=0;n<qualRows;n++){var qy=val("qy"+n).trim(),qm=val("qm"+n).trim(),qc=val("qc"+n).trim();if(qy||qm||qc)Q.push(ent(qy,qm,qc));}
+sec("資格・免許",Q.join("\n"));
+TAIL.forEach(function(a){sec(a[1],val(a[0]));});
+var W=[];
+for(n=0;n<wishRows;n++){var t=val("w"+n).trim();if(t)W.push(t);}
+sec("本人希望",W.join("\n"));
+return o.join("\r\n");
+}
 function exportTxt(){
-var out=fields().map(function(el){return (labels[el.dataset.k]||el.dataset.k)+"["+el.dataset.k+"]="+esc(el.innerText.replace(/\n+$/,""));}).join("\r\n")+"\r\n";
 var a=document.createElement("a");
-a.href=URL.createObjectURL(new Blob([out],{type:"text/plain;charset=utf-8"}));
+a.href=URL.createObjectURL(new Blob([buildText()],{type:"text/plain;charset=utf-8"}));
 a.download="履歴書.txt";
 document.body.appendChild(a);a.click();a.remove();
 setTimeout(function(){URL.revokeObjectURL(a.href);},1000);
 }
-function importTxt(text){
-var map={};
-text.replace(/^﻿/,"").split(/\r?\n/).forEach(function(l){
-var m=l.match(/^[^\[=]*\[([A-Za-z0-9_]+)\]=(.*)$/);
-if(m)map[m[1]]=unesc(m[2]);
-});
-fields().forEach(function(el){if(map[el.dataset.k]!==undefined)el.innerText=map[el.dataset.k];});
-save();
-}
+function importTxt(text){applyImport(parse(text));}
+window.__resume={imp:importTxt,exp:buildText};
 document.getElementById("exp").addEventListener("click",exportTxt);
 document.getElementById("imp").addEventListener("click",function(){document.getElementById("file").click();});
 document.getElementById("file").addEventListener("change",function(e){
