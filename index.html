@@ -348,11 +348,12 @@ fit();
 }
 function importTxt(text){applyImport(parse(text),true);pushText();}
 window.__resume={imp:importTxt,exp:buildText,view:setView,type:function(s){tx.value=s;tx.dispatchEvent(new Event("input",{bubbles:true}));}};
-document.getElementById("tb-r").addEventListener("click",function(){setView("resume");});
-document.getElementById("tb-i").addEventListener("click",function(){setView("in");});
-document.getElementById("tb-s").addEventListener("click",function(){setView("set");});
+function go(v){if(v!==curView)location.replace("?v="+v);}
+document.getElementById("tb-r").addEventListener("click",function(){go("resume");});
+document.getElementById("tb-i").addEventListener("click",function(){go("in");});
+document.getElementById("tb-s").addEventListener("click",function(){go("set");});
 tx.addEventListener("input",function(){applyImport(parse(tx.value),true);});
-fn.addEventListener("input",function(){touched=true;});
+fn.addEventListener("input",function(){touched=true;try{sessionStorage.setItem(FKEY,fn.value);}catch(e){}});
 document.getElementById("print").addEventListener("click",function(){
 autoName();
 var n=fn.value.replace(/[.]pdf$/i,"").trim()||"履歴書",old=document.title;
@@ -362,12 +363,14 @@ window.print();
 document.title=old;
 });
 var photo=document.getElementById("photo"),pimg=document.getElementById("pimg"),pfile=document.getElementById("pfile"),PKEY="create-resume-photo-v1";
-var phs=document.getElementById("phs");
+var phs=document.getElementById("phs"),FKEY="create-resume-fn-v1";
 function showPhoto(src){
 if(src){pimg.src=src;pimg.hidden=false;photo.classList.add("has");phs.style.display="none";}
 else{pimg.removeAttribute("src");pimg.hidden=true;photo.classList.remove("has");phs.style.display="";}
 }
 try{localStorage.removeItem(PKEY);}catch(e){}
+try{var sp=sessionStorage.getItem(PKEY);if(sp)showPhoto(sp);}catch(e){}
+try{var sf=sessionStorage.getItem(FKEY);if(sf){fn.value=sf;touched=true;}}catch(e){}
 photo.addEventListener("click",function(e){if(e.target!==pfile)pfile.click();});
 pfile.addEventListener("click",function(e){e.stopPropagation();});
 pfile.addEventListener("change",function(e){
@@ -381,6 +384,7 @@ c.getContext("2d").drawImage(im,0,0,c.width,c.height);
 var d=c.toDataURL("image/jpeg",.92);
 URL.revokeObjectURL(url);
 showPhoto(d);
+try{sessionStorage.setItem(PKEY,d);}catch(x){}
 
 };
 im.src=url;
@@ -389,7 +393,7 @@ e.target.value="";
 photo.addEventListener("contextmenu",function(e){
 if(!photo.classList.contains("has"))return;
 e.preventDefault();
-if(confirm("写真を削除します。よろしいですか。")){showPhoto("");try{localStorage.removeItem(PKEY);}catch(x){}}
+if(confirm("写真を削除します。よろしいですか。")){showPhoto("");try{sessionStorage.removeItem(PKEY);}catch(x){}}
 });
 function fit(){
 var vp=document.querySelector('meta[name="viewport"]');
@@ -403,7 +407,8 @@ layout();
 if(document.fonts&&document.fonts.ready)document.fonts.ready.then(layout);
 window.addEventListener('load',layout);
 window.addEventListener('beforeprint',layout);
-fit();
+var q0=(location.search.match(/[?&]v=(in|set)\b/)||[])[1];
+if(q0)setView(q0);else fit();
 })();
 </script>
 </body>
