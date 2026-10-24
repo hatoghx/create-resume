@@ -230,19 +230,24 @@ var r=[[0,0,.84,H],[483,.84,483.84,H],[.84,0,483.84,.84],[.84,24.12,483.84,24.96
 return r.map(function(a){return "M"+a[0]+" "+a[1]+"H"+a[2]+"V"+a[3]+"H"+a[0]+"Z";}).join("");
 }
 function layout(){
-var w=document.getElementById("wrap"),z=w.style.zoom,y=229.56,T=3*95.64,L=[],S=0;
+var w=document.getElementById("wrap"),z=w.style.zoom,y=229.56,T=3*95.64,L=[],S=0,P=0,fs=10;
 w.style.zoom=1;
 BX.forEach(function(id){
-var f=document.getElementById(id).querySelector(".ed"),n=1;
+var f=document.getElementById(id).querySelector(".ed"),n=1,cs;
+f.style.lineHeight=2.1;
+cs=getComputedStyle(f);
+P=(parseFloat(cs.paddingTop)+parseFloat(cs.paddingBottom))*.75;
+fs=parseFloat(cs.fontSize)*.75;
 if(f.innerText.trim()!==""){
-var cs=getComputedStyle(f);
 f.style.height="auto";
-n=Math.max(1,Math.round((f.getBoundingClientRect().height-parseFloat(cs.paddingTop)-parseFloat(cs.paddingBottom))/parseFloat(cs.lineHeight)));
+n=Math.max(1,Math.round((f.getBoundingClientRect().height*.75-P)/(fs*2.1)));
 }
 L.push(n);S+=n;
 });
+var lh=Math.max(fs,Math.min(fs*2.1,(T-3*P)/S));
 BX.forEach(function(id,i){
-var b=document.getElementById(id),f=b.querySelector(".ed"),bh=T*L[i]/S;
+var b=document.getElementById(id),f=b.querySelector(".ed"),bh=(T-3*P)*L[i]/S+P;
+f.style.lineHeight=lh/fs;
 f.style.height=bh+"pt";
 var H=24.96+bh+.84,s=b.querySelector("svg");
 s.setAttribute("height",H+"pt");
