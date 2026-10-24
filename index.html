@@ -5,59 +5,43 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>履歴書作成</title>
 <style>
-:root{--ink:#111;--line:#111;--bg:#e9e9ee}
+:root{--k:#000;--bg:#e9e9ee;--w:.3mm}
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--ink);font-family:"Noto Sans JP","Hiragino Kaku Gothic ProN","Yu Gothic",Meiryo,sans-serif}
-.bar{position:sticky;top:0;z-index:5;display:flex;gap:8px;justify-content:center;padding:10px;background:#fff;border-bottom:1px solid #ccc}
+body{margin:0;background:var(--bg);color:var(--k);font-family:"ＭＳ 明朝","MS Mincho","ＭＳ Ｐ明朝","MS PMincho","Hiragino Mincho ProN","Yu Mincho","Noto Serif JP",serif;font-size:10pt}
+.bar{position:sticky;top:0;z-index:9;display:flex;flex-wrap:wrap;gap:8px;justify-content:center;padding:10px;background:#fff;border-bottom:1px solid #ccc;font-family:sans-serif}
 .bar button{font:inherit;font-size:14px;padding:8px 18px;border:1px solid #333;background:#fff;border-radius:4px;cursor:pointer}
 .bar button.main{background:#111;color:#fff}
-.page{width:210mm;min-height:297mm;margin:12px auto;padding:10mm;background:#fff;box-shadow:0 2px 12px rgba(0,0,0,.2)}
-.title{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:2mm}
-h1{margin:0;font-size:20pt;letter-spacing:.8em;font-weight:700}
-.date{font-size:9pt}
-.top{display:flex;gap:3mm;align-items:flex-start}
-.left{flex:1}
-.photo{width:30mm;height:40mm;border:1px solid var(--line);display:flex;align-items:center;justify-content:center;text-align:center;font-size:7pt;line-height:1.6;flex:none}
-table{border-collapse:collapse;width:100%;table-layout:fixed}
-td,th{border:1px solid var(--line);padding:0;vertical-align:top;font-weight:400;text-align:left}
-.lb{width:18mm;font-size:7pt;padding:1mm 1.2mm;background:#f6f6f6}
-.lb.k{font-size:9pt;vertical-align:middle}
-.ed{display:block;width:100%;min-height:100%;padding:1mm 1.5mm;font-size:10pt;outline:none;line-height:1.5}
+.wrap{display:flex;flex-direction:row;width:420mm;margin:12px auto;box-shadow:0 2px 12px rgba(0,0,0,.2);background:#fff}
+.page{position:relative;width:210mm;height:297mm;background:#fff;overflow:hidden;flex:none}
+.a{position:absolute}
+.ed{display:block;width:100%;height:100%;padding:.6mm 1.5mm;outline:none;line-height:1.45;white-space:pre-wrap;overflow:hidden}
 .ed:focus{background:#fffbe0}
-.ed.sm{font-size:8.5pt}
-.il{display:inline-block;min-width:8mm;padding:0 1mm;outline:none}
-.il.w{min-width:14mm}
-.h-furi{height:7mm}
-.h-name{height:14mm}
-.h-name .ed{font-size:16pt}
-.h-row{height:8mm}
-.h-addr{height:14mm}
-.sp{height:3mm}
-.yr{width:16mm}
-.mo{width:10mm}
-.hd{text-align:center;font-size:9pt;font-weight:700;height:8mm;vertical-align:middle;background:#f6f6f6}
-.sec{text-align:center;font-weight:700;font-size:9pt;height:8mm;vertical-align:middle;letter-spacing:.8em}
-.end{text-align:right;font-size:9pt;padding:1mm 3mm;height:8mm}
-.note{font-size:7pt;color:#444;margin:1mm 0 0}
-.lbc{width:24mm;font-size:9pt;vertical-align:middle;padding:1mm 1.5mm;background:#f6f6f6}
-.box{height:48mm}
-.box.m{height:30mm}
-.box.s{height:20mm}
-.box.t{height:30mm}
-.ed.mul{min-height:100%;height:100%;white-space:pre-wrap}
-@page{size:A4;margin:0}
+.il{display:inline-block;min-width:9mm;text-align:center;outline:none}
+.g{border-top:var(--w) solid var(--k);border-left:var(--w) solid var(--k)}
+.c{border-right:var(--w) solid var(--k);border-bottom:var(--w) solid var(--k);position:relative;min-width:0}
+.row{display:grid}
+.lb{position:absolute;left:3mm;top:2mm;font-size:10pt;pointer-events:none}
+.lb.s{font-size:8pt;top:1.5mm}
+.lb.r{left:auto;right:2mm}
+.sm .ed{font-size:9pt}
+.fu{font-size:8pt}
+.hdc{display:flex;align-items:center;justify-content:center;font-size:10pt;letter-spacing:.35em;border-bottom:.9mm double var(--k)}
+.ttl{left:20mm;top:26.5mm;font-size:22pt;letter-spacing:.35em;line-height:1}
+.date{right:80mm;top:31mm;font-size:10pt;white-space:nowrap}
+.date .il{min-width:12mm}
+.photo{left:141.1mm;top:29.7mm;width:28mm;height:36.5mm;border:.25mm dashed #666;font-size:6.5pt;line-height:1.5;color:#444;padding:3mm 1.5mm;text-align:center}
+.photo p{margin:0;text-align:left}
+.note{left:19mm;top:267.8mm;font-size:7pt}
+.y{width:18mm}
+.m{width:9mm}
+.ro{height:8.45mm}
+.box .ed{height:calc(100% - 8.4mm)}
+@page{size:A3 landscape;margin:0}
 @media print{
 body{background:#fff}
 .bar{display:none}
-.page{margin:0;box-shadow:none;width:210mm;min-height:297mm;page-break-after:always}
-.page:last-of-type{page-break-after:auto}
-.lb,.lbc,.hd{background:none}
+.wrap{margin:0;box-shadow:none;zoom:1!important}
 .ed:focus{background:none}
-}
-@media(max-width:800px){
-.page{width:100%;padding:4mm;min-height:0}
-.top{flex-direction:column-reverse}
-.photo{align-self:flex-end}
 }
 </style>
 </head>
@@ -69,78 +53,77 @@ body{background:#fff}
 <button id="clear">入力を消去</button>
 <input type="file" id="file" accept=".txt,text/plain" hidden>
 </div>
-<main>
+<div class="wrap" id="wrap">
 <section class="page">
-<div class="title">
-<h1>履歴書</h1>
-<div class="date"><span class="il w" contenteditable data-k="dy"></span>年<span class="il" contenteditable data-k="dm"></span>月<span class="il" contenteditable data-k="dd"></span>日現在</div>
+<div class="a ttl">履歴書</div>
+<div class="a date"><span class="il" contenteditable data-k="dy"></span>年<span class="il" contenteditable data-k="dm"></span>月<span class="il" contenteditable data-k="dd"></span>日現在</div>
+<div class="a photo">
+<p style="text-align:center">写真をはる位置</p><p>&nbsp;</p>
+<p style="text-align:center">写真をはる必要が<br>ある場合</p>
+<p>1. 縦　36〜40mm<br>　 横　24〜30mm<br>2. 本人単身胸から上<br>3. 裏面のりづけ</p>
 </div>
-<div class="top">
-<div class="left">
-<table>
-<tr class="h-furi"><td class="lb">ふりがな</td><td colspan="3"><span class="ed sm" contenteditable data-k="furi"></span></td></tr>
-<tr><td class="lb k">氏　名</td><td colspan="3" class="h-name"><span class="ed" contenteditable data-k="name"></span></td></tr>
-<tr class="h-row"><td class="lb k">生年月日</td><td><span class="ed sm" contenteditable data-k="birth">　　　年　　月　　日生（満　　歳）</span></td><td class="lb k" style="width:14mm">性別</td><td style="width:22mm"><span class="ed sm" contenteditable data-k="sex"></span></td></tr>
-<tr class="h-furi"><td class="lb">ふりがな</td><td colspan="3"><span class="ed sm" contenteditable data-k="afuri"></span></td></tr>
-<tr class="h-addr"><td class="lb k">現住所</td><td colspan="3"><span class="ed" contenteditable data-k="addr">〒</span></td></tr>
-<tr class="h-row"><td class="lb k">電話</td><td colspan="3"><span class="ed sm" contenteditable data-k="tel"></span></td></tr>
-<tr class="h-row"><td class="lb k">E-mail</td><td colspan="3"><span class="ed sm" contenteditable data-k="mail"></span></td></tr>
-</table>
-<p class="note">性別は任意記載です。</p>
+<div class="a g" style="left:18.7mm;top:37.9mm;width:111mm">
+<div class="c" style="height:8.4mm"><span class="lb s">ふりがな</span><span class="ed fu" style="padding-left:22mm" contenteditable data-k="furi"></span></div>
+<div class="c" style="height:14.2mm"><span class="lb" style="top:5mm;left:5mm;letter-spacing:.4em">氏名</span><span class="ed" style="padding-left:22mm;font-size:16pt" contenteditable data-k="name"></span></div>
+<div class="row" style="grid-template-columns:1fr 22.1mm;height:8.4mm">
+<div class="c"><span class="ed" style="padding-top:2mm;text-align:center" contenteditable data-k="birth">　　　　年　　　　月　　　　日生（満　　　歳）</span></div>
+<div class="c"><span class="lb s" style="left:.5mm;top:.2mm">※性別</span><span class="ed" style="padding-top:3mm" contenteditable data-k="sex"></span></div>
 </div>
-<div class="photo">写真をはる位置<br>縦36〜40mm<br>横24〜30mm</div>
 </div>
-<div class="sp"></div>
-<table>
-<tr><th class="hd yr">年</th><th class="hd mo">月</th><th class="hd">学歴・職歴</th></tr>
-<tbody id="edu"></tbody>
-<tr><td colspan="3" class="end">以上</td></tr>
-</table>
-<div class="sp"></div>
-<table>
-<tr><th class="hd yr">年</th><th class="hd mo">月</th><th class="hd">免許・資格</th></tr>
-<tbody id="qual"></tbody>
-</table>
+<div class="a g" style="left:18.7mm;top:68.9mm;width:170mm">
+<div class="row" style="grid-template-columns:1fr 40.2mm">
+<div class="c ro"><span class="lb s">ふりがな</span><span class="ed fu" style="padding-left:22mm" contenteditable data-k="afuri"></span></div>
+<div class="c ro"><span class="lb">電話</span><span class="ed" style="padding-left:12mm" contenteditable data-k="tel"></span></div>
+<div class="c" style="height:16.7mm"><span class="lb">現住所　〒</span><span class="ed" style="padding-top:2mm;padding-left:22mm" contenteditable data-k="addr"></span></div>
+<div class="c" style="height:16.7mm"><span class="lb">E-mail</span><span class="ed" style="padding-top:6mm" contenteditable data-k="mail"></span></div>
+<div class="c" style="height:8.7mm"><span class="lb s">ふりがな</span><span class="ed fu" style="padding-left:22mm" contenteditable data-k="cfuri"></span></div>
+<div class="c" style="height:8.7mm"><span class="lb">電話</span><span class="ed" style="padding-left:12mm" contenteditable data-k="ctel"></span></div>
+<div class="c" style="height:16.7mm"><span class="lb">連絡先　〒</span><span class="lb s r" style="top:2.4mm;right:2mm;font-size:7.5pt">（現住所以外に連絡を希望する場合のみ記入）</span><span class="ed" style="padding-top:6mm;padding-left:22mm" contenteditable data-k="alt"></span></div>
+<div class="c" style="height:16.7mm"><span class="lb">E-mail</span><span class="ed" style="padding-top:6mm" contenteditable data-k="cmail"></span></div>
+</div>
+</div>
+<div class="a g" id="edu" style="left:18.7mm;top:122.1mm;width:170mm">
+<div class="row ro" style="grid-template-columns:18mm 9mm 1fr">
+<div class="c hdc" style="letter-spacing:0">年</div><div class="c hdc" style="letter-spacing:0">月</div><div class="c hdc">学歴・職歴（各別にまとめて書く）</div>
+</div>
+</div>
+<div class="a note">※「性別」欄：記載は任意です。未記載とすることも可能です。</div>
 </section>
 <section class="page">
-<table>
-<tr><td class="lbc">志望の動機</td><td class="box"><span class="ed mul" contenteditable data-k="motive"></span></td></tr>
-</table>
-<div class="sp"></div>
-<table>
-<tr><td class="lbc">自己PR</td><td class="box"><span class="ed mul" contenteditable data-k="pr"></span></td></tr>
-</table>
-<div class="sp"></div>
-<table>
-<tr><td class="lbc">趣味・特技など</td><td class="box s"><span class="ed mul" contenteditable data-k="skill"></span></td></tr>
-</table>
-<div class="sp"></div>
-<table>
-<tr><td class="lbc">本人希望記入欄<br><span style="font-size:7pt">給料・職種・勤務時間・勤務地・その他</span></td><td class="box t"><span class="ed mul" contenteditable data-k="wish">特になし（貴社規定に従います）</span></td></tr>
-</table>
-<div class="sp"></div>
-<table>
-<tr><td class="lbc">連絡先<br><span style="font-size:7pt">現住所以外に連絡を希望する場合のみ</span></td><td class="box s"><span class="ed mul" contenteditable data-k="alt"></span></td></tr>
-</table>
+<div class="a g" id="qual" style="left:21.7mm;top:26.7mm;width:168.5mm">
+<div class="row ro" style="grid-template-columns:18mm 9mm 1fr">
+<div class="c hdc" style="letter-spacing:0">年</div><div class="c hdc" style="letter-spacing:0">月</div><div class="c hdc">資格・免許</div>
+</div>
+</div>
+<div class="a g box" style="left:21.7mm;top:80.1mm;width:168.5mm;height:42mm">
+<div class="c" style="height:100%"><span class="lb">志望の動機</span><span class="ed" style="margin-top:8.4mm;height:calc(100% - 8.4mm);border-top:var(--w) solid var(--k)" contenteditable data-k="motive"></span></div>
+</div>
+<div class="a g box" style="left:21.7mm;top:125.1mm;width:168.5mm;height:42.2mm">
+<div class="c" style="height:100%"><span class="lb">自己PR</span><span class="ed" style="margin-top:8.4mm;height:calc(100% - 8.4mm);border-top:var(--w) solid var(--k)" contenteditable data-k="pr"></span></div>
+</div>
+<div class="a g box" style="left:21.7mm;top:170mm;width:168.5mm;height:41.9mm">
+<div class="c" style="height:100%"><span class="lb">趣味・特技など</span><span class="ed" style="margin-top:8.4mm;height:calc(100% - 8.4mm);border-top:var(--w) solid var(--k)" contenteditable data-k="skill"></span></div>
+</div>
+<div class="a g" id="wish" style="left:21.7mm;top:214.8mm;width:168.5mm">
+<div class="c hdc" style="height:8.4mm;justify-content:flex-start;padding-left:4mm;letter-spacing:0;font-size:9pt">本人希望記入欄（特に給料・職種・勤務時間・勤務地・その他についての希望などがあれば記入）</div>
+</div>
 </section>
-</main>
+</div>
 <script>
 (function(){
-var KEY="create-resume-v2";
-var eduDefault=[
-["","","学歴"],
-["","4","高等学校　入学"],["","3","高等学校　卒業"],
-["","4","大学　学部　学科　入学"],["","3","大学　学部　学科　卒業見込み"],
-["","","職歴"],["","","なし"]
-];
-var eduRows=9,qualRows=4;
-function cell(cls,k,v){return '<td class="'+cls+'"><span class="ed sm" contenteditable data-k="'+k+'">'+(v||"")+'</span></td>';}
-var h="",i,d;
-for(i=0;i<eduRows;i++){d=eduDefault[i]||["","",""];h+='<tr class="h-row">'+cell("yr","ey"+i,d[0])+cell("mo","em"+i,d[1])+cell("","ec"+i,d[2])+'</tr>';}
-document.getElementById("edu").innerHTML=h;
-h="";
-for(i=0;i<qualRows;i++){h+='<tr class="h-row">'+cell("yr","qy"+i,"")+cell("mo","qm"+i,"")+cell("","qc"+i,"")+'</tr>';}
-document.getElementById("qual").innerHTML=h;
+var KEY="create-resume-v3";
+var eduRows=16,qualRows=5,wishRows=5,i,h;
+function cell(cls,k){return '<div class="c '+cls+'"><span class="ed" contenteditable data-k="'+k+'"></span></div>';}
+function addRows(id,n,p){
+var el=document.getElementById(id),s="";
+for(var j=0;j<n;j++){s+='<div class="row ro" style="grid-template-columns:18mm 9mm 1fr">'+cell("",p+"y"+j)+cell("",p+"m"+j)+cell("",p+"c"+j)+'</div>';}
+el.insertAdjacentHTML("beforeend",s);
+}
+addRows("edu",eduRows,"e");
+addRows("qual",qualRows,"q");
+var wb="";
+for(i=0;i<wishRows;i++){wb+='<div class="c ro" style="height:8.4mm">'+'<span class="ed" contenteditable data-k="w'+i+'"></span></div>';}
+document.getElementById("wish").insertAdjacentHTML("beforeend",wb);
 function fields(){return Array.prototype.slice.call(document.querySelectorAll("[data-k]"));}
 function load(){
 try{var s=JSON.parse(localStorage.getItem(KEY)||"{}");fields().forEach(function(el){if(s[el.dataset.k]!==undefined)el.innerText=s[el.dataset.k];});}catch(e){}
@@ -153,9 +136,10 @@ document.addEventListener("input",save);
 document.addEventListener("paste",function(e){
 if(e.target&&e.target.isContentEditable){e.preventDefault();var t=(e.clipboardData||window.clipboardData).getData("text");document.execCommand("insertText",false,t);}
 });
-var labels={dy:"作成年",dm:"作成月",dd:"作成日",furi:"ふりがな",name:"氏名",birth:"生年月日",sex:"性別",afuri:"住所ふりがな",addr:"現住所",tel:"電話",mail:"E-mail",motive:"志望の動機",pr:"自己PR",skill:"趣味・特技など",wish:"本人希望記入欄",alt:"連絡先"};
+var labels={dy:"作成年",dm:"作成月",dd:"作成日",furi:"ふりがな",name:"氏名",birth:"生年月日",sex:"性別",afuri:"住所ふりがな",addr:"現住所",tel:"電話",mail:"E-mail",cfuri:"連絡先ふりがな",alt:"連絡先",ctel:"連絡先電話",cmail:"連絡先E-mail",motive:"志望の動機",pr:"自己PR",skill:"趣味・特技など"};
 for(i=0;i<eduRows;i++){labels["ey"+i]="学歴職歴"+(i+1)+"年";labels["em"+i]="学歴職歴"+(i+1)+"月";labels["ec"+i]="学歴職歴"+(i+1)+"内容";}
-for(i=0;i<qualRows;i++){labels["qy"+i]="免許資格"+(i+1)+"年";labels["qm"+i]="免許資格"+(i+1)+"月";labels["qc"+i]="免許資格"+(i+1)+"内容";}
+for(i=0;i<qualRows;i++){labels["qy"+i]="資格免許"+(i+1)+"年";labels["qm"+i]="資格免許"+(i+1)+"月";labels["qc"+i]="資格免許"+(i+1)+"内容";}
+for(i=0;i<wishRows;i++){labels["w"+i]="本人希望"+(i+1);}
 function esc(s){return s.replace(/\\/g,"\\\\").replace(/\r?\n/g,"\\n");}
 function unesc(s){return s.replace(/\\(\\|n)/g,function(m,c){return c==="n"?"\n":"\\";});}
 function exportTxt(){
@@ -191,6 +175,12 @@ if(!confirm("入力内容をすべて消去します。よろしいですか。"
 try{localStorage.removeItem(KEY);}catch(e){}
 fields().forEach(function(el){el.innerText="";});
 });
+function fit(){
+var px=420*96/25.4,z=Math.min(1,(window.innerWidth-16)/px);
+document.getElementById("wrap").style.zoom=z;
+}
+window.addEventListener("resize",fit);
+fit();
 })();
 </script>
 </body>
