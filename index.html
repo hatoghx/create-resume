@@ -8,8 +8,8 @@
 :root{--k:#000;--bg:#e9e9ee;--w:.3mm}
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--k);font-family:"ＭＳ 明朝","MS Mincho","ＭＳ Ｐ明朝","MS PMincho","Hiragino Mincho ProN","Yu Mincho","Noto Serif JP",serif;font-size:10pt}
-.bar{position:fixed;top:0;left:0;right:0;z-index:9;display:flex;flex-wrap:wrap;gap:8px;justify-content:center;padding:10px;background:#fff;border-bottom:1px solid #ccc;font-family:sans-serif}
-.bar button{font:inherit;font-size:14px;padding:8px 18px;border:1px solid #333;background:#fff;border-radius:4px;cursor:pointer}
+.bar{position:fixed;top:0;left:0;z-index:9;display:flex;flex-wrap:nowrap;gap:6px;justify-content:flex-end;padding:6px;font-family:sans-serif;transform-origin:0 0;pointer-events:none}
+.bar button{font:inherit;font-size:13px;padding:6px 12px;border:1px solid #333;background:#fff;border-radius:4px;cursor:pointer;pointer-events:auto;white-space:nowrap;box-shadow:0 1px 4px rgba(0,0,0,.3)}
 .bar button.main{background:#111;color:#fff}
 .wrap{display:flex;flex-direction:row;width:420mm;margin:12px auto;box-shadow:0 2px 12px rgba(0,0,0,.2);background:#fff}
 .page{position:relative;width:210mm;height:297mm;background:#fff;overflow:hidden;flex:none}
@@ -43,7 +43,6 @@ body{margin:0;background:var(--bg);color:var(--k);font-family:"ＭＳ 明朝","M
 @media print{
 body{background:#fff}
 .bar{display:none}
-body{padding-top:0!important}
 .wrap{margin:0;box-shadow:none;zoom:1!important}
 }
 </style>
@@ -208,12 +207,30 @@ if(!photo.classList.contains("has"))return;
 e.preventDefault();
 if(confirm("写真を削除します。よろしいですか。")){showPhoto("");try{localStorage.removeItem(PKEY);}catch(x){}}
 });
+var W=Math.ceil(420*96/25.4),bar=document.querySelector(".bar"),touch=navigator.maxTouchPoints>0;
+function stick(){
+var vv=window.visualViewport;
+if(!vv){bar.style.width="100%";return;}
+var k=vv.scale;
+var f=.6;
+bar.style.width=(vv.width*k/f)+"px";
+bar.style.transform="translate("+vv.offsetLeft+"px,"+vv.offsetTop+"px) scale("+(f/k)+")";
+}
 function fit(){
-var px=420*96/25.4,z=Math.min(1,(window.innerWidth-16)/px);
-document.getElementById("wrap").style.zoom=z;
-document.body.style.paddingTop=document.querySelector(".bar").offsetHeight+"px";
+var vp=document.querySelector('meta[name="viewport"]');
+if(touch&&Math.min(screen.width,screen.height)<W){
+vp.setAttribute("content","width="+W);
+document.getElementById("wrap").style.zoom=1;
+}else{
+vp.setAttribute("content","width=device-width,initial-scale=1");
+document.getElementById("wrap").style.zoom=Math.min(1,(window.innerWidth-16)/W);
+}
+stick();
 }
 window.addEventListener("resize",fit);
+window.addEventListener("orientationchange",function(){setTimeout(fit,300);});
+window.addEventListener("scroll",stick);
+if(window.visualViewport){window.visualViewport.addEventListener("resize",stick);window.visualViewport.addEventListener("scroll",stick);}
 fit();
 })();
 </script>
