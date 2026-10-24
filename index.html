@@ -53,7 +53,6 @@ body{padding-top:0!important}
 <button class="main" id="print">PDFで保存・印刷</button>
 <button id="imp">TXT読込</button>
 <button id="exp">TXT保存</button>
-<button id="clear">入力を消去</button>
 <input type="file" id="file" accept=".txt,text/plain" hidden>
 </div>
 <div class="wrap" id="wrap">
@@ -180,11 +179,6 @@ r.readAsText(f,"utf-8");
 e.target.value="";
 });
 document.getElementById("print").addEventListener("click",function(){window.print();});
-document.getElementById("clear").addEventListener("click",function(){
-if(!confirm("入力内容をすべて消去します。よろしいですか。"))return;
-try{localStorage.removeItem(KEY);}catch(e){}
-fields().forEach(function(el){el.innerText="";});
-});
 var photo=document.getElementById("photo"),pimg=document.getElementById("pimg"),pfile=document.getElementById("pfile"),PKEY="create-resume-photo-v1";
 function showPhoto(src){
 if(src){pimg.src=src;pimg.hidden=false;photo.classList.add("has");}
