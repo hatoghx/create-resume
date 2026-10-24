@@ -230,12 +230,19 @@ var r=[[0,0,.84,H],[483,.84,483.84,H],[.84,0,483.84,.84],[.84,24.12,483.84,24.96
 return r.map(function(a){return "M"+a[0]+" "+a[1]+"H"+a[2]+"V"+a[3]+"H"+a[0]+"Z";}).join("");
 }
 function layout(){
-var w=document.getElementById("wrap"),z=w.style.zoom,y=229.56;
+var w=document.getElementById("wrap"),z=w.style.zoom,y=229.56,T=3*95.64,L=[],S=0;
 w.style.zoom=1;
 BX.forEach(function(id){
-var b=document.getElementById(id),f=b.querySelector(".ed");
-var bh;
-if(f.innerText.trim()===""){bh=95.64;}else{f.style.height="auto";bh=f.getBoundingClientRect().height*.75;}
+var f=document.getElementById(id).querySelector(".ed"),n=1;
+if(f.innerText.trim()!==""){
+var cs=getComputedStyle(f);
+f.style.height="auto";
+n=Math.max(1,Math.round((f.getBoundingClientRect().height-parseFloat(cs.paddingTop)-parseFloat(cs.paddingBottom))/parseFloat(cs.lineHeight)));
+}
+L.push(n);S+=n;
+});
+BX.forEach(function(id,i){
+var b=document.getElementById(id),f=b.querySelector(".ed"),bh=T*L[i]/S;
 f.style.height=bh+"pt";
 var H=24.96+bh+.84,s=b.querySelector("svg");
 s.setAttribute("height",H+"pt");
