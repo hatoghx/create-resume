@@ -5,23 +5,29 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>履歴書作成</title>
 <style>
-:root{--k:#000;--bg:#e9e9ee}
+:root{--k:#000;--bg:#303030;--pn:#2b2b2b;--ln:#1a1a1a;--fd:#1d1d1d;--bt:#545454;--bh:#656565;--tx:#d9d9d9;--ac:#4772b3;color-scheme:dark}
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--k);font-family:"ＭＳ 明朝","MS Mincho","ＭＳ Ｐ明朝","MS PMincho","Hiragino Mincho ProN","Yu Mincho","Noto Serif JP",serif;font-size:10pt}
 [hidden]{display:none!important}
-.bar{position:fixed;top:0;left:0;z-index:9;display:flex;font-family:sans-serif;transform-origin:0 0;background:#fff;border-bottom:1px solid #333}
-.bar button{flex:1 1 0;min-width:0;font:inherit;font-size:15px;padding:12px 0;border:0;border-right:1px solid #ccc;background:#fff;color:#111;cursor:pointer;white-space:nowrap}
+.bar{position:fixed;top:0;left:0;z-index:9;display:flex;font-family:sans-serif;transform-origin:0 0;background:var(--pn);border-bottom:1px solid var(--ln)}
+.bar button{flex:1 1 0;min-width:0;font:inherit;font-size:15px;padding:12px 0;border:0;border-right:1px solid var(--ln);background:var(--pn);color:var(--tx);cursor:pointer;white-space:nowrap}
 .bar button:last-child{border-right:0}
-.bar button.on{background:#111;color:#fff}
+.bar button:hover{background:#3d3d3d}
+.bar button.on{background:var(--ac);color:#fff}
 .off{position:absolute;opacity:0;pointer-events:none;height:0;overflow:hidden;top:0;left:0}
-.vw{padding:64px 16px 24px;font-family:sans-serif;color:#111}
-#tx{display:block;width:100%;max-width:900px;margin:0 auto;min-height:calc(100vh - 100px);padding:12px;font:14px/1.6 "Yu Gothic","Meiryo",sans-serif;border:1px solid #888;background:#fff;color:#111;resize:vertical}
+.vw{padding:64px 16px 24px;font-family:sans-serif;color:var(--tx)}
+#tx{display:block;width:100%;max-width:900px;margin:0 auto;min-height:calc(100vh - 100px);padding:12px;font:14px/1.6 "Yu Gothic","Meiryo",sans-serif;border:1px solid var(--ln);border-radius:4px;background:var(--fd);color:var(--tx);resize:vertical;outline:none}
+#tx:focus,.set input:focus{border-color:var(--ac)}
 .set{max-width:560px;margin:0 auto;display:flex;flex-direction:column;gap:12px}
-.set input{font:inherit;font-size:16px;padding:10px;border:1px solid #888;background:#fff;color:#111;width:100%}
-.set button{font:inherit;font-size:16px;padding:12px;border:1px solid #111;background:#111;color:#fff;cursor:pointer}
-.wrap{display:flex;flex-direction:row;width:1190.64pt;margin:12px auto;box-shadow:0 2px 12px rgba(0,0,0,.2);background:#fff}
+.set input{font:inherit;font-size:16px;padding:10px;border:1px solid var(--ln);border-radius:4px;background:var(--fd);color:var(--tx);width:100%;outline:none}
+.set button{font:inherit;font-size:16px;padding:12px;border:1px solid var(--ln);border-radius:4px;background:var(--bt);color:#fff;cursor:pointer}
+.set button:hover{background:var(--bh)}
+.wrap{display:flex;flex-direction:row;width:1190.64pt;margin:52px auto 12px;box-shadow:0 2px 12px rgba(0,0,0,.5);background:#fff}
 .page{position:relative;width:595.32pt;height:841.92pt;background:#fff;overflow:hidden;flex:none}
 .page+.page{transform:translateX(-0.18pt)}
+.wrap.stk{flex-direction:column;width:595.32pt;gap:12px;background:transparent;box-shadow:none}
+.wrap.stk .page{box-shadow:0 2px 12px rgba(0,0,0,.5)}
+.wrap.stk .page+.page{transform:none}
 .sv{position:absolute;left:0;top:0;display:block;pointer-events:none}
 .tk{fill:#000;stroke:#000;stroke-width:.4px;vector-effect:non-scaling-stroke}
 .tn{fill:#000;stroke:#808080;stroke-width:.4px;vector-effect:non-scaling-stroke}
@@ -44,6 +50,9 @@ body{margin:0;background:var(--bg);color:var(--k);font-family:"ＭＳ 明朝","M
 @page{size:A3 landscape;margin:0}
 @media print{
 .vw{display:none!important}
+.wrap.stk{flex-direction:row!important;width:1190.64pt!important;gap:0!important}
+.wrap.stk .page{box-shadow:none!important}
+.wrap.stk .page+.page{transform:translateX(-0.18pt)!important}
 .wrap.off{position:static!important;opacity:1!important;pointer-events:auto!important;height:auto!important;overflow:visible!important}
 .tk,.tn{stroke:none}
 body{background:#fff}
@@ -388,7 +397,7 @@ if(!photo.classList.contains("has"))return;
 e.preventDefault();
 if(confirm("写真を削除します。よろしいですか。")){showPhoto("");try{localStorage.removeItem(PKEY);}catch(x){}}
 });
-var W=Math.ceil(1190.64*96/72),bar=document.querySelector(".bar"),touch=navigator.maxTouchPoints>0;
+var bar=document.querySelector(".bar");
 function stick(){
 var vv=window.visualViewport;
 if(!vv){bar.style.width="100%";return;}
@@ -398,14 +407,11 @@ bar.style.width=(vv.width*k/f)+"px";
 bar.style.transform="translate("+vv.offsetLeft+"px,"+vv.offsetTop+"px) scale("+(f/k)+")";
 }
 function fit(){
-var vp=document.querySelector('meta[name="viewport"]');
-if(touch&&curView==="resume"&&Math.min(screen.width,screen.height)<W){
-vp.setAttribute("content","width="+W);
-document.getElementById("wrap").style.zoom=1;
-}else{
+var vp=document.querySelector('meta[name="viewport"]'),w=document.getElementById("wrap"),iw=window.innerWidth;
 vp.setAttribute("content","width=device-width,initial-scale=1");
-document.getElementById("wrap").style.zoom=Math.min(1,(window.innerWidth-16)/W);
-}
+var side=Math.min(1,(iw-16)/1587.52),stk=side<.6;
+w.classList.toggle("stk",stk);
+w.style.zoom=stk?Math.min(1,(iw-16)/793.76):side;
 stick();
 }
 window.addEventListener("resize",fit);
