@@ -2,11 +2,12 @@
 <html lang="ja">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
 <title>履歴書作成</title>
 <style>
 :root{--k:#000;--bg:#303030;--pn:#2b2b2b;--ln:#1a1a1a;--fd:#1d1d1d;--bt:#545454;--bh:#656565;--tx:#d9d9d9;--ac:#4772b3;color-scheme:dark}
 *{box-sizing:border-box}
+html,body{touch-action:pan-x pan-y}
 body{margin:0;background:var(--bg);color:var(--k);font-family:"ＭＳ 明朝","MS Mincho","ＭＳ Ｐ明朝","MS PMincho","Hiragino Mincho ProN","Yu Mincho","Noto Serif JP",serif;font-size:10pt}
 [hidden]{display:none!important}
 .bar{position:fixed;top:0;left:0;right:0;z-index:9;display:flex;font-family:sans-serif;background:var(--pn);border-bottom:1px solid var(--ln);padding:env(safe-area-inset-top,0px) env(safe-area-inset-right,0px) 0 env(safe-area-inset-left,0px)}
@@ -15,7 +16,7 @@ body{margin:0;background:var(--bg);color:var(--k);font-family:"ＭＳ 明朝","M
 .bar button:hover{background:#3d3d3d}
 .bar button.on{background:var(--ac);color:#fff}
 .off{position:absolute;opacity:0;pointer-events:none;height:0;overflow:hidden;top:0;left:0}
-.vw{padding:64px 16px 24px;font-family:sans-serif;color:var(--tx);touch-action:pan-x pan-y}
+.vw{padding:64px 16px 24px;font-family:sans-serif;color:var(--tx)}
 #tx{display:block;width:100%;max-width:900px;margin:0 auto;min-height:calc(100vh - 100px);min-height:calc(100dvh - 100px);padding:12px;font:16px/1.6 "Yu Gothic","Meiryo",sans-serif;border:1px solid var(--ln);border-radius:4px;background:var(--fd);color:var(--tx);resize:vertical;outline:none}
 #tx:focus,.set input:focus{border-color:var(--ac)}
 .set{max-width:560px;margin:0 auto;display:flex;flex-direction:column;gap:12px}
@@ -397,7 +398,7 @@ if(confirm("写真を削除します。よろしいですか。")){showPhoto("")
 });
 function fit(){
 var vp=document.querySelector('meta[name="viewport"]');
-vp.setAttribute("content",curView==="resume"?"width=device-width,initial-scale=1":"width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no");
+vp.setAttribute("content","width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no");
 document.getElementById("wrap").style.zoom=Math.min(1,(window.innerWidth-16)/1587.52);
 }
 window.addEventListener("resize",fit);
