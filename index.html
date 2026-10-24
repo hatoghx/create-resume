@@ -306,7 +306,7 @@ function showPhoto(src){
 if(src){pimg.src=src;pimg.hidden=false;photo.classList.add("has");phs.style.display="none";}
 else{pimg.removeAttribute("src");pimg.hidden=true;photo.classList.remove("has");phs.style.display="";}
 }
-try{showPhoto(localStorage.getItem(PKEY)||"");}catch(e){}
+try{localStorage.removeItem(PKEY);}catch(e){}
 photo.addEventListener("click",function(e){if(e.target!==pfile)pfile.click();});
 pfile.addEventListener("click",function(e){e.stopPropagation();});
 pfile.addEventListener("change",function(e){
@@ -320,7 +320,7 @@ c.getContext("2d").drawImage(im,0,0,c.width,c.height);
 var d=c.toDataURL("image/jpeg",.92);
 URL.revokeObjectURL(url);
 showPhoto(d);
-try{localStorage.setItem(PKEY,d);}catch(x){}
+
 };
 im.src=url;
 e.target.value="";
