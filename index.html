@@ -175,7 +175,7 @@ body{background:#fff}
 <span class="ed" style="left:113.4pt;top:197.88pt;width:25.32pt;height:23.64pt;" contenteditable data-k="qm4"></span>
 <span class="ed" style="left:139.56pt;top:197.88pt;width:405.36pt;height:23.64pt;" contenteditable data-k="qc4"></span>
 <span class="ed" style="left:62.76pt;top:254.52pt;width:482.16pt;height:95.64pt;line-height:1.25" contenteditable data-k="motive"></span>
-<span class="ed" style="left:62.76pt;top:383.16pt;width:482.16pt;height:95.64pt;font-size:9pt;line-height:1.25" contenteditable data-k="pr"></span>
+<span class="ed" style="left:62.76pt;top:383.16pt;width:482.16pt;height:95.64pt;line-height:1.25" contenteditable data-k="pr"></span>
 <span class="ed" style="left:62.76pt;top:511.8pt;width:482.16pt;height:95.64pt;line-height:1.25" contenteditable data-k="skill"></span>
 <span class="ed" style="left:62.76pt;top:641.28pt;width:482.16pt;height:22.8pt;" contenteditable data-k="w0"></span>
 <span class="ed" style="left:62.76pt;top:664.2pt;width:482.16pt;height:24pt;" contenteditable data-k="w1"></span>
@@ -203,7 +203,7 @@ if(e.target&&e.target.isContentEditable){e.preventDefault();var t=(e.clipboardDa
 });
 var SINGLE=[["dy","作成年"],["dm","作成月"],["dd","作成日"],["furi","ふりがな"],["name","氏名"],["birth","生年月日"],["sex","性別"],["afuri","住所ふりがな"],["addr","現住所"],["tel","電話"],["mail","E-mail"],["cfuri","連絡先ふりがな"],["alt","連絡先"],["ctel","連絡先電話"],["cmail","連絡先E-mail"]];
 var TAIL=[["motive","志望の動機"],["pr","自己PR"],["skill","趣味・特技など"]];
-var ALIAS={"志望動機":"志望の動機","メール":"E-mail","email":"E-mail","Email":"E-mail","資格免許":"資格・免許","資格":"資格・免許","本人希望記入欄":"本人希望","趣味・特技":"趣味・特技など"};
+var ALIAS={"TEL":"電話","連絡ふりがな":"連絡先ふりがな","連絡TEL":"連絡先電話","連絡E-mail":"連絡先E-mail","志望動機":"志望の動機","メール":"E-mail","email":"E-mail","Email":"E-mail","資格免許":"資格・免許","資格":"資格・免許","本人希望記入欄":"本人希望","趣味・特技":"趣味・特技など"};
 function unesc(s){return s.replace(/\\(\\|n)/g,function(m,c){return c==="n"?"\n":"\\";});}
 function byKey(k){return document.querySelector('[data-k="'+k+'"]');}
 function val(k){var el=byKey(k);return el?el.innerText.replace(/\n+$/,""):"";}
@@ -238,11 +238,18 @@ while(s.lines.length&&s.lines[0].trim()==="")s.lines.shift();
 });
 return{secs:secs,legacy:legacy};
 }
+function nums(s){return s.split(/[,、]/).map(function(x){return x.trim();});}
 function applyImport(p){
 var sec={},n;
 p.secs.forEach(function(x){sec[x.name]=x;});
 Object.keys(p.legacy).forEach(function(k){setv(k,p.legacy[k]);});
 SINGLE.concat(TAIL).forEach(function(a){if(sec[a[1]])setv(a[0],sec[a[1]].lines.join("\n"));});
+var d=sec["作成年月日"];
+if(d){var dn=nums(d.lines[0]||"");setv("dy",dn[0]||"");setv("dm",dn[1]||"");setv("dd",dn[2]||"");}
+var b=sec["生年月日と満年齢"];
+if(b){var bn=nums(b.lines[0]||"");setv("birth",bn.length>3?bn[0]+"年　　"+bn[1]+"月　　"+bn[2]+"日生　　（満"+bn[3]+"歳）":"");}
+var pz=sec["郵便"],ad=sec["現住所"];
+if(pz||ad){setv("addr",(pz?pz.lines.slice(0,1):[]).concat(ad?ad.lines:[]).join("\n"));}
 var edu=sec["学歴"],work=sec["職歴"];
 if(edu||work){
 var rows=[];
@@ -260,8 +267,28 @@ alignAll();save();
 function ent(y,m,c){return (y||"null")+", "+(m||"null")+", "+c;}
 function buildText(){
 var o=[],n;
-function sec(t,v){o.push("["+t+"]");if(v!=="")o.push(v);o.push("");}
-SINGLE.forEach(function(a){sec(a[1],val(a[0]));});
+function sec(t,v){o.push("["+t+"]");if(v!=="")o.push(v);}
+function one(t,k){sec(t,val(k));}
+function gap(){o.push("");}
+var dd=[val("dy"),val("dm"),val("dd")].map(function(x){return x.trim();});
+sec("作成年月日",dd.join("")===""?"":dd.join(", "));
+one("ふりがな","furi");
+one("氏名","name");
+var bm=val("birth").match(/(\d+)\D+(\d+)\D+(\d+)\D+(\d+)/);
+sec("生年月日と満年齢",bm?bm.slice(1,5).join(", "):"");
+one("性別","sex");
+one("住所ふりがな","afuri");
+var al=val("addr").split("\n"),pc="";
+if(/^\d{3}-?\d{4}$/.test((al[0]||"").trim()))pc=al.shift().trim();
+sec("郵便",pc);
+sec("現住所",al.join("\n"));
+one("TEL","tel");
+one("E-mail","mail");
+one("連絡ふりがな","cfuri");
+one("連絡先","alt");
+one("連絡TEL","ctel");
+one("連絡E-mail","cmail");
+gap();
 var st="学歴",L={"学歴":[],"職歴":[]};
 for(n=0;n<eduRows;n++){
 var y=val("ey"+n).trim(),m=val("em"+n).trim(),c=val("ec"+n).trim();
@@ -271,10 +298,12 @@ L[st].push(ent(y,m,c));
 }
 sec("学歴",L["学歴"].join("\n"));
 sec("職歴",L["職歴"].join("\n"));
+gap();
 var Q=[];
 for(n=0;n<qualRows;n++){var qy=val("qy"+n).trim(),qm=val("qm"+n).trim(),qc=val("qc"+n).trim();if(qy||qm||qc)Q.push(ent(qy,qm,qc));}
 sec("資格・免許",Q.join("\n"));
-TAIL.forEach(function(a){sec(a[1],val(a[0]));});
+gap();
+TAIL.forEach(function(a){sec(a[1],val(a[0]));gap();});
 var W=[];
 for(n=0;n<wishRows;n++){var t=val("w"+n).trim();if(t)W.push(t);}
 sec("本人希望",W.join("\n"));
