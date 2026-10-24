@@ -89,10 +89,11 @@ body{background:#fff}
 </svg>
 <span class="ed vc fu" style="left:54.6pt;top:109.56pt;width:317.16pt;height:23.64pt;padding-left:63.04pt;font-size:8pt" contenteditable data-k="furi"></span>
 <span class="ed vc" style="left:54.6pt;top:133.32pt;width:317.16pt;height:39.72pt;padding-left:63.04pt;font-size:16pt" contenteditable data-k="name"></span>
-<span class="ed vc" style="left:309pt;top:173.88pt;width:62.76pt;height:23.52pt;" contenteditable data-k="sex"></span>
+<span class="ed vc" style="left:309pt;top:181.2pt;width:62.76pt;height:16.2pt;text-align:center;padding-left:0;padding-right:0" contenteditable data-k="sex"></span>
 <span class="ed vc fu" style="left:54.6pt;top:198.24pt;width:370.68pt;height:23.64pt;padding-left:63.04pt;font-size:8pt" contenteditable data-k="afuri"></span>
-<span class="ed vc" style="left:426.12pt;top:198.24pt;width:113.76pt;height:23.64pt;padding-left:26pt;padding-right:0;font-size:8pt;line-height:1.3" contenteditable data-k="tel"></span>
-<span class="ed vc" style="left:54.6pt;top:222pt;width:370.68pt;height:47.76pt;padding-left:63.04pt;line-height:1.25" contenteditable data-k="addr"></span>
+<span class="ed vc" style="left:426.12pt;top:198.24pt;width:113.76pt;height:23.64pt;padding-left:26pt;padding-right:0;font-size:10pt;line-height:1.15" contenteditable data-k="tel"></span>
+<span class="ed vc" style="left:54.6pt;top:222pt;width:370.68pt;height:15.5pt;padding-left:64pt" contenteditable data-k="zip"></span>
+<span class="ed vc" style="left:54.6pt;top:241pt;width:370.68pt;height:28.76pt;padding-left:64pt;line-height:1.25" contenteditable data-k="addr"></span>
 <span class="ed vc" style="left:426.12pt;top:222pt;width:113.76pt;height:47.76pt;padding-left:2pt;padding-right:0;font-size:7.5pt;line-height:1.35" contenteditable data-k="mail"></span>
 <span class="ed vc fu" style="left:54.6pt;top:270.6pt;width:370.68pt;height:23.64pt;padding-left:63.04pt;font-size:8pt" contenteditable data-k="cfuri"></span>
 <span class="ed vc" style="left:426.12pt;top:270.6pt;width:113.76pt;height:23.64pt;padding-left:34.4pt" contenteditable data-k="ctel"></span>
@@ -196,7 +197,7 @@ document.addEventListener("input",function(e){align(e.target);layout();save();})
 document.addEventListener("paste",function(e){
 if(e.target&&e.target.isContentEditable){e.preventDefault();var t=(e.clipboardData||window.clipboardData).getData("text");document.execCommand("insertText",false,t);}
 });
-var SINGLE=[["furi","ふりがな"],["name","氏名"],["sex","性別"],["afuri","住所ふりがな"],["tel","TEL"],["mail","E-mail"],["cfuri","連絡ふりがな"],["alt","連絡先"],["ctel","連絡TEL"],["cmail","連絡E-mail"]];
+var SINGLE=[["furi","ふりがな"],["name","氏名"],["sex","性別"],["afuri","住所ふりがな"],["zip","郵便"],["addr","現住所"],["tel","TEL"],["mail","E-mail"],["cfuri","連絡ふりがな"],["alt","連絡先"],["ctel","連絡TEL"],["cmail","連絡E-mail"]];
 var TAIL=[["motive","志望の動機"],["pr","自己PR"],["study","学生時代の取り組み"]];
 function byKey(k){return document.querySelector('[data-k="'+k+'"]');}
 function val(k){var el=byKey(k);return el?el.innerText.replace(/\n+$/,""):"";}
@@ -254,8 +255,6 @@ var d=sec["作成年月日"];
 if(d){var dn=nums(d.lines[0]||"");setv("dy",dn[0]||"");setv("dm",dn[1]||"");setv("dd",dn[2]||"");}
 var b=sec["生年月日と満年齢"];
 if(b){var bn=nums(b.lines[0]||"");setv("birth",bn.length>3?bn[0]+"年　　"+bn[1]+"月　　"+bn[2]+"日生　　（満"+bn[3]+"歳）":"");}
-var pz=sec["郵便"],ad=sec["現住所"];
-if(pz||ad){setv("addr",(pz?pz.lines.slice(0,1):[]).concat(ad?ad.lines:[]).join("\n"));}
 var edu=sec["学歴"],work=sec["職歴"];
 if(edu||work){
 var rows=[];
@@ -284,10 +283,8 @@ var bm=val("birth").match(/(\d+)\D+(\d+)\D+(\d+)\D+(\d+)/);
 sec("生年月日と満年齢",bm?bm.slice(1,5).join(", "):"");
 one("性別","sex");
 one("住所ふりがな","afuri");
-var al=val("addr").split("\n"),pc="";
-if(/^\d{3}-?\d{4}$/.test((al[0]||"").trim()))pc=al.shift().trim();
-sec("郵便",pc);
-sec("現住所",al.join("\n"));
+one("郵便","zip");
+one("現住所","addr");
 one("TEL","tel");
 one("E-mail","mail");
 one("連絡ふりがな","cfuri");
