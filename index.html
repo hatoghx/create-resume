@@ -148,7 +148,7 @@ body{background:#fff}
 <span class="ed vc" style="left:105.24pt;top:736.56pt;width:25.32pt;height:23.64pt;" contenteditable data-k="em15"></span>
 <span class="ed vc" style="left:131.4pt;top:736.56pt;width:408.48pt;height:23.64pt;" contenteditable data-k="ec15"></span>
 <div class="a dt" style="left:0;top:0;transform:translate(254.64pt,90.556pt) scale(.009967)"><span class="il" style="width:2648.741pt" contenteditable data-k="dy"></span>年<span class="il" style="width:1986.556pt" contenteditable data-k="dm"></span>月<span class="il" style="width:1986.556pt" contenteditable data-k="dd"></span>日現在</div>
-<span class="a bh" style="left:0;top:0;transform:translate(138pt,180.316pt) scale(.009967)" contenteditable data-k="birth">年　　　　　月　　　　　日生　（満　　　歳）　</span>
+<span class="a bh" style="left:0;top:0;width:25355.674pt;text-align:center;transform:translate(55.44pt,180.316pt) scale(.009967)" contenteditable data-k="birth">年　　　　　月　　　　　日生　（満　　　歳）　</span>
 <div class="a photo" id="photo" style="left:405pt;top:84.96pt;width:79.08pt;height:105.6pt"><img id="pimg" alt="" hidden><input type="file" id="pfile" accept="image/*" hidden></div>
 </section>
 <section class="page">
@@ -254,7 +254,7 @@ SINGLE.concat(TAIL).forEach(function(a){if(sec[a[1]])setv(a[0],sec[a[1]].lines.j
 var d=sec["作成年月日"];
 if(d){var dn=nums(d.lines[0]||"");setv("dy",dn[0]||"");setv("dm",dn[1]||"");setv("dd",dn[2]||"");}
 var b=sec["生年月日と満年齢"];
-if(b){var bn=nums(b.lines[0]||"");setv("birth",bn.length>3?bn[0]+"年　　"+bn[1]+"月　　"+bn[2]+"日生　　（満"+bn[3]+"歳）":"");}
+if(b){var bn=nums(b.lines[0]||"");setv("birth",bn.length>3?bn[0]+" 年 "+bn[1]+" 月 "+bn[2]+" 日生 （満 "+bn[3]+" 歳）":"");}
 var edu=sec["学歴"],work=sec["職歴"];
 if(edu||work){
 var rows=[];
