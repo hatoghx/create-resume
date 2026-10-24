@@ -15,7 +15,6 @@ body{margin:0;background:var(--bg);color:var(--k);font-family:"ＭＳ 明朝","M
 .page{position:relative;width:210mm;height:297mm;background:#fff;overflow:hidden;flex:none}
 .a{position:absolute}
 .ed{display:block;width:100%;height:100%;padding:.6mm 1.5mm;outline:none;line-height:1.45;white-space:pre-wrap;overflow:hidden}
-.ed:focus{background:#fffbe0}
 .il{display:inline-block;min-width:9mm;text-align:center;outline:none}
 .g{border-top:var(--w) solid var(--k);border-left:var(--w) solid var(--k)}
 .c{border-right:var(--w) solid var(--k);border-bottom:var(--w) solid var(--k);position:relative;min-width:0}
@@ -31,6 +30,10 @@ body{margin:0;background:var(--bg);color:var(--k);font-family:"ＭＳ 明朝","M
 .date .il{min-width:12mm}
 .photo{left:141.1mm;top:29.7mm;width:28mm;height:36.5mm;border:.25mm dashed #666;font-size:6.5pt;line-height:1.5;color:#444;padding:3mm 1.5mm;text-align:center}
 .photo p{margin:0;text-align:left}
+.photo{cursor:pointer;overflow:hidden}
+.photo img{position:absolute;left:0;top:0;width:100%;height:100%;object-fit:cover;display:block}
+.photo.has{border:none;padding:0}
+.photo.has #ph{display:none}
 .note{left:19mm;top:267.8mm;font-size:7pt}
 .y{width:18mm}
 .m{width:9mm}
@@ -41,7 +44,6 @@ body{margin:0;background:var(--bg);color:var(--k);font-family:"ＭＳ 明朝","M
 body{background:#fff}
 .bar{display:none}
 .wrap{margin:0;box-shadow:none;zoom:1!important}
-.ed:focus{background:none}
 }
 </style>
 </head>
@@ -57,10 +59,14 @@ body{background:#fff}
 <section class="page">
 <div class="a ttl">履歴書</div>
 <div class="a date"><span class="il" contenteditable data-k="dy"></span>年<span class="il" contenteditable data-k="dm"></span>月<span class="il" contenteditable data-k="dd"></span>日現在</div>
-<div class="a photo">
+<div class="a photo" id="photo">
+<div id="ph">
 <p style="text-align:center">写真をはる位置</p><p>&nbsp;</p>
 <p style="text-align:center">写真をはる必要が<br>ある場合</p>
 <p>1. 縦　36〜40mm<br>　 横　24〜30mm<br>2. 本人単身胸から上<br>3. 裏面のりづけ</p>
+</div>
+<img id="pimg" alt="" hidden>
+<input type="file" id="pfile" accept="image/*" hidden>
 </div>
 <div class="a g" style="left:18.7mm;top:37.9mm;width:111mm">
 <div class="c" style="height:8.4mm"><span class="lb s">ふりがな</span><span class="ed fu" style="padding-left:22mm" contenteditable data-k="furi"></span></div>
@@ -95,14 +101,17 @@ body{background:#fff}
 <div class="c hdc" style="letter-spacing:0">年</div><div class="c hdc" style="letter-spacing:0">月</div><div class="c hdc">資格・免許</div>
 </div>
 </div>
-<div class="a g box" style="left:21.7mm;top:80.1mm;width:168.5mm;height:42mm">
-<div class="c" style="height:100%"><span class="lb">志望の動機</span><span class="ed" style="margin-top:8.4mm;height:calc(100% - 8.4mm);border-top:var(--w) solid var(--k)" contenteditable data-k="motive"></span></div>
+<div class="a g" style="left:21.7mm;top:80.1mm;width:168.5mm">
+<div class="c" style="height:8.4mm"><span class="lb">志望の動機</span></div>
+<div class="c" style="height:33.6mm"><span class="ed" contenteditable data-k="motive"></span></div>
 </div>
-<div class="a g box" style="left:21.7mm;top:125.1mm;width:168.5mm;height:42.2mm">
-<div class="c" style="height:100%"><span class="lb">自己PR</span><span class="ed" style="margin-top:8.4mm;height:calc(100% - 8.4mm);border-top:var(--w) solid var(--k)" contenteditable data-k="pr"></span></div>
+<div class="a g" style="left:21.7mm;top:125.1mm;width:168.5mm">
+<div class="c" style="height:8.4mm"><span class="lb">自己PR</span></div>
+<div class="c" style="height:33.8mm"><span class="ed" contenteditable data-k="pr"></span></div>
 </div>
-<div class="a g box" style="left:21.7mm;top:170mm;width:168.5mm;height:41.9mm">
-<div class="c" style="height:100%"><span class="lb">趣味・特技など</span><span class="ed" style="margin-top:8.4mm;height:calc(100% - 8.4mm);border-top:var(--w) solid var(--k)" contenteditable data-k="skill"></span></div>
+<div class="a g" style="left:21.7mm;top:170mm;width:168.5mm">
+<div class="c" style="height:8.4mm"><span class="lb">趣味・特技など</span></div>
+<div class="c" style="height:33.5mm"><span class="ed" contenteditable data-k="skill"></span></div>
 </div>
 <div class="a g" id="wish" style="left:21.7mm;top:214.8mm;width:168.5mm">
 <div class="c hdc" style="height:8.4mm;justify-content:flex-start;padding-left:4mm;letter-spacing:0;font-size:9pt">本人希望記入欄（特に給料・職種・勤務時間・勤務地・その他についての希望などがあれば記入）</div>
@@ -174,6 +183,35 @@ document.getElementById("clear").addEventListener("click",function(){
 if(!confirm("入力内容をすべて消去します。よろしいですか。"))return;
 try{localStorage.removeItem(KEY);}catch(e){}
 fields().forEach(function(el){el.innerText="";});
+});
+var photo=document.getElementById("photo"),pimg=document.getElementById("pimg"),pfile=document.getElementById("pfile"),PKEY="create-resume-photo-v1";
+function showPhoto(src){
+if(src){pimg.src=src;pimg.hidden=false;photo.classList.add("has");}
+else{pimg.removeAttribute("src");pimg.hidden=true;photo.classList.remove("has");}
+}
+try{showPhoto(localStorage.getItem(PKEY)||"");}catch(e){}
+photo.addEventListener("click",function(e){if(e.target!==pfile)pfile.click();});
+pfile.addEventListener("click",function(e){e.stopPropagation();});
+pfile.addEventListener("change",function(e){
+var f=e.target.files&&e.target.files[0];
+if(!f)return;
+var url=URL.createObjectURL(f),im=new Image();
+im.onload=function(){
+var r=Math.min(1,900/Math.max(im.width,im.height)),c=document.createElement("canvas");
+c.width=Math.round(im.width*r);c.height=Math.round(im.height*r);
+c.getContext("2d").drawImage(im,0,0,c.width,c.height);
+var d=c.toDataURL("image/jpeg",.92);
+URL.revokeObjectURL(url);
+showPhoto(d);
+try{localStorage.setItem(PKEY,d);}catch(x){}
+};
+im.src=url;
+e.target.value="";
+});
+photo.addEventListener("contextmenu",function(e){
+if(!photo.classList.contains("has"))return;
+e.preventDefault();
+if(confirm("写真を削除します。よろしいですか。")){showPhoto("");try{localStorage.removeItem(PKEY);}catch(x){}}
 });
 function fit(){
 var px=420*96/25.4,z=Math.min(1,(window.innerWidth-16)/px);
