@@ -396,17 +396,6 @@ var vp=document.querySelector('meta[name="viewport"]');
 vp.setAttribute("content",curView==="resume"?"width=device-width,initial-scale=1":"width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no");
 document.getElementById("wrap").style.zoom=Math.min(1,(window.innerWidth-16)/1587.52);
 }
-function pinBar(){
-var b=document.getElementById("bar"),v=window.visualViewport;
-if(!v){return;}
-var k=1/v.scale;
-b.style.transformOrigin="0 0";
-b.style.right="auto";
-b.style.width=(v.width*v.scale)+"px";
-b.style.transform=v.scale===1&&!v.offsetLeft&&!v.offsetTop?"":"translate("+v.offsetLeft+"px,"+v.offsetTop+"px) scale("+k+")";
-}
-if(window.visualViewport){window.visualViewport.addEventListener("resize",pinBar);window.visualViewport.addEventListener("scroll",pinBar);}
-window.addEventListener("scroll",pinBar);
 window.addEventListener("resize",fit);
 window.addEventListener("orientationchange",function(){setTimeout(fit,300);});
 tx.value=buildText();
