@@ -8,7 +8,7 @@
 :root{--k:#000;--bg:#e9e9ee;--w:.3mm}
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--k);font-family:"ＭＳ 明朝","MS Mincho","ＭＳ Ｐ明朝","MS PMincho","Hiragino Mincho ProN","Yu Mincho","Noto Serif JP",serif;font-size:10pt}
-.bar{position:sticky;top:0;z-index:9;display:flex;flex-wrap:wrap;gap:8px;justify-content:center;padding:10px;background:#fff;border-bottom:1px solid #ccc;font-family:sans-serif}
+.bar{position:fixed;top:0;left:0;right:0;z-index:9;display:flex;flex-wrap:wrap;gap:8px;justify-content:center;padding:10px;background:#fff;border-bottom:1px solid #ccc;font-family:sans-serif}
 .bar button{font:inherit;font-size:14px;padding:8px 18px;border:1px solid #333;background:#fff;border-radius:4px;cursor:pointer}
 .bar button.main{background:#111;color:#fff}
 .wrap{display:flex;flex-direction:row;width:420mm;margin:12px auto;box-shadow:0 2px 12px rgba(0,0,0,.2);background:#fff}
@@ -43,6 +43,7 @@ body{margin:0;background:var(--bg);color:var(--k);font-family:"ＭＳ 明朝","M
 @media print{
 body{background:#fff}
 .bar{display:none}
+body{padding-top:0!important}
 .wrap{margin:0;box-shadow:none;zoom:1!important}
 }
 </style>
@@ -216,6 +217,7 @@ if(confirm("写真を削除します。よろしいですか。")){showPhoto("")
 function fit(){
 var px=420*96/25.4,z=Math.min(1,(window.innerWidth-16)/px);
 document.getElementById("wrap").style.zoom=z;
+document.body.style.paddingTop=document.querySelector(".bar").offsetHeight+"px";
 }
 window.addEventListener("resize",fit);
 fit();
