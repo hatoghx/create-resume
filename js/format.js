@@ -5,7 +5,7 @@ Resume.format = (function () {
   var WISH_ROWS = 5;
 
   var SINGLE = [
-    ["furi", "氏名ふりがな", "ふりがな"],
+    ["furi", "氏名ふりがな"],
     ["name", "氏名"],
     ["sex", "性別"],
     ["afuri", "住所ふりがな"],
@@ -13,11 +13,11 @@ Resume.format = (function () {
     ["addr", "現住所"],
     ["tel", "TEL"],
     ["mail", "E-mail"],
-    ["cfuri", "連絡先ふりがな", "連絡ふりがな"],
+    ["cfuri", "連絡先ふりがな"],
     ["czip", "連絡先郵便"],
     ["alt", "連絡先"],
-    ["ctel", "連絡先TEL", "連絡TEL"],
-    ["cmail", "連絡先E-mail", "連絡E-mail"]
+    ["ctel", "連絡先TEL"],
+    ["cmail", "連絡先E-mail"]
   ];
 
   var LONG = [
@@ -26,8 +26,8 @@ Resume.format = (function () {
     ["study", "03", "学生時代の取り組み"]
   ];
 
-  var NAME_QUAL = ["資格等", "資格・免許"];
-  var NAME_WISH = ["本人希望記入欄", "本人希望"];
+  var NAME_QUAL = "資格等";
+  var NAME_WISH = "本人希望記入欄";
 
   function nullToEmpty(s) {
     s = (s || "").trim();
@@ -77,15 +77,6 @@ Resume.format = (function () {
     return sections;
   }
 
-  function pick(sec, names) {
-    for (var i = 0; i < names.length; i++) {
-      if (sec[names[i]]) {
-        return sec[names[i]];
-      }
-    }
-    return null;
-  }
-
   function applyRows(prefixes, count, rows) {
     for (var n = 0; n < count; n++) {
       var r = rows[n] || { y: "", m: "", c: "" };
@@ -124,7 +115,7 @@ Resume.format = (function () {
   }
 
   function applyQualifications(sec) {
-    var q = pick(sec, NAME_QUAL);
+    var q = sec[NAME_QUAL];
     if (!q) {
       return;
     }
@@ -132,7 +123,7 @@ Resume.format = (function () {
   }
 
   function applyWishes(sec) {
-    var w = pick(sec, NAME_WISH);
+    var w = sec[NAME_WISH];
     if (!w) {
       return;
     }
@@ -167,13 +158,13 @@ Resume.format = (function () {
       sec[x.name] = x;
     });
     SINGLE.forEach(function (a) {
-      var s = pick(sec, a.slice(1));
+      var s = sec[a[1]];
       if (s) {
         f.set(a[0], s.lines.join("\n"));
       }
     });
     LONG.forEach(function (a) {
-      var s = pick(sec, [a[1] + "-B", a[2]]);
+      var s = sec[a[1] + "-B"];
       if (s) {
         f.set(a[0], s.lines.join("\n"));
       }
@@ -249,7 +240,7 @@ Resume.format = (function () {
         quals.push(entryText(qy, qm, qc));
       }
     }
-    section(NAME_QUAL[0], quals.join("\n"));
+    section(NAME_QUAL, quals.join("\n"));
     gap();
 
     LONG.forEach(function (a) {
@@ -265,7 +256,7 @@ Resume.format = (function () {
         wishes.push(t);
       }
     }
-    section(NAME_WISH[0], wishes.join("\n"));
+    section(NAME_WISH, wishes.join("\n"));
     return o.join("\r\n");
   }
 

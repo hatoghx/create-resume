@@ -3,7 +3,6 @@ window.Resume = {};
 Resume.fields = (function () {
   var KEY = "create-resume-v3";
   var BIRTH_EMPTY = "年　　　　　月　　　　　日生　（満　　　歳）　";
-  var BIRTH_OLD_EMPTY = "年　　　月　　　日生（満　　歳）";
 
   function list() {
     return Array.prototype.slice.call(document.querySelectorAll("[data-k]"));
@@ -56,9 +55,6 @@ Resume.fields = (function () {
       list().forEach(function (el) {
         var v = saved[el.dataset.k];
         if (v === undefined) {
-          return;
-        }
-        if (el.dataset.k === "birth" && v === BIRTH_OLD_EMPTY) {
           return;
         }
         el.innerText = v;

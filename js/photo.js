@@ -33,9 +33,6 @@ Resume.photo = (function () {
 
   function restore() {
     try {
-      localStorage.removeItem(KEY);
-    } catch (e) {}
-    try {
       var saved = sessionStorage.getItem(KEY);
       if (saved) {
         show(saved);
