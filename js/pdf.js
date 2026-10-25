@@ -2,7 +2,6 @@ Resume.pdf = (function () {
   var PAGE_W = 1190.64;
   var PAGE_H = 841.92;
   var PX_TO_PT = 0.75;
-  var FONT_FILE = "font/ipam.ttf";
 
   function parseColor(s) {
     var m = (s || "").match(/rgba?\(([^)]+)\)/);
@@ -125,7 +124,6 @@ Resume.pdf = (function () {
         continue;
       }
       var cs = getComputedStyle(parent);
-      var family = cs.fontFamily.split(",")[0].replace(/["']/g, "").trim();
       var color = parseColor(cs.color) || [0, 0, 0];
       var clips = clipRects(node);
       for (var i = 0; i < node.nodeValue.length; i++) {
@@ -141,7 +139,6 @@ Resume.pdf = (function () {
         }
         list.push({
           ch: ch,
-          family: family,
           color: color,
           x: (r.left - origin.left) * PX_TO_PT,
           top: (r.top - origin.top) * PX_TO_PT,
@@ -200,30 +197,17 @@ Resume.pdf = (function () {
     return data;
   }
 
-  function loadFonts(PDFLib, doc, chars) {
-    var used = {};
-    chars.forEach(function (c) {
-      used[c.family] = true;
-    });
-    var fonts = {};
-    return Promise.all(Object.keys(used).map(function (name) {
-      return fetch(FONT_FILE)
-        .then(function (res) {
-          return res.arrayBuffer();
-        })
-        .then(function (buf) {
-          var bytes = new Uint8Array(buf);
-          return doc.embedFont(bytes, { subset: true }).then(function (font) {
-            var info = window.fontkit.create(bytes);
-            fonts[name] = { pdf: font, info: info };
-          });
-        });
-    })).then(function () {
-      return fonts;
+  function loadFont(doc) {
+    var bytes = Resume.font.bytes();
+    if (!bytes) {
+      return Promise.reject(new Error("font"));
+    }
+    return doc.embedFont(bytes, { subset: true }).then(function (font) {
+      return { pdf: font, info: window.fontkit.create(bytes) };
     });
   }
 
-  function draw(PDFLib, doc, page, data, fonts) {
+  function draw(PDFLib, doc, page, data, f) {
     var rgb = PDFLib.rgb;
     data.paths.forEach(function (p) {
       page.drawSvgPath(p.d, {
@@ -239,8 +223,7 @@ Resume.pdf = (function () {
       });
     })).then(function () {
       data.chars.forEach(function (c) {
-        var f = fonts[c.family] || fonts.IPAMincho;
-        if (!f || !f.info.hasGlyphForCodePoint(c.ch.codePointAt(0))) {
+        if (!f.info.hasGlyphForCodePoint(c.ch.codePointAt(0))) {
           return;
         }
         var upm = f.info.unitsPerEm;
@@ -266,8 +249,8 @@ Resume.pdf = (function () {
       return PDFLib.PDFDocument.create().then(function (doc) {
         doc.registerFontkit(window.fontkit);
         var page = doc.addPage([PAGE_W, PAGE_H]);
-        return loadFonts(PDFLib, doc, data.chars).then(function (fonts) {
-          return draw(PDFLib, doc, page, data, fonts);
+        return loadFont(doc).then(function (font) {
+          return draw(PDFLib, doc, page, data, font);
         }).then(function () {
           return doc.save();
         });
