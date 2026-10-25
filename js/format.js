@@ -21,9 +21,9 @@ Resume.format = (function () {
   ];
 
   var LONG = [
-    ["motive", "01", "志望の動機"],
-    ["pr", "02", "自己PR"],
-    ["study", "03", "学生時代の取り組み"]
+    ["motive", "01", "motiveT"],
+    ["pr", "02", "prT"],
+    ["study", "03", "studyT"]
   ];
 
   var NAME_QUAL = "資格等";
@@ -164,7 +164,11 @@ Resume.format = (function () {
       }
     });
     LONG.forEach(function (a) {
+      var t = sec[a[1] + "-A"];
       var s = sec[a[1] + "-B"];
+      if (t) {
+        f.set(a[2], t.lines.join("\n"));
+      }
       if (s) {
         f.set(a[0], s.lines.join("\n"));
       }
@@ -244,7 +248,7 @@ Resume.format = (function () {
     gap();
 
     LONG.forEach(function (a) {
-      section(a[1] + "-A", a[2]);
+      section(a[1] + "-A", f.get(a[2]));
       section(a[1] + "-B", f.get(a[0]));
     });
     gap();

@@ -326,3 +326,20 @@ body {
     zoom: 1!important;
   }
 }
+
+.ti {
+  position: absolute;
+  display: block;
+  line-height: 1;
+  white-space: pre;
+  overflow: hidden;
+  outline: none;
+  font-family: "MS PMincho","ＭＳ Ｐ明朝","MS Mincho","ＭＳ 明朝","Noto Serif JP",serif;
+}
+
+.ti::before {
+  content: "";
+  display: inline-block;
+  width: 0;
+  height: 10pt;
+}

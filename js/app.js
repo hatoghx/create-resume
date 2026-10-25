@@ -14,6 +14,12 @@
     Resume.editor.push();
   });
 
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Enter" && e.target.classList && e.target.classList.contains("ti")) {
+      e.preventDefault();
+    }
+  });
+
   document.addEventListener("paste", function (e) {
     if (e.target && e.target.isContentEditable) {
       e.preventDefault();

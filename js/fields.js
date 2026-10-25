@@ -3,6 +3,12 @@ window.Resume = {};
 Resume.fields = (function () {
   var KEY = "create-resume-v3";
   var BIRTH_EMPTY = "年　　　　　月　　　　　日生　（満　　　歳）　";
+  var DEFAULTS = {
+    birth: BIRTH_EMPTY,
+    motiveT: "志望の動機",
+    prT: "自己PR",
+    studyT: "学生時代の取り組み"
+  };
 
   function list() {
     return Array.prototype.slice.call(document.querySelectorAll("[data-k]"));
@@ -28,7 +34,9 @@ Resume.fields = (function () {
     list().forEach(function (el) {
       el.innerText = "";
     });
-    set("birth", BIRTH_EMPTY);
+    Object.keys(DEFAULTS).forEach(function (k) {
+      set(k, DEFAULTS[k]);
+    });
   }
 
   function align(el) {
