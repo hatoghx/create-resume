@@ -8,7 +8,7 @@ Resume.font = (function () {
       var fonts = col.fonts || [];
       for (var i = 0; i < offsets.length; i++) {
         var name = fonts[i] && fonts[i].postscriptName;
-        if (name && /^MS-?Mincho$/i.test(name)) {
+        if (name && /^MS-?PMincho$/i.test(name)) {
           return i;
         }
       }
