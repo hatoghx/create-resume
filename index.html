@@ -1,447 +1,198 @@
 <!doctype html>
 <html lang="ja">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<title>履歴書作成</title>
-<style>
-:root{--k:#000;--bg:#303030;--pn:#2b2b2b;--ln:#1a1a1a;--fd:#1d1d1d;--bt:#545454;--bh:#656565;--tx:#d9d9d9;--ac:#4772b3;color-scheme:dark}
-*{box-sizing:border-box}
-html,body{touch-action:pan-x pan-y}
-body{margin:0;background:var(--bg);color:var(--k);font-family:"ＭＳ 明朝","MS Mincho","ＭＳ Ｐ明朝","MS PMincho","Hiragino Mincho ProN","Yu Mincho","Noto Serif JP",serif;font-size:10pt}
-[hidden]{display:none!important}
-.bar{position:fixed;top:0;left:0;right:0;z-index:9;display:flex;font-family:sans-serif;background:var(--pn);border-bottom:1px solid var(--ln);padding:env(safe-area-inset-top,0px) env(safe-area-inset-right,0px) 0 env(safe-area-inset-left,0px)}
-.bar button{flex:1 1 0;min-width:0;font:inherit;font-size:15px;padding:12px 0;border:0;border-right:1px solid var(--ln);background:var(--pn);color:var(--tx);cursor:pointer;white-space:nowrap}
-.bar button:last-child{border-right:0}
-.bar button:hover{background:#3d3d3d}
-.bar button.on{background:var(--ac);color:#fff}
-.off{position:absolute;opacity:0;pointer-events:none;height:0;overflow:hidden;top:0;left:0}
-.vw{padding:64px 16px 24px;font-family:sans-serif;color:var(--tx)}
-#tx{display:block;width:100%;max-width:900px;margin:0 auto;min-height:calc(100vh - 100px);min-height:calc(100dvh - 100px);padding:12px;font:16px/1.6 "Yu Gothic","Meiryo",sans-serif;border:1px solid var(--ln);border-radius:4px;background:var(--fd);color:var(--tx);resize:vertical;outline:none}
-#tx:focus,.set input:focus{border-color:var(--ac)}
-.set{max-width:560px;margin:0 auto;display:flex;flex-direction:column;gap:12px}
-.set input{font:inherit;font-size:16px;padding:10px;border:1px solid var(--ln);border-radius:4px;background:var(--fd);color:var(--tx);width:100%;outline:none}
-.set button{font:inherit;font-size:16px;padding:12px;border:1px solid var(--ln);border-radius:4px;background:var(--bt);color:#fff;cursor:pointer}
-.set button:hover{background:var(--bh)}
-.wrap{display:flex;flex-direction:row;width:1190.64pt;margin:52px auto 12px;box-shadow:0 2px 12px rgba(0,0,0,.5);background:#fff}
-.page{position:relative;width:595.32pt;height:841.92pt;background:#fff;overflow:hidden;flex:none}
-.page+.page{transform:translateX(-0.18pt)}
-.sv{position:absolute;left:0;top:0;display:block;pointer-events:none}
-.tk{fill:#000;stroke:#000;stroke-width:.4px;vector-effect:non-scaling-stroke}
-.tn{fill:#000;stroke:#808080;stroke-width:.4px;vector-effect:non-scaling-stroke}
-.sv text{white-space:pre;font-kerning:none;text-rendering:geometricPrecision;fill:#000}
-.sv text.p{font-family:"MS PMincho","ＭＳ Ｐ明朝","MS Mincho","ＭＳ 明朝","Noto Serif JP",serif}
-.sv text.m{font-family:"MS Mincho","ＭＳ 明朝","Noto Serif JP",serif}
-.a{position:absolute}
-.bx{position:absolute;left:0;top:0;width:483.84pt;transform-origin:0 0}
-.bx .bs{overflow:visible}
-.ed,.dt,.bh{text-rendering:geometricPrecision;font-kerning:none}
-.ed{position:absolute;display:block;padding:1.73pt 4.3pt;line-height:1.45;white-space:pre-wrap;overflow:hidden;outline:none;font-size:10pt}
-.fu{font-size:8pt}
-[data-k^="ey"],[data-k^="em"],[data-k^="qy"],[data-k^="qm"]{text-align:center}
-.vc{display:grid;align-content:center;padding-top:0;padding-bottom:0}
-.bl{line-height:1}
-.bl::before{content:"";display:inline-block;width:0;height:10pt}
-.dt,.bh{font-family:"MS PMincho","ＭＳ Ｐ明朝","MS Mincho","ＭＳ 明朝","Noto Serif JP",serif;font-size:1000pt;line-height:1;white-space:pre;transform-origin:0 0;letter-spacing:-1.1pt}
-.il{display:inline-block;text-align:center;outline:none;white-space:pre}
-.bh{outline:none}
-.photo{cursor:pointer;overflow:hidden}
-.photo img{position:absolute;left:0;top:0;width:100%;height:100%;object-fit:cover;display:block}
-@page{size:A3 landscape;margin:0}
-@media print{
-.vw{display:none!important}
-.wrap.off{position:static!important;opacity:1!important;pointer-events:auto!important;height:auto!important;overflow:visible!important}
-.tk,.tn{stroke:none}
-body{background:#fff}
-.bar{display:none}
-.wrap{margin:0;box-shadow:none;zoom:1!important}
-}
-</style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+  <title>履歴書作成</title>
+  <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-<div class="bar" id="bar">
-<button id="tb-r" class="on">履歴書</button><button id="tb-i">入力</button><button id="tb-s">設定</button>
-</div>
-<div class="wrap" id="wrap">
-<section class="page">
-<svg class="sv" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 595.32 841.92" width="595.32pt" height="841.92pt">
-<path class="tn" d="M54.6 221.88H425.28V222H54.6ZM54.6 294.24H425.28V294.36H54.6ZM105.12 351H105.24V373.44H105.12ZM54.6 398.76H130.56V398.88H54.6ZM54.6 422.88H130.56V423H54.6ZM54.6 447H130.56V447.12H54.6ZM54.6 471.12H130.56V471.24H54.6ZM54.6 495.24H130.56V495.36H54.6ZM54.6 519.36H130.56V519.48H54.6ZM54.6 543.48H130.56V543.6H54.6ZM54.6 567.6H130.56V567.72H54.6ZM54.6 591.72H130.56V591.84H54.6ZM54.6 615.84H130.56V615.96H54.6ZM54.6 639.96H130.56V640.08H54.6ZM54.6 664.08H130.56V664.2H54.6ZM54.6 688.2H130.56V688.32H54.6ZM54.6 712.32H130.56V712.44H54.6ZM54.6 736.44H130.56V736.56H54.6ZM105.12 375.96H105.24V760.2H105.12ZM54.6 133.2H371.76V133.32H54.6ZM426.12 221.88H539.88V222H426.12ZM426.12 294.24H539.88V294.36H426.12ZM131.4 398.76H539.88V398.88H131.4ZM131.4 422.88H539.88V423H131.4ZM131.4 447H539.88V447.12H131.4ZM131.4 471.12H539.88V471.24H131.4ZM131.4 495.24H539.88V495.36H131.4ZM131.4 519.36H539.88V519.48H131.4ZM131.4 543.48H539.88V543.6H131.4ZM131.4 567.6H539.88V567.72H131.4ZM131.4 591.72H539.88V591.84H131.4ZM131.4 615.84H539.88V615.96H131.4ZM131.4 639.96H539.88V640.08H131.4ZM131.4 664.08H539.88V664.2H131.4ZM131.4 688.2H539.88V688.32H131.4ZM131.4 712.32H539.88V712.44H131.4ZM131.4 736.44H539.88V736.56H131.4Z"/>
-<path class="tk" d="M53.76 108.72H54.6V342.96H53.76ZM539.88 198.24H540.72V342.96H539.88ZM130.56 351H131.4V373.44H130.56ZM53.76 350.16H54.6V761.04H53.76ZM371.76 109.56H372.6V198.24H371.76ZM308.16 173.88H309V198.24H308.16ZM425.28 198.24H426.12V342.96H425.28ZM539.88 351H540.72V761.04H539.88ZM130.56 375.96H131.4V761.04H130.56ZM54.6 108.72H372.6V109.56H54.6ZM54.6 173.04H372.6V173.88H54.6ZM54.6 197.4H540.72V198.24H54.6ZM54.6 269.76H540.72V270.6H54.6ZM54.6 342.12H540.72V342.96H54.6ZM54.6 350.16H540.72V351H54.6ZM54.6 373.44H539.88V374.28H54.6ZM54.6 375.12H539.88V375.96H54.6ZM54.6 760.2H540.72V761.04H54.6Z"/>
-<g id="phs">
-<path fill="#fff" d="M405.12 85.08H483.84V190.32H405.12Z"/>
-<path fill="rgb(127,127,127)" d="M405 190.32L405 189L405.36 189L405.36 190.32ZM405 188.52L405 187.2L405.36 187.2L405.36 188.52ZM405 186.72L405 185.4L405.36 185.4L405.36 186.72ZM405 184.92L405 183.6L405.36 183.6L405.36 184.92ZM405 183.12L405 181.8L405.36 181.8L405.36 183.12ZM405 181.32L405 180L405.36 180L405.36 181.32ZM405 179.52L405 178.2L405.36 178.2L405.36 179.52ZM405 177.72L405 176.4L405.36 176.4L405.36 177.72ZM405 175.92L405 174.6L405.36 174.6L405.36 175.92ZM405 174.12L405 172.8L405.36 172.8L405.36 174.12ZM405 172.32L405 171L405.36 171L405.36 172.32ZM405 170.52L405 169.2L405.36 169.2L405.36 170.52ZM405 168.72L405 167.4L405.36 167.4L405.36 168.72ZM405 166.92L405 165.6L405.36 165.6L405.36 166.92ZM405 165.12L405 163.8L405.36 163.8L405.36 165.12ZM405 163.32L405 162L405.36 162L405.36 163.32ZM405 161.52L405 160.2L405.36 160.2L405.36 161.52ZM405 159.72L405 158.4L405.36 158.4L405.36 159.72ZM405 157.92L405 156.6L405.36 156.6L405.36 157.92ZM405 156.12L405 154.8L405.36 154.8L405.36 156.12ZM405 154.32L405 153L405.36 153L405.36 154.32ZM405 152.52L405 151.2L405.36 151.2L405.36 152.52ZM405 150.72L405 149.4L405.36 149.4L405.36 150.72ZM405 148.92L405 147.6L405.36 147.6L405.36 148.92ZM405 147.12L405 145.8L405.36 145.8L405.36 147.12ZM405 145.32L405 144L405.36 144L405.36 145.32ZM405 143.52L405 142.2L405.36 142.2L405.36 143.52ZM405 141.72L405 140.4L405.36 140.4L405.36 141.72ZM405 139.92L405 138.6L405.36 138.6L405.36 139.92ZM405 138.12L405 136.8L405.36 136.8L405.36 138.12ZM405 136.32L405 135L405.36 135L405.36 136.32ZM405 134.52L405 133.2L405.36 133.2L405.36 134.52ZM405 132.72L405 131.4L405.36 131.4L405.36 132.72ZM405 130.92L405 129.6L405.36 129.6L405.36 130.92ZM405 129.12L405 127.8L405.36 127.8L405.36 129.12ZM405 127.32L405 126L405.36 126L405.36 127.32ZM405 125.52L405 124.2L405.36 124.2L405.36 125.52ZM405 123.72L405 122.4L405.36 122.4L405.36 123.72ZM405 121.92L405 120.6L405.36 120.6L405.36 121.92ZM405 120.12L405 118.8L405.36 118.8L405.36 120.12ZM405 118.32L405 117L405.36 117L405.36 118.32ZM405 116.52L405 115.2L405.36 115.2L405.36 116.52ZM405 114.72L405 113.4L405.36 113.4L405.36 114.72ZM405 112.92L405 111.6L405.36 111.6L405.36 112.92ZM405 111.12L405 109.8L405.36 109.8L405.36 111.12ZM405 109.32L405 108L405.36 108L405.36 109.32ZM405 107.52L405 106.2L405.36 106.2L405.36 107.52ZM405 105.72L405 104.4L405.36 104.4L405.36 105.72ZM405 103.92L405 102.6L405.36 102.6L405.36 103.92ZM405 102.12L405 100.8L405.36 100.8L405.36 102.12ZM405 100.32L405 99L405.36 99L405.36 100.32ZM405 98.52L405 97.2L405.36 97.2L405.36 98.52ZM405 96.72L405 95.4L405.36 95.4L405.36 96.72ZM405 94.92L405 93.6L405.36 93.6L405.36 94.92ZM405 93.12L405 91.8L405.36 91.8L405.36 93.12ZM405 91.32L405 90L405.36 90L405.36 91.32ZM405 89.52L405 88.2L405.36 88.2L405.36 89.52ZM405 87.72L405 86.4L405.36 86.4L405.36 87.72ZM405 85.92L405 85.08L405.12 84.96L405.72 84.96L405.72 85.32L405.12 85.32L405.36 85.08L405.36 85.92ZM406.2 84.96H407.52V85.32H406.2ZM408 84.96H409.32V85.32H408ZM409.8 84.96H411.12V85.32H409.8ZM411.6 84.96H412.92V85.32H411.6ZM413.4 84.96H414.72V85.32H413.4ZM415.2 84.96H416.52V85.32H415.2ZM417 84.96H418.32V85.32H417ZM418.8 84.96H420.12V85.32H418.8ZM420.6 84.96H421.92V85.32H420.6ZM422.4 84.96H423.72V85.32H422.4ZM424.2 84.96H425.52V85.32H424.2ZM426 84.96H427.32V85.32H426ZM427.8 84.96H429.12V85.32H427.8ZM429.6 84.96H430.92V85.32H429.6ZM431.4 84.96H432.72V85.32H431.4ZM433.2 84.96H434.52V85.32H433.2ZM435 84.96H436.32V85.32H435ZM436.8 84.96H438.12V85.32H436.8ZM438.6 84.96H439.92V85.32H438.6ZM440.4 84.96H441.72V85.32H440.4ZM442.2 84.96H443.52V85.32H442.2ZM444 84.96H445.32V85.32H444ZM445.8 84.96H447.12V85.32H445.8ZM447.6 84.96H448.92V85.32H447.6ZM449.4 84.96H450.72V85.32H449.4ZM451.2 84.96H452.52V85.32H451.2ZM453 84.96H454.32V85.32H453ZM454.8 84.96H456.12V85.32H454.8ZM456.6 84.96H457.92V85.32H456.6ZM458.4 84.96H459.72V85.32H458.4ZM460.2 84.96H461.52V85.32H460.2ZM462 84.96H463.32V85.32H462ZM463.8 84.96H465.12V85.32H463.8ZM465.6 84.96H466.92V85.32H465.6ZM467.4 84.96H468.72V85.32H467.4ZM469.2 84.96H470.52V85.32H469.2ZM471 84.96H472.32V85.32H471ZM472.8 84.96H474.12V85.32H472.8ZM474.6 84.96H475.92V85.32H474.6ZM476.4 84.96H477.72V85.32H476.4ZM478.2 84.96H479.52V85.32H478.2ZM480 84.96H481.32V85.32H480ZM481.8 84.96H483.12V85.32H481.8ZM483.6 84.96L483.84 84.96L484.08 85.08L484.08 86.16L483.72 86.16L483.72 85.08L483.84 85.32L483.6 85.32ZM484.08 86.64L484.08 87.96L483.72 87.96L483.72 86.64ZM484.08 88.44L484.08 89.76L483.72 89.76L483.72 88.44ZM484.08 90.24L484.08 91.56L483.72 91.56L483.72 90.24ZM484.08 92.04L484.08 93.36L483.72 93.36L483.72 92.04ZM484.08 93.84L484.08 95.16L483.72 95.16L483.72 93.84ZM484.08 95.64L484.08 96.96L483.72 96.96L483.72 95.64ZM484.08 97.44L484.08 98.76L483.72 98.76L483.72 97.44ZM484.08 99.24L484.08 100.56L483.72 100.56L483.72 99.24ZM484.08 101.04L484.08 102.36L483.72 102.36L483.72 101.04ZM484.08 102.84L484.08 104.16L483.72 104.16L483.72 102.84ZM484.08 104.64L484.08 105.96L483.72 105.96L483.72 104.64ZM484.08 106.44L484.08 107.76L483.72 107.76L483.72 106.44ZM484.08 108.24L484.08 109.56L483.72 109.56L483.72 108.24ZM484.08 110.04L484.08 111.36L483.72 111.36L483.72 110.04ZM484.08 111.84L484.08 113.16L483.72 113.16L483.72 111.84ZM484.08 113.64L484.08 114.96L483.72 114.96L483.72 113.64ZM484.08 115.44L484.08 116.76L483.72 116.76L483.72 115.44ZM484.08 117.24L484.08 118.56L483.72 118.56L483.72 117.24ZM484.08 119.04L484.08 120.36L483.72 120.36L483.72 119.04ZM484.08 120.84L484.08 122.16L483.72 122.16L483.72 120.84ZM484.08 122.64L484.08 123.96L483.72 123.96L483.72 122.64ZM484.08 124.44L484.08 125.76L483.72 125.76L483.72 124.44ZM484.08 126.24L484.08 127.56L483.72 127.56L483.72 126.24ZM484.08 128.04L484.08 129.36L483.72 129.36L483.72 128.04ZM484.08 129.84L484.08 131.16L483.72 131.16L483.72 129.84ZM484.08 131.64L484.08 132.96L483.72 132.96L483.72 131.64ZM484.08 133.44L484.08 134.76L483.72 134.76L483.72 133.44ZM484.08 135.24L484.08 136.56L483.72 136.56L483.72 135.24ZM484.08 137.04L484.08 138.36L483.72 138.36L483.72 137.04ZM484.08 138.84L484.08 140.16L483.72 140.16L483.72 138.84ZM484.08 140.64L484.08 141.96L483.72 141.96L483.72 140.64ZM484.08 142.44L484.08 143.76L483.72 143.76L483.72 142.44ZM484.08 144.24L484.08 145.56L483.72 145.56L483.72 144.24ZM484.08 146.04L484.08 147.36L483.72 147.36L483.72 146.04ZM484.08 147.84L484.08 149.16L483.72 149.16L483.72 147.84ZM484.08 149.64L484.08 150.96L483.72 150.96L483.72 149.64ZM484.08 151.44L484.08 152.76L483.72 152.76L483.72 151.44ZM484.08 153.24L484.08 154.56L483.72 154.56L483.72 153.24ZM484.08 155.04L484.08 156.36L483.72 156.36L483.72 155.04ZM484.08 156.84L484.08 158.16L483.72 158.16L483.72 156.84ZM484.08 158.64L484.08 159.96L483.72 159.96L483.72 158.64ZM484.08 160.44L484.08 161.76L483.72 161.76L483.72 160.44ZM484.08 162.24L484.08 163.56L483.72 163.56L483.72 162.24ZM484.08 164.04L484.08 165.36L483.72 165.36L483.72 164.04ZM484.08 165.84L484.08 167.16L483.72 167.16L483.72 165.84ZM484.08 167.64L484.08 168.96L483.72 168.96L483.72 167.64ZM484.08 169.44L484.08 170.76L483.72 170.76L483.72 169.44ZM484.08 171.24L484.08 172.56L483.72 172.56L483.72 171.24ZM484.08 173.04L484.08 174.36L483.72 174.36L483.72 173.04ZM484.08 174.84L484.08 176.16L483.72 176.16L483.72 174.84ZM484.08 176.64L484.08 177.96L483.72 177.96L483.72 176.64ZM484.08 178.44L484.08 179.76L483.72 179.76L483.72 178.44ZM484.08 180.24L484.08 181.56L483.72 181.56L483.72 180.24ZM484.08 182.04L484.08 183.36L483.72 183.36L483.72 182.04ZM484.08 183.84L484.08 185.16L483.72 185.16L483.72 183.84ZM484.08 185.64L484.08 186.96L483.72 186.96L483.72 185.64ZM484.08 187.44L484.08 188.76L483.72 188.76L483.72 187.44ZM484.08 189.24L484.08 190.32L483.84 190.56L483.6 190.56L483.6 190.08L483.84 190.08L483.72 190.32L483.72 189.24ZM481.8 190.08H483.12V190.56H481.8ZM480 190.08H481.32V190.56H480ZM478.2 190.08H479.52V190.56H478.2ZM476.4 190.08H477.72V190.56H476.4ZM474.6 190.08H475.92V190.56H474.6ZM472.8 190.08H474.12V190.56H472.8ZM471 190.08H472.32V190.56H471ZM469.2 190.08H470.52V190.56H469.2ZM467.4 190.08H468.72V190.56H467.4ZM465.6 190.08H466.92V190.56H465.6ZM463.8 190.08H465.12V190.56H463.8ZM462 190.08H463.32V190.56H462ZM460.2 190.08H461.52V190.56H460.2ZM458.4 190.08H459.72V190.56H458.4ZM456.6 190.08H457.92V190.56H456.6ZM454.8 190.08H456.12V190.56H454.8ZM453 190.08H454.32V190.56H453ZM451.2 190.08H452.52V190.56H451.2ZM449.4 190.08H450.72V190.56H449.4ZM447.6 190.08H448.92V190.56H447.6ZM445.8 190.08H447.12V190.56H445.8ZM444 190.08H445.32V190.56H444ZM442.2 190.08H443.52V190.56H442.2ZM440.4 190.08H441.72V190.56H440.4ZM438.6 190.08H439.92V190.56H438.6ZM436.8 190.08H438.12V190.56H436.8ZM435 190.08H436.32V190.56H435ZM433.2 190.08H434.52V190.56H433.2ZM431.4 190.08H432.72V190.56H431.4ZM429.6 190.08H430.92V190.56H429.6ZM427.8 190.08H429.12V190.56H427.8ZM426 190.08H427.32V190.56H426ZM424.2 190.08H425.52V190.56H424.2ZM422.4 190.08H423.72V190.56H422.4ZM420.6 190.08H421.92V190.56H420.6ZM418.8 190.08H420.12V190.56H418.8ZM417 190.08H418.32V190.56H417ZM415.2 190.08H416.52V190.56H415.2ZM413.4 190.08H414.72V190.56H413.4ZM411.6 190.08H412.92V190.56H411.6ZM409.8 190.08H411.12V190.56H409.8ZM408 190.08H409.32V190.56H408ZM406.2 190.08H407.52V190.56H406.2ZM405.12 190.08H405.72V190.56H405.12Z"/>
-<text x="421.678 428.398 435.118 441.838 448.679 455.399 462.119" y="115.32" class="m" style="font-size:6.72">写真をはる位置</text>
-<text x="418.318 425.038 431.758 438.478 445.198 452.039 458.759 465.479" y="131.52" class="m" style="font-size:6.72">写真をはる必要が</text>
-<text x="418.318 425.038 431.758 438.478" y="139.56" class="m" style="font-size:6.72">ある場合</text>
-<text x="414.958 418.318 425.038" y="147.72" class="m" style="font-size:6.72">1．縦</text>
-<text x="438.478 441.838 445.198 452.039 455.399 458.759 462.119" y="147.72" class="m" style="font-size:6.72">36～40mm</text>
-<text x="425.038" y="155.76" class="m" style="font-size:6.72">横</text>
-<text x="438.478 441.838 445.198 452.039 455.399 458.759 462.119" y="155.76" class="m" style="font-size:6.72">24～30mm</text>
-<text x="414.958 418.318 421.678 428.398 435.118 441.838 448.679 455.399 462.119 468.839" y="163.92" class="m" style="font-size:6.72">2.本人単身胸から上</text>
-<text x="414.958 418.318 421.678 428.398 435.118 441.838 448.679 455.399" y="171.96" class="m" style="font-size:6.72">3.裏面のりづけ</text>
-</g>
-<text x="309.961 317.157 324.361" y="180.24" class="p" style="font-size:7.205">※性別</text>
-<text x="55.557 62.761 69.957 77.16 84.357 91.56 98.763 105.959 113.163 120.359 127.562 134.758 141.962 149.158 156.361 163.558 170.761 177.957 185.16 192.357 199.56 206.763 213.959 221.163 228.359 235.562 242.758 249.962 257.158" y="772.92" class="m" style="font-size:7.205">※「性別」欄：記載は任意です。未記載とすることも可能です。</text>
-<text x="106.919 116.884 119.876 122.878 125.881 128.883 131.875 134.878 137.88 140.883 143.885 146.877 149.88 152.882 155.884 158.877 161.879 164.882 167.884 170.876 173.879 176.881 179.883 182.876 185.878 188.88 191.883 194.875 197.878 200.88 203.882 206.885 209.877 212.879 215.882 218.884" y="305.52" class="p" style="font-size:9.967">〒                                   </text>
-<text x="75.595" y="365.52" class="p" style="font-size:9.007">年</text>
-<text x="114.001" y="365.52" class="p" style="font-size:9.007">月</text>
-<text x="64.32 73.324 79.084 87.601" y="285.12" class="p" style="font-size:9.007">ふりがな</text>
-<text x="265.684 274.68 277.438 280.196 289.2 291.958 296.519 299.277 308.281 311.039 313.797 322.801 325.559 330.12 339.124 348.119 356.637 364.082 370.436 378.962 387.119 396.124 401.883" y="365.52" class="p" style="font-size:9.007">学  歴 ・ 職  歴 （各別にまとめて書く）</text>
-<text x="427.436 430.439 440.403" y="285.48" class="p" style="font-size:9.967"> 電話</text>
-<text x="65.158 75.122 85.077" y="305.52" class="p" style="font-size:9.967">連絡先</text>
-<text x="427.436 430.439 436.443 441.481 448.443 453.001 455.395" y="305.52" class="p" style="font-size:9.967"> E-mail</text>
-<text x="57.123 76.912 82.92 102.729 108.718" y="97.92" class="p" style="font-size:19.815">履 歴 書</text>
-<text x="64.318 73.322 79.081 87.599" y="124.08" class="p" style="font-size:9.007">ふりがな</text>
-<text x="65.635 75.6 78.602 81.605 84.597" y="156.6" class="p" style="font-size:9.967">氏   名</text>
-<text x="427.435 430.438 436.442 441.479 448.442 453 455.404" y="233.16" class="p" style="font-size:9.967"> E-mail</text>
-<text x="65.156 75.121 85.076" y="233.16" class="p" style="font-size:9.967">現住所</text>
-<text x="254.764 257.281 259.798 262.323 264.84 273.004 281.159 289.323 297.479 305.643 313.439 321.602 329.758 336.721 344.876 353.04 361.204 367.676 375.84 384.004 391.8 399.964 408.119 416.283 418.8" y="304.92" class="p" style="font-size:8.166">   (現住所以外に連絡を希望する場合のみ記入)　</text>
-<text x="427.438 430.44 440.395" y="213.12" class="p" style="font-size:9.967"> 電話</text>
-<text x="64.324 73.32 79.079 87.597" y="212.76" class="p" style="font-size:9.007">ふりがな</text>
-<text x="106.918" y="233.16" class="p" style="font-size:9.967">〒</text>
-</svg>
-<span class="ed vc fu" style="left:54.6pt;top:109.56pt;width:317.16pt;height:23.64pt;padding-left:63.04pt;font-size:8pt" contenteditable data-k="furi"></span>
-<span class="ed vc" style="left:54.6pt;top:133.32pt;width:317.16pt;height:39.72pt;padding-left:63.04pt;font-size:16pt" contenteditable data-k="name"></span>
-<span class="ed vc" style="left:309pt;top:181.2pt;width:62.76pt;height:16.2pt;text-align:center;padding-left:0;padding-right:0" contenteditable data-k="sex"></span>
-<span class="ed vc fu" style="left:54.6pt;top:198.24pt;width:370.68pt;height:23.64pt;padding-left:63.04pt;font-size:8pt" contenteditable data-k="afuri"></span>
-<span class="ed bl" style="left:426.12pt;top:203.12pt;width:113.76pt;height:18pt;padding:0 0 0 34.4pt;font-size:10pt" contenteditable data-k="tel"></span>
-<span class="ed vc" style="left:54.6pt;top:222pt;width:370.68pt;height:15.5pt;padding-left:64pt" contenteditable data-k="zip"></span>
-<span class="ed vc" style="left:54.6pt;top:237.5pt;width:370.68pt;height:32.26pt;padding-left:64pt;line-height:1.25;align-content:start" contenteditable data-k="addr"></span>
-<span class="ed vc" style="left:426.12pt;top:222pt;width:113.76pt;height:47.76pt;padding-left:2pt;padding-right:0;font-size:7.5pt;line-height:1.35" contenteditable data-k="mail"></span>
-<span class="ed vc fu" style="left:54.6pt;top:270.6pt;width:370.68pt;height:23.64pt;padding-left:63.04pt;font-size:8pt" contenteditable data-k="cfuri"></span>
-<span class="ed bl" style="left:426.12pt;top:275.48pt;width:113.76pt;height:18pt;padding:0 0 0 34.4pt" contenteditable data-k="ctel"></span>
-<span class="ed vc" style="left:54.6pt;top:294.36pt;width:370.68pt;height:47.76pt;padding-left:63.04pt" contenteditable data-k="alt"></span>
-<span class="ed vc" style="left:426.12pt;top:294.36pt;width:113.76pt;height:47.76pt;" contenteditable data-k="cmail"></span>
-<span class="ed vc" style="left:54.6pt;top:375.96pt;width:50.52pt;height:22.8pt;" contenteditable data-k="ey0"></span>
-<span class="ed vc" style="left:105.24pt;top:375.96pt;width:25.32pt;height:22.8pt;" contenteditable data-k="em0"></span>
-<span class="ed vc" style="left:131.4pt;top:375.96pt;width:408.48pt;height:22.8pt;" contenteditable data-k="ec0"></span>
-<span class="ed vc" style="left:54.6pt;top:398.88pt;width:50.52pt;height:24pt;" contenteditable data-k="ey1"></span>
-<span class="ed vc" style="left:105.24pt;top:398.88pt;width:25.32pt;height:24pt;" contenteditable data-k="em1"></span>
-<span class="ed vc" style="left:131.4pt;top:398.88pt;width:408.48pt;height:24pt;" contenteditable data-k="ec1"></span>
-<span class="ed vc" style="left:54.6pt;top:423pt;width:50.52pt;height:24pt;" contenteditable data-k="ey2"></span>
-<span class="ed vc" style="left:105.24pt;top:423pt;width:25.32pt;height:24pt;" contenteditable data-k="em2"></span>
-<span class="ed vc" style="left:131.4pt;top:423pt;width:408.48pt;height:24pt;" contenteditable data-k="ec2"></span>
-<span class="ed vc" style="left:54.6pt;top:447.12pt;width:50.52pt;height:24pt;" contenteditable data-k="ey3"></span>
-<span class="ed vc" style="left:105.24pt;top:447.12pt;width:25.32pt;height:24pt;" contenteditable data-k="em3"></span>
-<span class="ed vc" style="left:131.4pt;top:447.12pt;width:408.48pt;height:24pt;" contenteditable data-k="ec3"></span>
-<span class="ed vc" style="left:54.6pt;top:471.24pt;width:50.52pt;height:24pt;" contenteditable data-k="ey4"></span>
-<span class="ed vc" style="left:105.24pt;top:471.24pt;width:25.32pt;height:24pt;" contenteditable data-k="em4"></span>
-<span class="ed vc" style="left:131.4pt;top:471.24pt;width:408.48pt;height:24pt;" contenteditable data-k="ec4"></span>
-<span class="ed vc" style="left:54.6pt;top:495.36pt;width:50.52pt;height:24pt;" contenteditable data-k="ey5"></span>
-<span class="ed vc" style="left:105.24pt;top:495.36pt;width:25.32pt;height:24pt;" contenteditable data-k="em5"></span>
-<span class="ed vc" style="left:131.4pt;top:495.36pt;width:408.48pt;height:24pt;" contenteditable data-k="ec5"></span>
-<span class="ed vc" style="left:54.6pt;top:519.48pt;width:50.52pt;height:24pt;" contenteditable data-k="ey6"></span>
-<span class="ed vc" style="left:105.24pt;top:519.48pt;width:25.32pt;height:24pt;" contenteditable data-k="em6"></span>
-<span class="ed vc" style="left:131.4pt;top:519.48pt;width:408.48pt;height:24pt;" contenteditable data-k="ec6"></span>
-<span class="ed vc" style="left:54.6pt;top:543.6pt;width:50.52pt;height:24pt;" contenteditable data-k="ey7"></span>
-<span class="ed vc" style="left:105.24pt;top:543.6pt;width:25.32pt;height:24pt;" contenteditable data-k="em7"></span>
-<span class="ed vc" style="left:131.4pt;top:543.6pt;width:408.48pt;height:24pt;" contenteditable data-k="ec7"></span>
-<span class="ed vc" style="left:54.6pt;top:567.72pt;width:50.52pt;height:24pt;" contenteditable data-k="ey8"></span>
-<span class="ed vc" style="left:105.24pt;top:567.72pt;width:25.32pt;height:24pt;" contenteditable data-k="em8"></span>
-<span class="ed vc" style="left:131.4pt;top:567.72pt;width:408.48pt;height:24pt;" contenteditable data-k="ec8"></span>
-<span class="ed vc" style="left:54.6pt;top:591.84pt;width:50.52pt;height:24pt;" contenteditable data-k="ey9"></span>
-<span class="ed vc" style="left:105.24pt;top:591.84pt;width:25.32pt;height:24pt;" contenteditable data-k="em9"></span>
-<span class="ed vc" style="left:131.4pt;top:591.84pt;width:408.48pt;height:24pt;" contenteditable data-k="ec9"></span>
-<span class="ed vc" style="left:54.6pt;top:616pt;width:50.52pt;height:23.96pt;" contenteditable data-k="ey10"></span>
-<span class="ed vc" style="left:105.24pt;top:616pt;width:25.32pt;height:23.96pt;" contenteditable data-k="em10"></span>
-<span class="ed vc" style="left:131.4pt;top:616pt;width:408.48pt;height:23.96pt;" contenteditable data-k="ec10"></span>
-<span class="ed vc" style="left:54.6pt;top:640.08pt;width:50.52pt;height:24pt;" contenteditable data-k="ey11"></span>
-<span class="ed vc" style="left:105.24pt;top:640.08pt;width:25.32pt;height:24pt;" contenteditable data-k="em11"></span>
-<span class="ed vc" style="left:131.4pt;top:640.08pt;width:408.48pt;height:24pt;" contenteditable data-k="ec11"></span>
-<span class="ed vc" style="left:54.6pt;top:664.2pt;width:50.52pt;height:24pt;" contenteditable data-k="ey12"></span>
-<span class="ed vc" style="left:105.24pt;top:664.2pt;width:25.32pt;height:24pt;" contenteditable data-k="em12"></span>
-<span class="ed vc" style="left:131.4pt;top:664.2pt;width:408.48pt;height:24pt;" contenteditable data-k="ec12"></span>
-<span class="ed vc" style="left:54.6pt;top:688.32pt;width:50.52pt;height:24pt;" contenteditable data-k="ey13"></span>
-<span class="ed vc" style="left:105.24pt;top:688.32pt;width:25.32pt;height:24pt;" contenteditable data-k="em13"></span>
-<span class="ed vc" style="left:131.4pt;top:688.32pt;width:408.48pt;height:24pt;" contenteditable data-k="ec13"></span>
-<span class="ed vc" style="left:54.6pt;top:712.44pt;width:50.52pt;height:24pt;" contenteditable data-k="ey14"></span>
-<span class="ed vc" style="left:105.24pt;top:712.44pt;width:25.32pt;height:24pt;" contenteditable data-k="em14"></span>
-<span class="ed vc" style="left:131.4pt;top:712.44pt;width:408.48pt;height:24pt;" contenteditable data-k="ec14"></span>
-<span class="ed vc" style="left:54.6pt;top:736.56pt;width:50.52pt;height:23.64pt;" contenteditable data-k="ey15"></span>
-<span class="ed vc" style="left:105.24pt;top:736.56pt;width:25.32pt;height:23.64pt;" contenteditable data-k="em15"></span>
-<span class="ed vc" style="left:131.4pt;top:736.56pt;width:408.48pt;height:23.64pt;" contenteditable data-k="ec15"></span>
-<div class="a dt" style="left:0;top:0;transform:translate(254.64pt,90.556pt) scale(.009967)"><span class="il" style="width:2648.741pt" contenteditable data-k="dy"></span>年<span class="il" style="width:1986.556pt" contenteditable data-k="dm"></span>月<span class="il" style="width:1986.556pt" contenteditable data-k="dd"></span>日現在</div>
-<span class="a bh" style="left:0;top:0;width:25355.674pt;text-align:center;transform:translate(55.44pt,180.316pt) scale(.009967)" contenteditable data-k="birth">年　　　　　月　　　　　日生　（満　　　歳）　</span>
-<div class="a photo" id="photo" style="left:405pt;top:84.96pt;width:79.08pt;height:105.6pt"><img id="pimg" alt="" hidden><input type="file" id="pfile" accept="image/*" hidden></div>
-</section>
-<section class="page">
-<svg class="sv" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 595.32 841.92" width="595.32pt" height="841.92pt">
-<path class="tn" d="M113.28 77.4H113.4V99.84H113.28ZM62.76 125.16H138.72V125.28H62.76ZM62.76 149.28H138.72V149.4H62.76ZM62.76 173.4H138.72V173.52H62.76ZM62.76 197.76H138.72V197.88H62.76ZM113.28 102.36H113.4V221.52H113.28ZM139.56 125.16H544.92V125.28H139.56ZM139.56 149.28H544.92V149.4H139.56ZM139.56 173.4H544.92V173.52H139.56ZM139.56 197.76H544.92V197.88H139.56Z"/>
-<path class="tk" d="M138.72 77.4H139.56V99.84H138.72ZM61.92 76.56H62.76V222.36H61.92ZM544.92 77.4H545.76V222.36H544.92ZM138.72 102.36H139.56V222.36H138.72ZM62.76 76.56H545.76V77.4H62.76ZM62.76 99.84H544.92V100.68H62.76ZM62.76 101.52H544.92V102.36H62.76ZM62.76 221.52H545.76V222.36H62.76Z"/>
-<text x="83.76" y="91.92" class="p" style="font-size:9.007">年</text>
-<text x="122.156" y="91.92" class="p" style="font-size:9.007">月</text>
-<text x="314.039 323.043 325.801 328.559 337.563 340.321 344.882 347.64 356.644 359.402 362.16" y="91.92" class="p" style="font-size:9.007">資  格 ・ 免  許</text>
-</svg>
-<span class="ed vc" style="left:62.76pt;top:102.36pt;width:50.52pt;height:22.8pt;" contenteditable data-k="qy0"></span>
-<span class="ed vc" style="left:113.4pt;top:102.36pt;width:25.32pt;height:22.8pt;" contenteditable data-k="qm0"></span>
-<span class="ed vc" style="left:139.56pt;top:102.36pt;width:405.36pt;height:22.8pt;" contenteditable data-k="qc0"></span>
-<span class="ed vc" style="left:62.76pt;top:125.28pt;width:50.52pt;height:24pt;" contenteditable data-k="qy1"></span>
-<span class="ed vc" style="left:113.4pt;top:125.28pt;width:25.32pt;height:24pt;" contenteditable data-k="qm1"></span>
-<span class="ed vc" style="left:139.56pt;top:125.28pt;width:405.36pt;height:24pt;" contenteditable data-k="qc1"></span>
-<span class="ed vc" style="left:62.76pt;top:149.4pt;width:50.52pt;height:24pt;" contenteditable data-k="qy2"></span>
-<span class="ed vc" style="left:113.4pt;top:149.4pt;width:25.32pt;height:24pt;" contenteditable data-k="qm2"></span>
-<span class="ed vc" style="left:139.56pt;top:149.4pt;width:405.36pt;height:24pt;" contenteditable data-k="qc2"></span>
-<span class="ed vc" style="left:62.76pt;top:173.52pt;width:50.52pt;height:24.24pt;" contenteditable data-k="qy3"></span>
-<span class="ed vc" style="left:113.4pt;top:173.52pt;width:25.32pt;height:24.24pt;" contenteditable data-k="qm3"></span>
-<span class="ed vc" style="left:139.56pt;top:173.52pt;width:405.36pt;height:24.24pt;" contenteditable data-k="qc3"></span>
-<span class="ed vc" style="left:62.76pt;top:197.88pt;width:50.52pt;height:23.64pt;" contenteditable data-k="qy4"></span>
-<span class="ed vc" style="left:113.4pt;top:197.88pt;width:25.32pt;height:23.64pt;" contenteditable data-k="qm4"></span>
-<span class="ed vc" style="left:139.56pt;top:197.88pt;width:405.36pt;height:23.64pt;" contenteditable data-k="qc4"></span>
-<div class="bx" id="bx1" style="transform:translate(61.92pt,229.56pt)"><svg class="sv bs" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 483.84 121.44" width="483.84pt" height="121.44pt"><path class="tk" d="M0 0H0.84V121.44H0ZM483 0.84H483.84V121.44H483ZM0.84 0H483.84V0.84H0.84ZM0.84 24.12H483.84V24.96H0.84ZM0.84 120.6H483.84V121.44H0.84Z"/><text x="2.038 8.041 17.036 26.04 34.558 43.562" y="15.36" class="p" style="font-size:9.007">　志望の動機</text></svg><span class="ed" style="left:.84pt;top:24.96pt;width:482.16pt;height:95.64pt;padding:2.9pt 4.3pt;line-height:2.1" contenteditable data-k="motive"></span></div>
-<div class="bx" id="bx2" style="transform:translate(61.92pt,358.2pt)"><svg class="sv bs" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 483.84 121.44" width="483.84pt" height="121.44pt"><path class="tk" d="M0 0H0.84V121.44H0ZM483 0.84H483.84V121.44H483ZM0.84 0H483.84V0.84H0.84ZM0.84 24.12H483.84V24.96H0.84ZM0.84 120.6H483.84V121.44H0.84Z"/><text x="2.038 8.041 17.036 26.04 31.078" y="15.36" class="p" style="font-size:9.007">　自己PR</text></svg><span class="ed" style="left:.84pt;top:24.96pt;width:482.16pt;height:95.64pt;padding:2.9pt 4.3pt;line-height:2.1" contenteditable data-k="pr"></span></div>
-<div class="bx" id="bx3" style="transform:translate(61.92pt,486.84pt)"><svg class="sv bs" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 483.84 121.44" width="483.84pt" height="121.44pt"><path class="tk" d="M0 0H0.84V121.44H0ZM483 0.84H483.84V121.44H483ZM0.84 0H483.84V0.84H0.84ZM0.84 24.12H483.84V24.96H0.84ZM0.84 120.6H483.84V121.44H0.84Z"/><text x="2.04" y="15.36" class="p" style="font-size:9.007">　学生時代の取り組み</text></svg><span class="ed" style="left:.84pt;top:24.96pt;width:482.16pt;height:95.64pt;padding:2.9pt 4.3pt;line-height:2.1" contenteditable data-k="study"></span></div>
-<div class="bx" id="bx4" style="transform:translate(61.92pt,615.48pt)"><svg class="sv bs" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 483.84 145.56" width="483.84pt" height="145.56pt"><path class="tn" d="M0.84 48.6H483V48.72H0.84ZM0.84 72.72H483V72.84H0.84ZM0.84 96.84H483V96.96H0.84ZM0.84 120.96H483V121.08H0.84Z"/><path class="tk" d="M-0 -0H0.84V145.56H-0ZM483 0.84H483.84V145.56H483ZM0.84 -0H483.84V0.84H0.84ZM0.84 23.28H483V24.12H0.84ZM0.84 24.96H483V25.8H0.84ZM0.84 144.72H483.84V145.56H0.84Z"/><text x="2.038 8.041 10.799 19.803 28.798 37.802 46.797 55.802 64.797 73.801 78.362 87.357 95.884 104.879 113.883 118.444 127.439 136.443 141.004 149.999 159.003 167.998 177.003 181.563 190.558 199.563 208.558 213.119 221.402 229.919 238.923 247.441 256.436 264.963 273.12 281.637 290.641 299.637 307.803 315.356 323.882 331.796 340.683 349.678 358.682 367.677" y="15.36" class="p" style="font-size:9.007">　 本人希望記入欄（特に給料・職種・勤務時間・勤務地・その他についての希望などがあれば記入）</text></svg><span class="ed vc" style="left:0.84pt;top:25.8pt;width:482.16pt;height:22.8pt;" contenteditable data-k="w0"></span><span class="ed vc" style="left:0.84pt;top:48.72pt;width:482.16pt;height:24pt;" contenteditable data-k="w1"></span><span class="ed vc" style="left:0.84pt;top:72.84pt;width:482.16pt;height:24pt;" contenteditable data-k="w2"></span><span class="ed vc" style="left:0.84pt;top:96.96pt;width:482.16pt;height:24pt;" contenteditable data-k="w3"></span><span class="ed vc" style="left:0.84pt;top:121.08pt;width:482.16pt;height:23.64pt;" contenteditable data-k="w4"></span></div>
-</section>
-</div>
-<div class="vw" id="v-in" hidden><textarea id="tx" spellcheck="false" aria-label="入力"></textarea></div>
-<div class="vw" id="v-set" hidden><div class="set"><input id="fn" type="text" aria-label="ファイル名"><button id="print">PDF保存</button></div></div>
-<script>
-(function(){
-var KEY="create-resume-v3";
-var eduRows=16,qualRows=5,wishRows=5,i,h;
-function fields(){return Array.prototype.slice.call(document.querySelectorAll("[data-k]"));}
-function load(){
-try{var s=JSON.parse(localStorage.getItem(KEY)||"{}");fields().forEach(function(el){var v=s[el.dataset.k];if(v===undefined)return;if(el.dataset.k==="birth"&&v==="年　　　月　　　日生（満　　歳）")return;el.innerText=v;});}catch(e){}
-}
-function save(){
-try{var o={};fields().forEach(function(el){o[el.dataset.k]=el.innerText;});localStorage.setItem(KEY,JSON.stringify(o));}catch(e){}
-}
-load();
-alignAll();
-document.addEventListener("input",function(e){if(e.target===tx||e.target===fn)return;align(e.target);layout();save();pushText();});
-document.addEventListener("paste",function(e){
-if(e.target&&e.target.isContentEditable){e.preventDefault();var t=(e.clipboardData||window.clipboardData).getData("text");document.execCommand("insertText",false,t);}
-});
-var SINGLE=[["furi","ふりがな"],["name","氏名"],["sex","性別"],["afuri","住所ふりがな"],["zip","郵便"],["addr","現住所"],["tel","TEL"],["mail","E-mail"],["cfuri","連絡ふりがな"],["alt","連絡先"],["ctel","連絡TEL"],["cmail","連絡E-mail"]];
-var TAIL=[["motive","志望の動機"],["pr","自己PR"],["study","学生時代の取り組み"]];
-function byKey(k){return document.querySelector('[data-k="'+k+'"]');}
-function val(k){var el=byKey(k);return el?el.innerText.replace(/\n+$/,""):"";}
-function setv(k,v){var el=byKey(k);if(el)el.innerText=v;}
-function nz(s){s=(s||"").trim();return s==="null"?"":s;}
-function nums(s){return s.split(/[,、]/).map(function(x){return x.trim();});}
-function entry(line){var m=line.match(/^\s*([^,]*?)\s*,\s*([^,]*?)\s*,\s*(.*?)\s*$/);if(m)return{y:nz(m[1]),m:nz(m[2]),c:nz(m[3])};return{y:"",m:"",c:nz(line)};}
-function align(el){
-if(!el||!el.dataset||!/^ec\d+$/.test(el.dataset.k||""))return;
-var t=el.innerText.trim();
-el.style.textAlign=(t==="学歴"||t==="職歴")?"center":(t==="以上"?"right":"");
-}
-function alignAll(){fields().forEach(align);}
-var BX=["bx1","bx2","bx3"];
-function boxD(H){
-var r=[[0,0,.84,H],[483,.84,483.84,H],[.84,0,483.84,.84],[.84,24.12,483.84,24.96],[.84,H-.84,483.84,H]];
-return r.map(function(a){return "M"+a[0]+" "+a[1]+"H"+a[2]+"V"+a[3]+"H"+a[0]+"Z";}).join("");
-}
-function layout(){
-var w=document.getElementById("wrap"),z=w.style.zoom,y=229.56,T=3*95.64,L=[],S=0,P=0,fs=10;
-w.style.zoom=1;
-BX.forEach(function(id){
-var f=document.getElementById(id).querySelector(".ed"),n=1,cs;
-f.style.lineHeight=2.1;
-cs=getComputedStyle(f);
-P=(parseFloat(cs.paddingTop)+parseFloat(cs.paddingBottom))*.75;
-fs=parseFloat(cs.fontSize)*.75;
-if(f.innerText.trim()!==""){
-f.style.height="auto";
-n=Math.max(1,Math.round((f.getBoundingClientRect().height*.75-P)/(fs*2.1)));
-}
-L.push(n);S+=n;
-});
-var lh=Math.max(fs,Math.min(fs*2.1,(T-3*P)/S));
-BX.forEach(function(id,i){
-var b=document.getElementById(id),f=b.querySelector(".ed"),bh=(T-3*P)*L[i]/S+P;
-f.style.lineHeight=lh/fs;
-f.style.height=bh+"pt";
-var H=24.96+bh+.84,s=b.querySelector("svg");
-s.setAttribute("height",H+"pt");
-s.setAttribute("viewBox","0 0 483.84 "+H);
-s.querySelector("path").setAttribute("d",boxD(H));
-b.style.transform="translate(61.92pt,"+y+"pt)";
-y+=H+7.2;
-});
-document.getElementById("bx4").style.transform="translate(61.92pt,"+y+"pt)";
-w.style.zoom=z;
-}
-function parse(text){
-var secs=[],cur=null;
-text.replace(/^﻿/,"").split(/\r?\n/).forEach(function(l){
-var h=l.match(/^\s*\[([^\]]+)\]\s*$/);
-if(h){cur={name:h[1].trim(),lines:[]};secs.push(cur);return;}
-if(cur)cur.lines.push(l);
-});
-secs.forEach(function(s){
-while(s.lines.length&&s.lines[s.lines.length-1].trim()==="")s.lines.pop();
-while(s.lines.length&&s.lines[0].trim()==="")s.lines.shift();
-});
-return secs;
-}
-function applyImport(secs,full){
-var sec={},n;
-if(full)resetAll();
-secs.forEach(function(x){sec[x.name]=x;});
-SINGLE.concat(TAIL).forEach(function(a){if(sec[a[1]])setv(a[0],sec[a[1]].lines.join("\n"));});
-var d=sec["作成年月日"];
-if(d){var dn=nums(d.lines[0]||"");setv("dy",dn[0]||"");setv("dm",dn[1]||"");setv("dd",dn[2]||"");}
-var b=sec["生年月日と満年齢"];
-if(b){var bn=nums(b.lines[0]||"");setv("birth",bn.length>3?bn[0]+" 年 "+bn[1]+" 月 "+bn[2]+" 日生 （満 "+bn[3]+" 歳）":BIRTH0);}
-var edu=sec["学歴"],work=sec["職歴"];
-if(edu||work){
-var rows=[];
-if(edu){rows.push({y:"",m:"",c:"学歴"});edu.lines.forEach(function(l){rows.push(entry(l));});}
-if(work){if(edu)rows.push({y:"",m:"",c:""});rows.push({y:"",m:"",c:"職歴"});work.lines.forEach(function(l){rows.push(entry(l));});}
-if(rows[rows.length-1].c!=="以上")rows.push({y:"",m:"",c:"以上"});
-for(n=0;n<eduRows;n++){var r=rows[n]||{y:"",m:"",c:""};setv("ey"+n,r.y);setv("em"+n,r.m);setv("ec"+n,r.c);}
-}
-var q=sec["資格・免許"];
-if(q){for(n=0;n<qualRows;n++){var e=q.lines[n]!==undefined?entry(q.lines[n]):{y:"",m:"",c:""};setv("qy"+n,e.y);setv("qm"+n,e.m);setv("qc"+n,e.c);}}
-var w=sec["本人希望"];
-if(w){for(n=0;n<wishRows;n++){setv("w"+n,w.lines[n]!==undefined?w.lines[n].trim():"");}}
-alignAll();layout();save();
-}
-function ent(y,m,c){return (y||"null")+", "+(m||"null")+", "+c;}
-function buildText(){
-var o=[],n;
-function sec(t,v){o.push("["+t+"]");if(v!=="")o.push(v);}
-function one(t,k){sec(t,val(k));}
-function gap(){o.push("");}
-var dd=[val("dy"),val("dm"),val("dd")].map(function(x){return x.trim();});
-sec("作成年月日",dd.join("")===""?"":dd.join(", "));
-one("ふりがな","furi");
-one("氏名","name");
-var bm=val("birth").match(/(\d+)\D+(\d+)\D+(\d+)\D+(\d+)/);
-sec("生年月日と満年齢",bm?bm.slice(1,5).join(", "):"");
-one("性別","sex");
-one("住所ふりがな","afuri");
-one("郵便","zip");
-one("現住所","addr");
-one("TEL","tel");
-one("E-mail","mail");
-one("連絡ふりがな","cfuri");
-one("連絡先","alt");
-one("連絡TEL","ctel");
-one("連絡E-mail","cmail");
-gap();
-var st="学歴",L={"学歴":[],"職歴":[]};
-for(n=0;n<eduRows;n++){
-var y=val("ey"+n).trim(),m=val("em"+n).trim(),c=val("ec"+n).trim();
-if(c==="学歴"||c==="職歴"){st=c;continue;}
-if(c==="以上"||(!y&&!m&&!c))continue;
-L[st].push(ent(y,m,c));
-}
-sec("学歴",L["学歴"].join("\n"));
-sec("職歴",L["職歴"].join("\n"));
-gap();
-var Q=[];
-for(n=0;n<qualRows;n++){var qy=val("qy"+n).trim(),qm=val("qm"+n).trim(),qc=val("qc"+n).trim();if(qy||qm||qc)Q.push(ent(qy,qm,qc));}
-sec("資格・免許",Q.join("\n"));
-gap();
-TAIL.forEach(function(a){sec(a[1],val(a[0]));gap();});
-var W=[];
-for(n=0;n<wishRows;n++){var t=val("w"+n).trim();if(t)W.push(t);}
-sec("本人希望",W.join("\n"));
-return o.join("\r\n");
-}
-var tx=document.getElementById("tx"),fn=document.getElementById("fn"),curView="resume",touched=false;
-var BIRTH0="年　　　　　月　　　　　日生　（満　　　歳）　";
-function resetAll(){fields().forEach(function(el){el.innerText="";});setv("birth",BIRTH0);}
-function pad(n){return (n<10?"0":"")+n;}
-function stamp(){var d=new Date();return pad(d.getMonth()+1)+pad(d.getDate())+pad(d.getHours())+pad(d.getMinutes());}
-function autoName(){if(!touched)fn.value="履歴書_"+stamp()+".pdf";}
-function pushText(){if(document.activeElement!==tx)tx.value=buildText();}
-function setView(v){
-curView=v;
-document.getElementById("wrap").classList.toggle("off",v!=="resume");
-document.getElementById("v-in").hidden=v!=="in";
-document.getElementById("v-set").hidden=v!=="set";
-document.getElementById("tb-r").classList.toggle("on",v==="resume");
-document.getElementById("tb-i").classList.toggle("on",v==="in");
-document.getElementById("tb-s").classList.toggle("on",v==="set");
-if(v==="in")pushText();
-if(v==="set")autoName();
-if(v==="resume")layout();
-window.scrollTo(0,0);
-fit();
-}
-function importTxt(text){applyImport(parse(text),true);pushText();}
-window.__resume={imp:importTxt,exp:buildText,view:setView,type:function(s){tx.value=s;tx.dispatchEvent(new Event("input",{bubbles:true}));}};
-function go(v){if(v!==curView)location.replace("?v="+v);}
-document.getElementById("tb-r").addEventListener("click",function(){go("resume");});
-document.getElementById("tb-i").addEventListener("click",function(){go("in");});
-document.getElementById("tb-s").addEventListener("click",function(){go("set");});
-tx.addEventListener("input",function(){applyImport(parse(tx.value),true);});
-fn.addEventListener("input",function(){touched=true;try{sessionStorage.setItem(FKEY,fn.value);}catch(e){}});
-document.getElementById("print").addEventListener("click",function(){
-autoName();
-var n=fn.value.replace(/[.]pdf$/i,"").trim()||"履歴書",old=document.title;
-document.title=n;
-layout();
-window.print();
-document.title=old;
-});
-var photo=document.getElementById("photo"),pimg=document.getElementById("pimg"),pfile=document.getElementById("pfile"),PKEY="create-resume-photo-v1";
-var phs=document.getElementById("phs"),FKEY="create-resume-fn-v1";
-function showPhoto(src){
-if(src){pimg.src=src;pimg.hidden=false;photo.classList.add("has");phs.style.display="none";}
-else{pimg.removeAttribute("src");pimg.hidden=true;photo.classList.remove("has");phs.style.display="";}
-}
-try{localStorage.removeItem(PKEY);}catch(e){}
-try{var sp=sessionStorage.getItem(PKEY);if(sp)showPhoto(sp);}catch(e){}
-try{var sf=sessionStorage.getItem(FKEY);if(sf){fn.value=sf;touched=true;}}catch(e){}
-photo.addEventListener("click",function(e){if(e.target!==pfile)pfile.click();});
-pfile.addEventListener("click",function(e){e.stopPropagation();});
-pfile.addEventListener("change",function(e){
-var f=e.target.files&&e.target.files[0];
-if(!f)return;
-var url=URL.createObjectURL(f),im=new Image();
-im.onload=function(){
-var r=Math.min(1,900/Math.max(im.width,im.height)),c=document.createElement("canvas");
-c.width=Math.round(im.width*r);c.height=Math.round(im.height*r);
-c.getContext("2d").drawImage(im,0,0,c.width,c.height);
-var d=c.toDataURL("image/jpeg",.92);
-URL.revokeObjectURL(url);
-showPhoto(d);
-try{sessionStorage.setItem(PKEY,d);}catch(x){}
-
-};
-im.src=url;
-e.target.value="";
-});
-photo.addEventListener("contextmenu",function(e){
-if(!photo.classList.contains("has"))return;
-e.preventDefault();
-if(confirm("写真を削除します。よろしいですか。")){showPhoto("");try{sessionStorage.removeItem(PKEY);}catch(x){}}
-});
-function fit(){
-var vp=document.querySelector('meta[name="viewport"]');
-vp.setAttribute("content","width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no");
-document.getElementById("wrap").style.zoom=baseZ()*U;
-}
-function baseZ(){return Math.min(1,(window.innerWidth-16)/1587.52);}
-var U=1,pd=0,pu=1;
-function tdist(t){return Math.hypot(t[0].clientX-t[1].clientX,t[0].clientY-t[1].clientY);}
-function zoomAt(nu,cx,cy){
-var w=document.getElementById("wrap"),f=baseZ(),old=parseFloat(w.style.zoom)||f;
-nu=Math.max(1,Math.min(nu,2.5/f));
-var nz=f*nu,px=(window.scrollX+cx)/old,py=(window.scrollY+cy)/old;
-U=nu;w.style.zoom=nz;
-window.scrollTo(px*nz-cx,py*nz-cy);
-}
-document.addEventListener("touchstart",function(e){if(curView==="resume"&&e.touches.length===2){pd=tdist(e.touches);pu=U;}},{passive:true});
-document.addEventListener("touchmove",function(e){
-if(curView!=="resume"||e.touches.length!==2||!pd)return;
-e.preventDefault();
-zoomAt(pu*tdist(e.touches)/pd,(e.touches[0].clientX+e.touches[1].clientX)/2,(e.touches[0].clientY+e.touches[1].clientY)/2);
-},{passive:false});
-document.addEventListener("touchend",function(e){if(e.touches.length<2)pd=0;},{passive:true});
-window.addEventListener("resize",fit);
-window.addEventListener("orientationchange",function(){setTimeout(fit,300);});
-tx.value=buildText();
-layout();
-if(document.fonts&&document.fonts.ready)document.fonts.ready.then(layout);
-window.addEventListener('load',layout);
-window.addEventListener('beforeprint',layout);
-var q0=(location.search.match(/[?&]v=(in|set)\b/)||[])[1];
-if(q0)setView(q0);else fit();
-})();
-</script>
+  <div class="bar" id="bar">
+    <button id="tb-r" class="on">履歴書</button>
+    <button id="tb-i">入力</button>
+    <button id="tb-s">設定</button>
+  </div>
+  <div class="wrap" id="wrap">
+    <section class="page">
+      <svg class="sv" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 595.32 841.92" width="595.32pt" height="841.92pt">
+        <path class="tn" d="M54.6 221.88H425.28V222H54.6ZM54.6 294.24H425.28V294.36H54.6ZM105.12 351H105.24V373.44H105.12ZM54.6 398.76H130.56V398.88H54.6ZM54.6 422.88H130.56V423H54.6ZM54.6 447H130.56V447.12H54.6ZM54.6 471.12H130.56V471.24H54.6ZM54.6 495.24H130.56V495.36H54.6ZM54.6 519.36H130.56V519.48H54.6ZM54.6 543.48H130.56V543.6H54.6ZM54.6 567.6H130.56V567.72H54.6ZM54.6 591.72H130.56V591.84H54.6ZM54.6 615.84H130.56V615.96H54.6ZM54.6 639.96H130.56V640.08H54.6ZM54.6 664.08H130.56V664.2H54.6ZM54.6 688.2H130.56V688.32H54.6ZM54.6 712.32H130.56V712.44H54.6ZM54.6 736.44H130.56V736.56H54.6ZM105.12 375.96H105.24V760.2H105.12ZM54.6 133.2H371.76V133.32H54.6ZM426.12 221.88H539.88V222H426.12ZM426.12 294.24H539.88V294.36H426.12ZM131.4 398.76H539.88V398.88H131.4ZM131.4 422.88H539.88V423H131.4ZM131.4 447H539.88V447.12H131.4ZM131.4 471.12H539.88V471.24H131.4ZM131.4 495.24H539.88V495.36H131.4ZM131.4 519.36H539.88V519.48H131.4ZM131.4 543.48H539.88V543.6H131.4ZM131.4 567.6H539.88V567.72H131.4ZM131.4 591.72H539.88V591.84H131.4ZM131.4 615.84H539.88V615.96H131.4ZM131.4 639.96H539.88V640.08H131.4ZM131.4 664.08H539.88V664.2H131.4ZM131.4 688.2H539.88V688.32H131.4ZM131.4 712.32H539.88V712.44H131.4ZM131.4 736.44H539.88V736.56H131.4Z"/>
+        <path class="tk" d="M53.76 108.72H54.6V342.96H53.76ZM539.88 198.24H540.72V342.96H539.88ZM130.56 351H131.4V373.44H130.56ZM53.76 350.16H54.6V761.04H53.76ZM371.76 109.56H372.6V198.24H371.76ZM308.16 173.88H309V198.24H308.16ZM425.28 198.24H426.12V342.96H425.28ZM539.88 351H540.72V761.04H539.88ZM130.56 375.96H131.4V761.04H130.56ZM54.6 108.72H372.6V109.56H54.6ZM54.6 173.04H372.6V173.88H54.6ZM54.6 197.4H540.72V198.24H54.6ZM54.6 269.76H540.72V270.6H54.6ZM54.6 342.12H540.72V342.96H54.6ZM54.6 350.16H540.72V351H54.6ZM54.6 373.44H539.88V374.28H54.6ZM54.6 375.12H539.88V375.96H54.6ZM54.6 760.2H540.72V761.04H54.6Z"/>
+        <g id="phs">
+          <path fill="#fff" d="M405.12 85.08H483.84V190.32H405.12Z"/>
+          <path fill="rgb(127,127,127)" d="M405 190.32L405 189L405.36 189L405.36 190.32ZM405 188.52L405 187.2L405.36 187.2L405.36 188.52ZM405 186.72L405 185.4L405.36 185.4L405.36 186.72ZM405 184.92L405 183.6L405.36 183.6L405.36 184.92ZM405 183.12L405 181.8L405.36 181.8L405.36 183.12ZM405 181.32L405 180L405.36 180L405.36 181.32ZM405 179.52L405 178.2L405.36 178.2L405.36 179.52ZM405 177.72L405 176.4L405.36 176.4L405.36 177.72ZM405 175.92L405 174.6L405.36 174.6L405.36 175.92ZM405 174.12L405 172.8L405.36 172.8L405.36 174.12ZM405 172.32L405 171L405.36 171L405.36 172.32ZM405 170.52L405 169.2L405.36 169.2L405.36 170.52ZM405 168.72L405 167.4L405.36 167.4L405.36 168.72ZM405 166.92L405 165.6L405.36 165.6L405.36 166.92ZM405 165.12L405 163.8L405.36 163.8L405.36 165.12ZM405 163.32L405 162L405.36 162L405.36 163.32ZM405 161.52L405 160.2L405.36 160.2L405.36 161.52ZM405 159.72L405 158.4L405.36 158.4L405.36 159.72ZM405 157.92L405 156.6L405.36 156.6L405.36 157.92ZM405 156.12L405 154.8L405.36 154.8L405.36 156.12ZM405 154.32L405 153L405.36 153L405.36 154.32ZM405 152.52L405 151.2L405.36 151.2L405.36 152.52ZM405 150.72L405 149.4L405.36 149.4L405.36 150.72ZM405 148.92L405 147.6L405.36 147.6L405.36 148.92ZM405 147.12L405 145.8L405.36 145.8L405.36 147.12ZM405 145.32L405 144L405.36 144L405.36 145.32ZM405 143.52L405 142.2L405.36 142.2L405.36 143.52ZM405 141.72L405 140.4L405.36 140.4L405.36 141.72ZM405 139.92L405 138.6L405.36 138.6L405.36 139.92ZM405 138.12L405 136.8L405.36 136.8L405.36 138.12ZM405 136.32L405 135L405.36 135L405.36 136.32ZM405 134.52L405 133.2L405.36 133.2L405.36 134.52ZM405 132.72L405 131.4L405.36 131.4L405.36 132.72ZM405 130.92L405 129.6L405.36 129.6L405.36 130.92ZM405 129.12L405 127.8L405.36 127.8L405.36 129.12ZM405 127.32L405 126L405.36 126L405.36 127.32ZM405 125.52L405 124.2L405.36 124.2L405.36 125.52ZM405 123.72L405 122.4L405.36 122.4L405.36 123.72ZM405 121.92L405 120.6L405.36 120.6L405.36 121.92ZM405 120.12L405 118.8L405.36 118.8L405.36 120.12ZM405 118.32L405 117L405.36 117L405.36 118.32ZM405 116.52L405 115.2L405.36 115.2L405.36 116.52ZM405 114.72L405 113.4L405.36 113.4L405.36 114.72ZM405 112.92L405 111.6L405.36 111.6L405.36 112.92ZM405 111.12L405 109.8L405.36 109.8L405.36 111.12ZM405 109.32L405 108L405.36 108L405.36 109.32ZM405 107.52L405 106.2L405.36 106.2L405.36 107.52ZM405 105.72L405 104.4L405.36 104.4L405.36 105.72ZM405 103.92L405 102.6L405.36 102.6L405.36 103.92ZM405 102.12L405 100.8L405.36 100.8L405.36 102.12ZM405 100.32L405 99L405.36 99L405.36 100.32ZM405 98.52L405 97.2L405.36 97.2L405.36 98.52ZM405 96.72L405 95.4L405.36 95.4L405.36 96.72ZM405 94.92L405 93.6L405.36 93.6L405.36 94.92ZM405 93.12L405 91.8L405.36 91.8L405.36 93.12ZM405 91.32L405 90L405.36 90L405.36 91.32ZM405 89.52L405 88.2L405.36 88.2L405.36 89.52ZM405 87.72L405 86.4L405.36 86.4L405.36 87.72ZM405 85.92L405 85.08L405.12 84.96L405.72 84.96L405.72 85.32L405.12 85.32L405.36 85.08L405.36 85.92ZM406.2 84.96H407.52V85.32H406.2ZM408 84.96H409.32V85.32H408ZM409.8 84.96H411.12V85.32H409.8ZM411.6 84.96H412.92V85.32H411.6ZM413.4 84.96H414.72V85.32H413.4ZM415.2 84.96H416.52V85.32H415.2ZM417 84.96H418.32V85.32H417ZM418.8 84.96H420.12V85.32H418.8ZM420.6 84.96H421.92V85.32H420.6ZM422.4 84.96H423.72V85.32H422.4ZM424.2 84.96H425.52V85.32H424.2ZM426 84.96H427.32V85.32H426ZM427.8 84.96H429.12V85.32H427.8ZM429.6 84.96H430.92V85.32H429.6ZM431.4 84.96H432.72V85.32H431.4ZM433.2 84.96H434.52V85.32H433.2ZM435 84.96H436.32V85.32H435ZM436.8 84.96H438.12V85.32H436.8ZM438.6 84.96H439.92V85.32H438.6ZM440.4 84.96H441.72V85.32H440.4ZM442.2 84.96H443.52V85.32H442.2ZM444 84.96H445.32V85.32H444ZM445.8 84.96H447.12V85.32H445.8ZM447.6 84.96H448.92V85.32H447.6ZM449.4 84.96H450.72V85.32H449.4ZM451.2 84.96H452.52V85.32H451.2ZM453 84.96H454.32V85.32H453ZM454.8 84.96H456.12V85.32H454.8ZM456.6 84.96H457.92V85.32H456.6ZM458.4 84.96H459.72V85.32H458.4ZM460.2 84.96H461.52V85.32H460.2ZM462 84.96H463.32V85.32H462ZM463.8 84.96H465.12V85.32H463.8ZM465.6 84.96H466.92V85.32H465.6ZM467.4 84.96H468.72V85.32H467.4ZM469.2 84.96H470.52V85.32H469.2ZM471 84.96H472.32V85.32H471ZM472.8 84.96H474.12V85.32H472.8ZM474.6 84.96H475.92V85.32H474.6ZM476.4 84.96H477.72V85.32H476.4ZM478.2 84.96H479.52V85.32H478.2ZM480 84.96H481.32V85.32H480ZM481.8 84.96H483.12V85.32H481.8ZM483.6 84.96L483.84 84.96L484.08 85.08L484.08 86.16L483.72 86.16L483.72 85.08L483.84 85.32L483.6 85.32ZM484.08 86.64L484.08 87.96L483.72 87.96L483.72 86.64ZM484.08 88.44L484.08 89.76L483.72 89.76L483.72 88.44ZM484.08 90.24L484.08 91.56L483.72 91.56L483.72 90.24ZM484.08 92.04L484.08 93.36L483.72 93.36L483.72 92.04ZM484.08 93.84L484.08 95.16L483.72 95.16L483.72 93.84ZM484.08 95.64L484.08 96.96L483.72 96.96L483.72 95.64ZM484.08 97.44L484.08 98.76L483.72 98.76L483.72 97.44ZM484.08 99.24L484.08 100.56L483.72 100.56L483.72 99.24ZM484.08 101.04L484.08 102.36L483.72 102.36L483.72 101.04ZM484.08 102.84L484.08 104.16L483.72 104.16L483.72 102.84ZM484.08 104.64L484.08 105.96L483.72 105.96L483.72 104.64ZM484.08 106.44L484.08 107.76L483.72 107.76L483.72 106.44ZM484.08 108.24L484.08 109.56L483.72 109.56L483.72 108.24ZM484.08 110.04L484.08 111.36L483.72 111.36L483.72 110.04ZM484.08 111.84L484.08 113.16L483.72 113.16L483.72 111.84ZM484.08 113.64L484.08 114.96L483.72 114.96L483.72 113.64ZM484.08 115.44L484.08 116.76L483.72 116.76L483.72 115.44ZM484.08 117.24L484.08 118.56L483.72 118.56L483.72 117.24ZM484.08 119.04L484.08 120.36L483.72 120.36L483.72 119.04ZM484.08 120.84L484.08 122.16L483.72 122.16L483.72 120.84ZM484.08 122.64L484.08 123.96L483.72 123.96L483.72 122.64ZM484.08 124.44L484.08 125.76L483.72 125.76L483.72 124.44ZM484.08 126.24L484.08 127.56L483.72 127.56L483.72 126.24ZM484.08 128.04L484.08 129.36L483.72 129.36L483.72 128.04ZM484.08 129.84L484.08 131.16L483.72 131.16L483.72 129.84ZM484.08 131.64L484.08 132.96L483.72 132.96L483.72 131.64ZM484.08 133.44L484.08 134.76L483.72 134.76L483.72 133.44ZM484.08 135.24L484.08 136.56L483.72 136.56L483.72 135.24ZM484.08 137.04L484.08 138.36L483.72 138.36L483.72 137.04ZM484.08 138.84L484.08 140.16L483.72 140.16L483.72 138.84ZM484.08 140.64L484.08 141.96L483.72 141.96L483.72 140.64ZM484.08 142.44L484.08 143.76L483.72 143.76L483.72 142.44ZM484.08 144.24L484.08 145.56L483.72 145.56L483.72 144.24ZM484.08 146.04L484.08 147.36L483.72 147.36L483.72 146.04ZM484.08 147.84L484.08 149.16L483.72 149.16L483.72 147.84ZM484.08 149.64L484.08 150.96L483.72 150.96L483.72 149.64ZM484.08 151.44L484.08 152.76L483.72 152.76L483.72 151.44ZM484.08 153.24L484.08 154.56L483.72 154.56L483.72 153.24ZM484.08 155.04L484.08 156.36L483.72 156.36L483.72 155.04ZM484.08 156.84L484.08 158.16L483.72 158.16L483.72 156.84ZM484.08 158.64L484.08 159.96L483.72 159.96L483.72 158.64ZM484.08 160.44L484.08 161.76L483.72 161.76L483.72 160.44ZM484.08 162.24L484.08 163.56L483.72 163.56L483.72 162.24ZM484.08 164.04L484.08 165.36L483.72 165.36L483.72 164.04ZM484.08 165.84L484.08 167.16L483.72 167.16L483.72 165.84ZM484.08 167.64L484.08 168.96L483.72 168.96L483.72 167.64ZM484.08 169.44L484.08 170.76L483.72 170.76L483.72 169.44ZM484.08 171.24L484.08 172.56L483.72 172.56L483.72 171.24ZM484.08 173.04L484.08 174.36L483.72 174.36L483.72 173.04ZM484.08 174.84L484.08 176.16L483.72 176.16L483.72 174.84ZM484.08 176.64L484.08 177.96L483.72 177.96L483.72 176.64ZM484.08 178.44L484.08 179.76L483.72 179.76L483.72 178.44ZM484.08 180.24L484.08 181.56L483.72 181.56L483.72 180.24ZM484.08 182.04L484.08 183.36L483.72 183.36L483.72 182.04ZM484.08 183.84L484.08 185.16L483.72 185.16L483.72 183.84ZM484.08 185.64L484.08 186.96L483.72 186.96L483.72 185.64ZM484.08 187.44L484.08 188.76L483.72 188.76L483.72 187.44ZM484.08 189.24L484.08 190.32L483.84 190.56L483.6 190.56L483.6 190.08L483.84 190.08L483.72 190.32L483.72 189.24ZM481.8 190.08H483.12V190.56H481.8ZM480 190.08H481.32V190.56H480ZM478.2 190.08H479.52V190.56H478.2ZM476.4 190.08H477.72V190.56H476.4ZM474.6 190.08H475.92V190.56H474.6ZM472.8 190.08H474.12V190.56H472.8ZM471 190.08H472.32V190.56H471ZM469.2 190.08H470.52V190.56H469.2ZM467.4 190.08H468.72V190.56H467.4ZM465.6 190.08H466.92V190.56H465.6ZM463.8 190.08H465.12V190.56H463.8ZM462 190.08H463.32V190.56H462ZM460.2 190.08H461.52V190.56H460.2ZM458.4 190.08H459.72V190.56H458.4ZM456.6 190.08H457.92V190.56H456.6ZM454.8 190.08H456.12V190.56H454.8ZM453 190.08H454.32V190.56H453ZM451.2 190.08H452.52V190.56H451.2ZM449.4 190.08H450.72V190.56H449.4ZM447.6 190.08H448.92V190.56H447.6ZM445.8 190.08H447.12V190.56H445.8ZM444 190.08H445.32V190.56H444ZM442.2 190.08H443.52V190.56H442.2ZM440.4 190.08H441.72V190.56H440.4ZM438.6 190.08H439.92V190.56H438.6ZM436.8 190.08H438.12V190.56H436.8ZM435 190.08H436.32V190.56H435ZM433.2 190.08H434.52V190.56H433.2ZM431.4 190.08H432.72V190.56H431.4ZM429.6 190.08H430.92V190.56H429.6ZM427.8 190.08H429.12V190.56H427.8ZM426 190.08H427.32V190.56H426ZM424.2 190.08H425.52V190.56H424.2ZM422.4 190.08H423.72V190.56H422.4ZM420.6 190.08H421.92V190.56H420.6ZM418.8 190.08H420.12V190.56H418.8ZM417 190.08H418.32V190.56H417ZM415.2 190.08H416.52V190.56H415.2ZM413.4 190.08H414.72V190.56H413.4ZM411.6 190.08H412.92V190.56H411.6ZM409.8 190.08H411.12V190.56H409.8ZM408 190.08H409.32V190.56H408ZM406.2 190.08H407.52V190.56H406.2ZM405.12 190.08H405.72V190.56H405.12Z"/>
+          <text x="421.678 428.398 435.118 441.838 448.679 455.399 462.119" y="115.32" class="m" style="font-size:6.72">写真をはる位置</text>
+          <text x="418.318 425.038 431.758 438.478 445.198 452.039 458.759 465.479" y="131.52" class="m" style="font-size:6.72">写真をはる必要が</text>
+          <text x="418.318 425.038 431.758 438.478" y="139.56" class="m" style="font-size:6.72">ある場合</text>
+          <text x="414.958 418.318 425.038" y="147.72" class="m" style="font-size:6.72">1．縦</text>
+          <text x="438.478 441.838 445.198 452.039 455.399 458.759 462.119" y="147.72" class="m" style="font-size:6.72">36～40mm</text>
+          <text x="425.038" y="155.76" class="m" style="font-size:6.72">横</text>
+          <text x="438.478 441.838 445.198 452.039 455.399 458.759 462.119" y="155.76" class="m" style="font-size:6.72">24～30mm</text>
+          <text x="414.958 418.318 421.678 428.398 435.118 441.838 448.679 455.399 462.119 468.839" y="163.92" class="m" style="font-size:6.72">2.本人単身胸から上</text>
+          <text x="414.958 418.318 421.678 428.398 435.118 441.838 448.679 455.399" y="171.96" class="m" style="font-size:6.72">3.裏面のりづけ</text>
+        </g>
+        <text x="309.961 317.157 324.361" y="180.24" class="p" style="font-size:7.205">※性別</text>
+        <text x="55.557 62.761 69.957 77.16 84.357 91.56 98.763 105.959 113.163 120.359 127.562 134.758 141.962 149.158 156.361 163.558 170.761 177.957 185.16 192.357 199.56 206.763 213.959 221.163 228.359 235.562 242.758 249.962 257.158" y="772.92" class="m" style="font-size:7.205">※「性別」欄：記載は任意です。未記載とすることも可能です。</text>
+        <text x="106.919 116.884 119.876 122.878 125.881 128.883 131.875 134.878 137.88 140.883 143.885 146.877 149.88 152.882 155.884 158.877 161.879 164.882 167.884 170.876 173.879 176.881 179.883 182.876 185.878 188.88 191.883 194.875 197.878 200.88 203.882 206.885 209.877 212.879 215.882 218.884" y="305.52" class="p" style="font-size:9.967">〒                                   </text>
+        <text x="75.595" y="365.52" class="p" style="font-size:9.007">年</text>
+        <text x="114.001" y="365.52" class="p" style="font-size:9.007">月</text>
+        <text x="64.32 73.324 79.084 87.601" y="285.12" class="p" style="font-size:9.007">ふりがな</text>
+        <text x="265.684 274.68 277.438 280.196 289.2 291.958 296.519 299.277 308.281 311.039 313.797 322.801 325.559 330.12 339.124 348.119 356.637 364.082 370.436 378.962 387.119 396.124 401.883" y="365.52" class="p" style="font-size:9.007">学  歴 ・ 職  歴 （各別にまとめて書く）</text>
+        <text x="427.436 430.439 440.403" y="285.48" class="p" style="font-size:9.967"> 電話</text>
+        <text x="65.158 75.122 85.077" y="305.52" class="p" style="font-size:9.967">連絡先</text>
+        <text x="427.436 430.439 436.443 441.481 448.443 453.001 455.395" y="305.52" class="p" style="font-size:9.967"> E-mail</text>
+        <text x="57.123 76.912 82.92 102.729 108.718" y="97.92" class="p" style="font-size:19.815">履 歴 書</text>
+        <text x="64.318 73.322 79.081 87.599" y="124.08" class="p" style="font-size:9.007">ふりがな</text>
+        <text x="65.635 75.6 78.602 81.605 84.597" y="156.6" class="p" style="font-size:9.967">氏   名</text>
+        <text x="427.435 430.438 436.442 441.479 448.442 453 455.404" y="233.16" class="p" style="font-size:9.967"> E-mail</text>
+        <text x="65.156 75.121 85.076" y="233.16" class="p" style="font-size:9.967">現住所</text>
+        <text x="254.764 257.281 259.798 262.323 264.84 273.004 281.159 289.323 297.479 305.643 313.439 321.602 329.758 336.721 344.876 353.04 361.204 367.676 375.84 384.004 391.8 399.964 408.119 416.283 418.8" y="304.92" class="p" style="font-size:8.166">   (現住所以外に連絡を希望する場合のみ記入)　</text>
+        <text x="427.438 430.44 440.395" y="213.12" class="p" style="font-size:9.967"> 電話</text>
+        <text x="64.324 73.32 79.079 87.597" y="212.76" class="p" style="font-size:9.007">ふりがな</text>
+        <text x="106.918" y="233.16" class="p" style="font-size:9.967">〒</text>
+      </svg>
+      <span class="ed vc fu" style="left:54.6pt;top:109.56pt;width:317.16pt;height:23.64pt;padding-left:63.04pt;font-size:8pt" contenteditable data-k="furi"></span>
+      <span class="ed vc" style="left:54.6pt;top:133.32pt;width:317.16pt;height:39.72pt;padding-left:63.04pt;font-size:16pt" contenteditable data-k="name"></span>
+      <span class="ed vc" style="left:309pt;top:181.2pt;width:62.76pt;height:16.2pt;text-align:center;padding-left:0;padding-right:0" contenteditable data-k="sex"></span>
+      <span class="ed vc fu" style="left:54.6pt;top:198.24pt;width:370.68pt;height:23.64pt;padding-left:63.04pt;font-size:8pt" contenteditable data-k="afuri"></span>
+      <span class="ed bl" style="left:426.12pt;top:203.12pt;width:113.76pt;height:18pt;padding:0 0 0 34.4pt;font-size:10pt" contenteditable data-k="tel"></span>
+      <span class="ed vc" style="left:54.6pt;top:222pt;width:370.68pt;height:15.5pt;padding-left:64pt" contenteditable data-k="zip"></span>
+      <span class="ed vc" style="left:54.6pt;top:237.5pt;width:370.68pt;height:32.26pt;padding-left:64pt;line-height:1.25;align-content:start" contenteditable data-k="addr"></span>
+      <span class="ed vc" style="left:426.12pt;top:222pt;width:113.76pt;height:47.76pt;padding-left:2pt;padding-right:0;font-size:7.5pt;line-height:1.35" contenteditable data-k="mail"></span>
+      <span class="ed vc fu" style="left:54.6pt;top:270.6pt;width:370.68pt;height:23.64pt;padding-left:63.04pt;font-size:8pt" contenteditable data-k="cfuri"></span>
+      <span class="ed bl" style="left:426.12pt;top:275.48pt;width:113.76pt;height:18pt;padding:0 0 0 34.4pt" contenteditable data-k="ctel"></span>
+      <span class="ed vc" style="left:54.6pt;top:294.36pt;width:370.68pt;height:15.5pt;padding-left:64pt" contenteditable data-k="czip"></span>
+      <span class="ed vc" style="left:54.6pt;top:309.86pt;width:370.68pt;height:32.26pt;padding-left:64pt;line-height:1.25;align-content:start" contenteditable data-k="alt"></span>
+      <span class="ed vc" style="left:426.12pt;top:294.36pt;width:113.76pt;height:47.76pt;" contenteditable data-k="cmail"></span>
+      <span class="ed vc" style="left:54.6pt;top:375.96pt;width:50.52pt;height:22.8pt;" contenteditable data-k="ey0"></span>
+      <span class="ed vc" style="left:105.24pt;top:375.96pt;width:25.32pt;height:22.8pt;" contenteditable data-k="em0"></span>
+      <span class="ed vc" style="left:131.4pt;top:375.96pt;width:408.48pt;height:22.8pt;" contenteditable data-k="ec0"></span>
+      <span class="ed vc" style="left:54.6pt;top:398.88pt;width:50.52pt;height:24pt;" contenteditable data-k="ey1"></span>
+      <span class="ed vc" style="left:105.24pt;top:398.88pt;width:25.32pt;height:24pt;" contenteditable data-k="em1"></span>
+      <span class="ed vc" style="left:131.4pt;top:398.88pt;width:408.48pt;height:24pt;" contenteditable data-k="ec1"></span>
+      <span class="ed vc" style="left:54.6pt;top:423pt;width:50.52pt;height:24pt;" contenteditable data-k="ey2"></span>
+      <span class="ed vc" style="left:105.24pt;top:423pt;width:25.32pt;height:24pt;" contenteditable data-k="em2"></span>
+      <span class="ed vc" style="left:131.4pt;top:423pt;width:408.48pt;height:24pt;" contenteditable data-k="ec2"></span>
+      <span class="ed vc" style="left:54.6pt;top:447.12pt;width:50.52pt;height:24pt;" contenteditable data-k="ey3"></span>
+      <span class="ed vc" style="left:105.24pt;top:447.12pt;width:25.32pt;height:24pt;" contenteditable data-k="em3"></span>
+      <span class="ed vc" style="left:131.4pt;top:447.12pt;width:408.48pt;height:24pt;" contenteditable data-k="ec3"></span>
+      <span class="ed vc" style="left:54.6pt;top:471.24pt;width:50.52pt;height:24pt;" contenteditable data-k="ey4"></span>
+      <span class="ed vc" style="left:105.24pt;top:471.24pt;width:25.32pt;height:24pt;" contenteditable data-k="em4"></span>
+      <span class="ed vc" style="left:131.4pt;top:471.24pt;width:408.48pt;height:24pt;" contenteditable data-k="ec4"></span>
+      <span class="ed vc" style="left:54.6pt;top:495.36pt;width:50.52pt;height:24pt;" contenteditable data-k="ey5"></span>
+      <span class="ed vc" style="left:105.24pt;top:495.36pt;width:25.32pt;height:24pt;" contenteditable data-k="em5"></span>
+      <span class="ed vc" style="left:131.4pt;top:495.36pt;width:408.48pt;height:24pt;" contenteditable data-k="ec5"></span>
+      <span class="ed vc" style="left:54.6pt;top:519.48pt;width:50.52pt;height:24pt;" contenteditable data-k="ey6"></span>
+      <span class="ed vc" style="left:105.24pt;top:519.48pt;width:25.32pt;height:24pt;" contenteditable data-k="em6"></span>
+      <span class="ed vc" style="left:131.4pt;top:519.48pt;width:408.48pt;height:24pt;" contenteditable data-k="ec6"></span>
+      <span class="ed vc" style="left:54.6pt;top:543.6pt;width:50.52pt;height:24pt;" contenteditable data-k="ey7"></span>
+      <span class="ed vc" style="left:105.24pt;top:543.6pt;width:25.32pt;height:24pt;" contenteditable data-k="em7"></span>
+      <span class="ed vc" style="left:131.4pt;top:543.6pt;width:408.48pt;height:24pt;" contenteditable data-k="ec7"></span>
+      <span class="ed vc" style="left:54.6pt;top:567.72pt;width:50.52pt;height:24pt;" contenteditable data-k="ey8"></span>
+      <span class="ed vc" style="left:105.24pt;top:567.72pt;width:25.32pt;height:24pt;" contenteditable data-k="em8"></span>
+      <span class="ed vc" style="left:131.4pt;top:567.72pt;width:408.48pt;height:24pt;" contenteditable data-k="ec8"></span>
+      <span class="ed vc" style="left:54.6pt;top:591.84pt;width:50.52pt;height:24pt;" contenteditable data-k="ey9"></span>
+      <span class="ed vc" style="left:105.24pt;top:591.84pt;width:25.32pt;height:24pt;" contenteditable data-k="em9"></span>
+      <span class="ed vc" style="left:131.4pt;top:591.84pt;width:408.48pt;height:24pt;" contenteditable data-k="ec9"></span>
+      <span class="ed vc" style="left:54.6pt;top:616pt;width:50.52pt;height:23.96pt;" contenteditable data-k="ey10"></span>
+      <span class="ed vc" style="left:105.24pt;top:616pt;width:25.32pt;height:23.96pt;" contenteditable data-k="em10"></span>
+      <span class="ed vc" style="left:131.4pt;top:616pt;width:408.48pt;height:23.96pt;" contenteditable data-k="ec10"></span>
+      <span class="ed vc" style="left:54.6pt;top:640.08pt;width:50.52pt;height:24pt;" contenteditable data-k="ey11"></span>
+      <span class="ed vc" style="left:105.24pt;top:640.08pt;width:25.32pt;height:24pt;" contenteditable data-k="em11"></span>
+      <span class="ed vc" style="left:131.4pt;top:640.08pt;width:408.48pt;height:24pt;" contenteditable data-k="ec11"></span>
+      <span class="ed vc" style="left:54.6pt;top:664.2pt;width:50.52pt;height:24pt;" contenteditable data-k="ey12"></span>
+      <span class="ed vc" style="left:105.24pt;top:664.2pt;width:25.32pt;height:24pt;" contenteditable data-k="em12"></span>
+      <span class="ed vc" style="left:131.4pt;top:664.2pt;width:408.48pt;height:24pt;" contenteditable data-k="ec12"></span>
+      <span class="ed vc" style="left:54.6pt;top:688.32pt;width:50.52pt;height:24pt;" contenteditable data-k="ey13"></span>
+      <span class="ed vc" style="left:105.24pt;top:688.32pt;width:25.32pt;height:24pt;" contenteditable data-k="em13"></span>
+      <span class="ed vc" style="left:131.4pt;top:688.32pt;width:408.48pt;height:24pt;" contenteditable data-k="ec13"></span>
+      <span class="ed vc" style="left:54.6pt;top:712.44pt;width:50.52pt;height:24pt;" contenteditable data-k="ey14"></span>
+      <span class="ed vc" style="left:105.24pt;top:712.44pt;width:25.32pt;height:24pt;" contenteditable data-k="em14"></span>
+      <span class="ed vc" style="left:131.4pt;top:712.44pt;width:408.48pt;height:24pt;" contenteditable data-k="ec14"></span>
+      <span class="ed vc" style="left:54.6pt;top:736.56pt;width:50.52pt;height:23.64pt;" contenteditable data-k="ey15"></span>
+      <span class="ed vc" style="left:105.24pt;top:736.56pt;width:25.32pt;height:23.64pt;" contenteditable data-k="em15"></span>
+      <span class="ed vc" style="left:131.4pt;top:736.56pt;width:408.48pt;height:23.64pt;" contenteditable data-k="ec15"></span>
+      <div class="a dt" style="left:0;top:0;transform:translate(254.64pt,90.556pt) scale(.009967)"><span class="il" style="width:2648.741pt" contenteditable data-k="dy"></span>年<span class="il" style="width:1986.556pt" contenteditable data-k="dm"></span>月<span class="il" style="width:1986.556pt" contenteditable data-k="dd"></span>日現在</div>
+      <span class="a bh" style="left:0;top:0;width:25355.674pt;text-align:center;transform:translate(55.44pt,180.316pt) scale(.009967)" contenteditable data-k="birth">年　　　　　月　　　　　日生　（満　　　歳）　</span>
+      <div class="a photo" id="photo" style="left:405pt;top:84.96pt;width:79.08pt;height:105.6pt">
+        <img id="pimg" alt="" hidden>
+        <input type="file" id="pfile" accept="image/*" hidden>
+      </div>
+    </section>
+    <section class="page">
+      <svg class="sv" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 595.32 841.92" width="595.32pt" height="841.92pt">
+        <path class="tn" d="M113.28 77.4H113.4V99.84H113.28ZM62.76 125.16H138.72V125.28H62.76ZM62.76 149.28H138.72V149.4H62.76ZM62.76 173.4H138.72V173.52H62.76ZM62.76 197.76H138.72V197.88H62.76ZM113.28 102.36H113.4V221.52H113.28ZM139.56 125.16H544.92V125.28H139.56ZM139.56 149.28H544.92V149.4H139.56ZM139.56 173.4H544.92V173.52H139.56ZM139.56 197.76H544.92V197.88H139.56Z"/>
+        <path class="tk" d="M138.72 77.4H139.56V99.84H138.72ZM61.92 76.56H62.76V222.36H61.92ZM544.92 77.4H545.76V222.36H544.92ZM138.72 102.36H139.56V222.36H138.72ZM62.76 76.56H545.76V77.4H62.76ZM62.76 99.84H544.92V100.68H62.76ZM62.76 101.52H544.92V102.36H62.76ZM62.76 221.52H545.76V222.36H62.76Z"/>
+        <text x="83.76" y="91.92" class="p" style="font-size:9.007">年</text>
+        <text x="122.156" y="91.92" class="p" style="font-size:9.007">月</text>
+        <text x="314.039 323.043 325.801 328.559 337.563 340.321 344.882 347.64 356.644 359.402 362.16" y="91.92" class="p" style="font-size:9.007">資  格 ・ 免  許</text>
+      </svg>
+      <span class="ed vc" style="left:62.76pt;top:102.36pt;width:50.52pt;height:22.8pt;" contenteditable data-k="qy0"></span>
+      <span class="ed vc" style="left:113.4pt;top:102.36pt;width:25.32pt;height:22.8pt;" contenteditable data-k="qm0"></span>
+      <span class="ed vc" style="left:139.56pt;top:102.36pt;width:405.36pt;height:22.8pt;" contenteditable data-k="qc0"></span>
+      <span class="ed vc" style="left:62.76pt;top:125.28pt;width:50.52pt;height:24pt;" contenteditable data-k="qy1"></span>
+      <span class="ed vc" style="left:113.4pt;top:125.28pt;width:25.32pt;height:24pt;" contenteditable data-k="qm1"></span>
+      <span class="ed vc" style="left:139.56pt;top:125.28pt;width:405.36pt;height:24pt;" contenteditable data-k="qc1"></span>
+      <span class="ed vc" style="left:62.76pt;top:149.4pt;width:50.52pt;height:24pt;" contenteditable data-k="qy2"></span>
+      <span class="ed vc" style="left:113.4pt;top:149.4pt;width:25.32pt;height:24pt;" contenteditable data-k="qm2"></span>
+      <span class="ed vc" style="left:139.56pt;top:149.4pt;width:405.36pt;height:24pt;" contenteditable data-k="qc2"></span>
+      <span class="ed vc" style="left:62.76pt;top:173.52pt;width:50.52pt;height:24.24pt;" contenteditable data-k="qy3"></span>
+      <span class="ed vc" style="left:113.4pt;top:173.52pt;width:25.32pt;height:24.24pt;" contenteditable data-k="qm3"></span>
+      <span class="ed vc" style="left:139.56pt;top:173.52pt;width:405.36pt;height:24.24pt;" contenteditable data-k="qc3"></span>
+      <span class="ed vc" style="left:62.76pt;top:197.88pt;width:50.52pt;height:23.64pt;" contenteditable data-k="qy4"></span>
+      <span class="ed vc" style="left:113.4pt;top:197.88pt;width:25.32pt;height:23.64pt;" contenteditable data-k="qm4"></span>
+      <span class="ed vc" style="left:139.56pt;top:197.88pt;width:405.36pt;height:23.64pt;" contenteditable data-k="qc4"></span>
+      <div class="bx" id="bx1" style="transform:translate(61.92pt,229.56pt)">
+        <svg class="sv bs" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 483.84 121.44" width="483.84pt" height="121.44pt">
+          <path class="tk" d="M0 0H0.84V121.44H0ZM483 0.84H483.84V121.44H483ZM0.84 0H483.84V0.84H0.84ZM0.84 24.12H483.84V24.96H0.84ZM0.84 120.6H483.84V121.44H0.84Z"/>
+          <text x="2.038 8.041 17.036 26.04 34.558 43.562" y="15.36" class="p" style="font-size:9.007">　志望の動機</text>
+        </svg>
+        <span class="ed" style="left:.84pt;top:24.96pt;width:482.16pt;height:95.64pt;padding:2.9pt 4.3pt;line-height:2.1" contenteditable data-k="motive"></span>
+      </div>
+      <div class="bx" id="bx2" style="transform:translate(61.92pt,358.2pt)">
+        <svg class="sv bs" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 483.84 121.44" width="483.84pt" height="121.44pt">
+          <path class="tk" d="M0 0H0.84V121.44H0ZM483 0.84H483.84V121.44H483ZM0.84 0H483.84V0.84H0.84ZM0.84 24.12H483.84V24.96H0.84ZM0.84 120.6H483.84V121.44H0.84Z"/>
+          <text x="2.038 8.041 17.036 26.04 31.078" y="15.36" class="p" style="font-size:9.007">　自己PR</text>
+        </svg>
+        <span class="ed" style="left:.84pt;top:24.96pt;width:482.16pt;height:95.64pt;padding:2.9pt 4.3pt;line-height:2.1" contenteditable data-k="pr"></span>
+      </div>
+      <div class="bx" id="bx3" style="transform:translate(61.92pt,486.84pt)">
+        <svg class="sv bs" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 483.84 121.44" width="483.84pt" height="121.44pt">
+          <path class="tk" d="M0 0H0.84V121.44H0ZM483 0.84H483.84V121.44H483ZM0.84 0H483.84V0.84H0.84ZM0.84 24.12H483.84V24.96H0.84ZM0.84 120.6H483.84V121.44H0.84Z"/>
+          <text x="2.04" y="15.36" class="p" style="font-size:9.007">　学生時代の取り組み</text>
+        </svg>
+        <span class="ed" style="left:.84pt;top:24.96pt;width:482.16pt;height:95.64pt;padding:2.9pt 4.3pt;line-height:2.1" contenteditable data-k="study"></span>
+      </div>
+      <div class="bx" id="bx4" style="transform:translate(61.92pt,615.48pt)">
+        <svg class="sv bs" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 483.84 145.56" width="483.84pt" height="145.56pt">
+          <path class="tn" d="M0.84 48.6H483V48.72H0.84ZM0.84 72.72H483V72.84H0.84ZM0.84 96.84H483V96.96H0.84ZM0.84 120.96H483V121.08H0.84Z"/>
+          <path class="tk" d="M-0 -0H0.84V145.56H-0ZM483 0.84H483.84V145.56H483ZM0.84 -0H483.84V0.84H0.84ZM0.84 23.28H483V24.12H0.84ZM0.84 24.96H483V25.8H0.84ZM0.84 144.72H483.84V145.56H0.84Z"/>
+          <text x="2.038 8.041 10.799 19.803 28.798 37.802 46.797 55.802 64.797 73.801 78.362 87.357 95.884 104.879 113.883 118.444 127.439 136.443 141.004 149.999 159.003 167.998 177.003 181.563 190.558 199.563 208.558 213.119 221.402 229.919 238.923 247.441 256.436 264.963 273.12 281.637 290.641 299.637 307.803 315.356 323.882 331.796 340.683 349.678 358.682 367.677" y="15.36" class="p" style="font-size:9.007">　 本人希望記入欄（特に給料・職種・勤務時間・勤務地・その他についての希望などがあれば記入）</text>
+        </svg>
+        <span class="ed vc" style="left:0.84pt;top:25.8pt;width:482.16pt;height:22.8pt;" contenteditable data-k="w0"></span>
+        <span class="ed vc" style="left:0.84pt;top:48.72pt;width:482.16pt;height:24pt;" contenteditable data-k="w1"></span>
+        <span class="ed vc" style="left:0.84pt;top:72.84pt;width:482.16pt;height:24pt;" contenteditable data-k="w2"></span>
+        <span class="ed vc" style="left:0.84pt;top:96.96pt;width:482.16pt;height:24pt;" contenteditable data-k="w3"></span>
+        <span class="ed vc" style="left:0.84pt;top:121.08pt;width:482.16pt;height:23.64pt;" contenteditable data-k="w4"></span>
+      </div>
+    </section>
+  </div>
+  <div class="vw" id="v-in" hidden>
+    <textarea id="tx" spellcheck="false" aria-label="入力"></textarea>
+  </div>
+  <div class="vw" id="v-set" hidden>
+    <div class="set">
+      <input id="fn" type="text" aria-label="ファイル名">
+      <button id="print">PDF保存</button>
+    </div>
+  </div>
+  <script src="js/fields.js"></script>
+  <script src="js/layout.js"></script>
+  <script src="js/format.js"></script>
+  <script src="js/zoom.js"></script>
+  <script src="js/editor.js"></script>
+  <script src="js/settings.js"></script>
+  <script src="js/view.js"></script>
+  <script src="js/photo.js"></script>
+  <script src="js/app.js"></script>
 </body>
 </html>
