@@ -9,7 +9,7 @@ Resume.settings = (function () {
 
   function stamp() {
     var d = new Date();
-    return pad(d.getMonth() + 1) + pad(d.getDate()) + pad(d.getHours()) + pad(d.getMinutes());
+    return pad(d.getMonth() + 1) + pad(d.getDate());
   }
 
   function autoName() {
