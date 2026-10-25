@@ -14,13 +14,13 @@ Resume.settings = (function () {
 
   function autoName() {
     if (!touched) {
-      fn.value = "履歴書_" + stamp() + ".pdf";
+      fn.value = "履歴書_" + stamp();
     }
   }
 
   function print() {
     autoName();
-    var name = fn.value.replace(/[.]pdf$/i, "").trim() || "履歴書";
+    var name = fn.value.trim() || "履歴書";
     var old = document.title;
     document.title = name;
     Resume.layout.apply();

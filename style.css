@@ -116,7 +116,7 @@ body {
   outline: none;
 }
 
-#tx:focus,.set input:focus {
+#tx:focus,.fnrow:focus-within {
   border-color: var(--ac);
 }
 
@@ -128,16 +128,30 @@ body {
   gap: 12px;
 }
 
-.set input {
-  font: inherit;
-  font-size: 16px;
-  padding: 10px;
+.fnrow {
+  display: flex;
+  align-items: center;
   border: 1px solid var(--ln);
   border-radius: 4px;
   background: var(--fd);
   color: var(--tx);
-  width: 100%;
+  font-size: 16px;
+}
+
+.fnrow input {
+  flex: 1;
+  min-width: 0;
+  font: inherit;
+  padding: 10px;
+  border: 0;
+  background: transparent;
+  color: inherit;
   outline: none;
+}
+
+.fnrow span {
+  flex: none;
+  padding-right: 10px;
 }
 
 .set button {
