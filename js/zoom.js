@@ -63,6 +63,14 @@ Resume.zoom = (function () {
     }
   }, { passive: true });
 
+  document.addEventListener("wheel", function (e) {
+    if (!active || !e.ctrlKey) {
+      return;
+    }
+    e.preventDefault();
+    zoomAt(factor * Math.exp(-e.deltaY * 0.002), e.clientX, e.clientY);
+  }, { passive: false });
+
   window.addEventListener("resize", fit);
   window.addEventListener("orientationchange", function () {
     setTimeout(fit, 300);
