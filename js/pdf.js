@@ -198,12 +198,10 @@ Resume.pdf = (function () {
   }
 
   function loadFont(doc) {
-    var bytes = Resume.font.bytes();
-    if (!bytes) {
-      return Promise.reject(new Error("font"));
-    }
-    return doc.embedFont(bytes, { subset: true }).then(function (font) {
-      return { pdf: font, info: window.fontkit.create(bytes) };
+    return Resume.font.acquire().then(function (bytes) {
+      return doc.embedFont(bytes, { subset: true }).then(function (font) {
+        return { pdf: font, info: window.fontkit.create(bytes) };
+      });
     });
   }
 

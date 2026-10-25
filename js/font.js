@@ -75,12 +75,35 @@ Resume.font = (function () {
     });
   }
 
+  function local() {
+    if (!window.queryLocalFonts) {
+      return Promise.reject(new Error("font"));
+    }
+    return window.queryLocalFonts().then(function (list) {
+      var hit = list.filter(function (f) {
+        return /^MS-?PMincho$/i.test(f.postscriptName);
+      })[0];
+      if (!hit) {
+        throw new Error("font");
+      }
+      return hit.blob();
+    }).then(function (blob) {
+      return blob.arrayBuffer();
+    }).then(function (buf) {
+      return apply(extract(buf));
+    });
+  }
+
+  function acquire() {
+    return current ? Promise.resolve(current) : local().then(function () {
+      return current;
+    });
+  }
+
   var ready = load();
 
   return {
     ready: ready,
-    bytes: function () {
-      return current;
-    }
+    acquire: acquire
   };
 })();
