@@ -18,14 +18,15 @@ Resume.settings = (function () {
     }
   }
 
-  function print() {
+  function save() {
     autoName();
-    var name = fn.value.trim() || "履歴書";
-    var old = document.title;
-    document.title = name;
-    Resume.layout.apply();
-    window.print();
-    document.title = old;
+    var button = document.getElementById("print");
+    button.disabled = true;
+    Resume.pdf.save(fn.value.trim() || "履歴書").then(function () {
+      button.disabled = false;
+    }, function () {
+      button.disabled = false;
+    });
   }
 
   function restore() {
@@ -45,7 +46,7 @@ Resume.settings = (function () {
     } catch (e) {}
   });
 
-  document.getElementById("print").addEventListener("click", print);
+  document.getElementById("print").addEventListener("click", save);
   restore();
 
   return { autoName: autoName };

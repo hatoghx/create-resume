@@ -5,6 +5,8 @@ create-resume uses the following third-party software.
 | Software | Use in create-resume | License |
 |---|---|---|
 | [IPAfont 00303 (IPAMincho, IPAPMincho)](https://moji.or.jp/ipafont/) | Display and print fonts (bundled unmodified as `font/ipam.ttf` and `font/ipamp.ttf`) | IPA Font License v1.0 |
+| [pdf-lib 1.17.1](https://github.com/Hopding/pdf-lib) | PDF generation (bundled as `lib/pdf-lib.min.js`) | MIT |
+| [@pdf-lib/fontkit 1.1.1](https://github.com/Hopding/fontkit) | Font parsing and subsetting for PDF generation (bundled as `lib/fontkit.umd.min.js`) | MIT |
 
 The bundled font files are the unmodified `ipam.ttf` and `ipamp.ttf` from `IPAfont00303.zip`, distributed by the Information-technology Promotion Agency, Japan (IPA). Their license terms follow.
 
@@ -127,4 +129,56 @@ Article 4 (Termination of Agreement)
 Article 5 (Governing Law)
 1.IPA may publish revised and/or new versions of this License.  In such an event, the Recipient may select either this Agreement or any subsequent version of the Agreement in using, conducting the Reproduction and Other Exploitation of, or Redistributing the Licensed Program or a Derived Program. Other matters not specified above shall be subject to the Copyright Law of Japan and other related laws and regulations of Japan.
 2.This Agreement shall be construed under the laws of Japan.
+```
+
+## pdf-lib
+
+```
+MIT License
+
+Copyright (c) 2019 Andrew Dillon
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+```
+
+## @pdf-lib/fontkit
+
+```
+MIT License
+
+Copyright (c) Devon Govett
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
 ```
