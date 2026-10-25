@@ -3,7 +3,7 @@ Resume.editor = (function () {
 
   function push() {
     if (document.activeElement !== tx) {
-      tx.value = Resume.format.build();
+      tx.value = Resume.fields.isBlank() ? "" : Resume.format.build();
     }
   }
 

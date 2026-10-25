@@ -39,6 +39,13 @@ Resume.fields = (function () {
     });
   }
 
+  function isBlank() {
+    return list().every(function (el) {
+      var d = DEFAULTS[el.dataset.k];
+      return el.innerText.trim() === (d === undefined ? "" : d.trim());
+    });
+  }
+
   function align(el) {
     if (!el || !el.dataset || !/^ec\d+$/.test(el.dataset.k || "")) {
       return;
@@ -85,6 +92,7 @@ Resume.fields = (function () {
     get: get,
     set: set,
     clear: clear,
+    isBlank: isBlank,
     align: align,
     alignAll: alignAll,
     load: load,

@@ -38,7 +38,7 @@
     type: Resume.editor.setText
   };
 
-  Resume.editor.element.value = Resume.format.build();
+  Resume.editor.push();
   Resume.layout.apply();
   if (document.fonts && document.fonts.ready) {
     document.fonts.ready.then(Resume.layout.apply);
