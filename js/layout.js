@@ -67,7 +67,24 @@ Resume.layout = (function () {
     });
     document.getElementById("bx4").style.transform = "translate(61.92pt," + y + "pt)";
     wrap.style.zoom = zoom;
+    pitch();
   }
 
-  return { apply: apply };
+  function pitch() {
+    var wrap = document.getElementById("wrap");
+    var zoom = parseFloat(wrap.style.zoom) || 1;
+    Array.prototype.forEach.call(document.querySelectorAll(".fu"), function (el) {
+      var probe = document.createElement("span");
+      probe.className = "ed fu";
+      probe.style.cssText = "position:absolute;visibility:hidden;width:auto;height:auto;padding:0;white-space:pre;letter-spacing:0";
+      probe.textContent = Array(21).join("あ");
+      el.parentNode.appendChild(probe);
+      var advance = probe.getBoundingClientRect().width / 20 / zoom;
+      var size = parseFloat(getComputedStyle(el).fontSize);
+      el.parentNode.removeChild(probe);
+      el.style.letterSpacing = (size - advance) + "px";
+    });
+  }
+
+  return { apply: apply, pitch: pitch };
 })();

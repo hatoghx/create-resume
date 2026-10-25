@@ -15,6 +15,7 @@ Resume.zoom = (function () {
   function fit() {
     document.querySelector('meta[name="viewport"]').setAttribute("content", VIEWPORT);
     document.getElementById("wrap").style.zoom = base() * factor;
+    Resume.layout.pitch();
   }
 
   function distance(t) {
@@ -31,6 +32,7 @@ Resume.zoom = (function () {
     var py = (window.scrollY + cy) / old;
     factor = next;
     wrap.style.zoom = z;
+    Resume.layout.pitch();
     window.scrollTo(px * z - cx, py * z - cy);
   }
 
