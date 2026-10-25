@@ -251,6 +251,7 @@ body {
 
 .fu {
   font-size: 8pt;
+  letter-spacing: 0.15em;
 }
 
 [data-k^="ey"],[data-k^="em"],[data-k^="qy"],[data-k^="qm"] {
