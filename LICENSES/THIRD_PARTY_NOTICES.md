@@ -4,11 +4,11 @@ create-resume uses the following third-party software.
 
 | Software | Use in create-resume | License |
 |---|---|---|
-| [IPAfont 00303 (IPAMincho, IPAPMincho)](https://moji.or.jp/ipafont/) | Display and print fonts (bundled unmodified as `font/ipam.ttf` and `font/ipamp.ttf`) | IPA Font License v1.0 |
+| [IPAfont 00303 (IPAPMincho)](https://moji.or.jp/ipafont/) | Display and print font (bundled unmodified as `font/ipamp.ttf`) | IPA Font License v1.0 |
 | [pdf-lib 1.17.1](https://github.com/Hopding/pdf-lib) | PDF generation (bundled as `lib/pdf-lib.min.js`) | MIT |
 | [@pdf-lib/fontkit 1.1.1](https://github.com/Hopding/fontkit) | Font parsing and subsetting for PDF generation (bundled as `lib/fontkit.umd.min.js`) | MIT |
 
-The bundled font files are the unmodified `ipam.ttf` and `ipamp.ttf` from `IPAfont00303.zip`, distributed by the Information-technology Promotion Agency, Japan (IPA). Their license terms follow.
+The bundled font file is the unmodified `ipamp.ttf` from `IPAfont00303.zip`, distributed by the Information-technology Promotion Agency, Japan (IPA). Their license terms follow.
 
 ## IPAfont
 
