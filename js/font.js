@@ -1,40 +1,6 @@
 Resume.font = (function () {
-  var DB = "create-resume-font";
-  var STORE = "f";
-  var ID = "ttf";
+  var FILE = "font/msmincho.ttc";
   var current = null;
-
-  function open() {
-    return new Promise(function (resolve, reject) {
-      var req = indexedDB.open(DB, 1);
-      req.onupgradeneeded = function () {
-        req.result.createObjectStore(STORE);
-      };
-      req.onsuccess = function () {
-        resolve(req.result);
-      };
-      req.onerror = function () {
-        reject(req.error);
-      };
-    });
-  }
-
-  function run(mode, fn) {
-    return open().then(function (db) {
-      return new Promise(function (resolve, reject) {
-        var tx = db.transaction(STORE, mode);
-        var req = fn(tx.objectStore(STORE));
-        tx.oncomplete = function () {
-          db.close();
-          resolve(req.result);
-        };
-        tx.onerror = function () {
-          db.close();
-          reject(tx.error);
-        };
-      });
-    });
-  }
 
   function pick(bytes, offsets) {
     try {
@@ -99,23 +65,12 @@ Resume.font = (function () {
     });
   }
 
-  function install(file) {
-    return file.arrayBuffer().then(function (buf) {
-      var bytes = extract(buf);
-      return apply(bytes).then(function () {
-        return run("readwrite", function (s) {
-          return s.put(bytes, ID);
-        });
-      });
-    });
-  }
-
   function load() {
-    return run("readonly", function (s) {
-      return s.get(ID);
-    }).then(function (bytes) {
-      return bytes ? apply(bytes) : null;
-    }, function () {
+    return fetch(FILE).then(function (res) {
+      return res.ok ? res.arrayBuffer() : null;
+    }).then(function (buf) {
+      return buf ? apply(extract(buf)) : null;
+    }).catch(function () {
       return null;
     });
   }
@@ -123,7 +78,6 @@ Resume.font = (function () {
   var ready = load();
 
   return {
-    install: install,
     ready: ready,
     bytes: function () {
       return current;
