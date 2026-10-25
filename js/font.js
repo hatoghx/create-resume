@@ -1,5 +1,5 @@
 Resume.font = (function () {
-  var FILE = "font/NotoSerifJP-Regular.ttf";
+  var FILE = "font/NotoSerifJP-320.ttf";
   var bytes = null;
 
   var ready = fetch(FILE).then(function (res) {
