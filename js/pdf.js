@@ -2,7 +2,7 @@ Resume.pdf = (function () {
   var PAGE_W = 1190.64;
   var PAGE_H = 841.92;
   var PX_TO_PT = 0.75;
-  var FONT_FILE = "font/ipamp.ttf";
+  var FONT_FILE = "font/ipam.ttf";
 
   function parseColor(s) {
     var m = (s || "").match(/rgba?\(([^)]+)\)/);
@@ -239,7 +239,7 @@ Resume.pdf = (function () {
       });
     })).then(function () {
       data.chars.forEach(function (c) {
-        var f = fonts[c.family] || fonts.IPAPMincho;
+        var f = fonts[c.family] || fonts.IPAMincho;
         if (!f || !f.info.hasGlyphForCodePoint(c.ch.codePointAt(0))) {
           return;
         }

@@ -1,6 +1,6 @@
 @font-face {
-  font-family: "IPAPMincho";
-  src: url("font/ipamp.ttf") format("truetype");
+  font-family: "IPAMincho";
+  src: url("font/ipam.ttf") format("truetype");
   font-display: block;
 }
 
@@ -163,7 +163,7 @@ body {
 }
 
 .wrap {
-  font-family: "IPAPMincho",serif;
+  font-family: "IPAMincho",serif;
   display: flex;
   flex-direction: row;
   width: 1190.64pt;
@@ -215,11 +215,11 @@ body {
 }
 
 .sv text.p {
-  font-family: "IPAPMincho",serif;
+  font-family: "IPAMincho",serif;
 }
 
 .sv text.m {
-  font-family: "IPAPMincho",serif;
+  font-family: "IPAMincho",serif;
 }
 
 .a {
@@ -281,7 +281,7 @@ body {
 }
 
 .dt,.bh {
-  font-family: "IPAPMincho",serif;
+  font-family: "IPAMincho",serif;
   font-size: 1000pt;
   line-height: 1;
   white-space: pre;
@@ -354,7 +354,7 @@ body {
   white-space: pre;
   overflow: hidden;
   outline: none;
-  font-family: "IPAPMincho",serif;
+  font-family: "IPAMincho",serif;
 }
 
 .ti::before {
