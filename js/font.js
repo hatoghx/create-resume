@@ -8,7 +8,7 @@ Resume.font = (function () {
       var fonts = col.fonts || [];
       for (var i = 0; i < offsets.length; i++) {
         var name = fonts[i] && fonts[i].postscriptName;
-        if (name && /^MS-?PMincho$/i.test(name)) {
+        if (name && /^MS-?Mincho$/i.test(name)) {
           return i;
         }
       }
@@ -81,7 +81,7 @@ Resume.font = (function () {
     }
     return window.queryLocalFonts().then(function (list) {
       var hit = list.filter(function (f) {
-        return /^MS-?PMincho$/i.test(f.postscriptName);
+        return /^MS-?Mincho$/i.test(f.postscriptName);
       })[0];
       if (!hit) {
         throw new Error("font");

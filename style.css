@@ -8,7 +8,7 @@
   --bh: #656565;
   --tx: #d9d9d9;
   --ac: #4772b3;
-  --rf: "ResumeFont","MS PMincho","ＭＳ Ｐ明朝",serif;
+  --rf: "ResumeFont","MS Mincho","ＭＳ 明朝",serif;
   color-scheme: dark;
 }
 
@@ -251,7 +251,6 @@ body {
 
 .fu {
   font-size: 8pt;
-  letter-spacing: 0.15em;
 }
 
 [data-k^="ey"],[data-k^="em"],[data-k^="qy"],[data-k^="qm"] {
